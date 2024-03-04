@@ -1,18 +1,15 @@
-// FreqEFM8.c: Measure the frequency of a signal on pin T0.
-//
-// By:  Jesus Calvino-Fraga (c) 2008-2018
-//
-// The next line clears the "C51 command line options:" field when compiling with CrossIDE
-//  ~C51~
-  
-#include <EFM8LB1.h>
+// Lab 5
+
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <EFM8LB1.h>
 
-#define SYSCLK      72000000L  // SYSCLK frequency in Hz
-#define BAUDRATE      115200L  // Baud rate of UART in bps
+// ~C51~  
+
+#define SYSCLK 72000000L
+#define BAUDRATE 115200L
 #define SARCLK 18000000L
-#define VDD 3.3000 // The measured value of VDD in volts (we should measure this in lab)
 
 unsigned char overflow_count;
 
@@ -23,8 +20,8 @@ char _c51_external_startup (void)
 	WDTCN = 0xDE; //First key
 	WDTCN = 0xAD; //Second key
   
-	VDM0CN |= 0x80;
-	RSTSRC = 0x02;
+	VDM0CN=0x80;       // enable VDD monitor
+	RSTSRC=0x02|0x04;  // Enable reset on missing clock detector and VDD
 
 	#if (SYSCLK == 48000000L)	
 		SFRPAGE = 0x10;
@@ -66,75 +63,22 @@ char _c51_external_startup (void)
 	
 	P0MDOUT |= 0x10; // Enable UART0 TX as push-pull output
 	XBR0     = 0x01; // Enable UART0 on P0.4(TX) and P0.5(RX)                     
-	XBR1     = 0X10; // Enable T0 on P0.0
+	XBR1     = 0X00;
 	XBR2     = 0x40; // Enable crossbar and weak pull-ups
 
+	// Configure Uart 0
 	#if (((SYSCLK/BAUDRATE)/(2L*12L))>0xFFL)
 		#error Timer 0 reload value is incorrect because (SYSCLK/BAUDRATE)/(2L*12L) > 0xFF
 	#endif
-	// Configure Uart 0
 	SCON0 = 0x10;
-	CKCON0 |= 0b_0000_0000 ; // Timer 1 uses the system clock divided by 12.
 	TH1 = 0x100-((SYSCLK/BAUDRATE)/(2L*12L));
 	TL1 = TH1;      // Init Timer1
 	TMOD &= ~0xf0;  // TMOD: timer 1 in 8-bit auto-reload
 	TMOD |=  0x20;                       
 	TR1 = 1; // START Timer1
 	TI = 1;  // Indicate TX0 ready
-	
+  	
 	return 0;
-}
- 
-// Uses Timer3 to delay <us> micro-seconds. 
-void Timer3us(unsigned char us)
-{
-	unsigned char i;               // usec counter
-	
-	// The input for Timer 3 is selected as SYSCLK by setting T3ML (bit 6) of CKCON0:
-	CKCON0|=0b_0100_0000;
-	
-	TMR3RL = (-(SYSCLK)/1000000L); // Set Timer3 to overflow in 1us.
-	TMR3 = TMR3RL;                 // Initialize Timer3 for first overflow
-	
-	TMR3CN0 = 0x04;                 // Sart Timer3 and clear overflow flag
-	for (i = 0; i < us; i++)       // Count <us> overflows
-	{
-		while (!(TMR3CN0 & 0x80));  // Wait for overflow
-		TMR3CN0 &= ~(0x80);         // Clear overflow indicator
-		if (TF0)
-		{
-		   TF0=0;
-		   overflow_count++;
-		}
-	}
-	TMR3CN0 = 0 ;                   // Stop Timer3 and clear overflow flag
-}
-
-void waitms (unsigned int ms)
-{
-	unsigned int j;
-	for(j=ms; j!=0; j--)
-	{
-		Timer3us(249);
-		Timer3us(249);
-		Timer3us(249);
-		Timer3us(250);
-	}
-}
-
-void TIMER0_Init(void)
-{
-	TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
-	TMOD|=0b_0000_0101; // Timer/Counter 0 used as a 16-bit counter
-	TR0=0; // Stop Timer/Counter 0
-}
-
-unsigned int Get_ADC (void)
-{
-    ADINT = 0;
-    ADBUSY = 1;
-    while (!ADINT); // Wait for conversion to complete
-        return (ADC0);
 }
 
 void InitADC (void)
@@ -176,11 +120,41 @@ void InitADC (void)
 	ADEN=1; // Enable ADC
 }
 
-void InitPinADC (unsigned char portno, unsigned char pin_num)
+// Uses Timer3 to delay <us> micro-seconds. 
+void Timer3us(unsigned char us)
+{
+	unsigned char i;               // usec counter
+	
+	// The input for Timer 3 is selected as SYSCLK by setting T3ML (bit 6) of CKCON0:
+	CKCON0|=0b_0100_0000;
+	
+	TMR3RL = (-(SYSCLK)/1000000L); // Set Timer3 to overflow in 1us.
+	TMR3 = TMR3RL;                 // Initialize Timer3 for first overflow
+	
+	TMR3CN0 = 0x04;                 // Sart Timer3 and clear overflow flag
+	for (i = 0; i < us; i++)       // Count <us> overflows
+	{
+		while (!(TMR3CN0 & 0x80));  // Wait for overflow
+		TMR3CN0 &= ~(0x80);         // Clear overflow indicator
+	}
+	TMR3CN0 = 0 ;                   // Stop Timer3 and clear overflow flag
+}
+
+void waitms (unsigned int ms)
+{
+	unsigned int j;
+	unsigned char k;
+	for(j=0; j<ms; j++)
+		for (k=0; k<4; k++) Timer3us(250);
+}
+
+#define VDD 3.3000 // The measured value of VDD in volts
+
+void InitPinADC (unsigned char portno, unsigned char pinno)
 {
 	unsigned char mask;
 	
-	mask=1<<pin_num;
+	mask=1<<pinno;
 
 	SFRPAGE = 0x20;
 	switch (portno)
@@ -214,39 +188,38 @@ unsigned int ADC_at_Pin(unsigned char pin)
 
 float Volts_at_Pin(unsigned char pin)
 {
-	return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
+	 return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
 }
 
+void TIMER0_Init(void)
+{
+	TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
+	TMOD|=0b_0000_0101; // Timer/Counter 0 used as a 16-bit counter
+	TR0=0; // Stop Timer/Counter 0
+}
 
-
-//--------------------------------------------------//
-//                      main                        //
-//--------------------------------------------------// 
-void main (void) 
+void main (void)
 {
 	unsigned long F;
-    float ADCvoltages[2];
+	float v[4];
 	
 	TIMER0_Init();
 
-	waitms(500); // Give PuTTY a chance to start.
+    waitms(500); // Give PuTTy a chance to start before sending
 	printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
-
-	printf ("EFM8 Frequency measurement using Timer/Counter 0.\n"
+	
+	printf ("ADC test program\n"
 	        "File: %s\n"
 	        "Compiled: %s, %s\n\n",
 	        __FILE__, __DATE__, __TIME__);
+	
+	InitPinADC(2, 1); // Configure P2.1 as analog input
+	InitPinADC(2, 2); // Configure P2.2 as analog input
+	
+    InitADC();
 
 	while(1)
 	{
-        // ADC stuff
-        // Read 14-bit value from the pins configured as analog inputs
-		ADCvoltages[0] = Volts_at_Pin(QFP32_MUX_P2_1);
-		ADCvoltages[1] = Volts_at_Pin(QFP32_MUX_P2_2);
-
-        printf ("V@P2.1=%7.5fV, V@P2.2=%7.5fV\r", ADCvoltages[0], ADCvoltages[1]);
-
-        // Frequency stuff 
 		TL0=0;
 		TH0=0;
 		overflow_count=0;
@@ -255,9 +228,14 @@ void main (void)
 		waitms(1000);
 		TR0=0; // Stop Timer/Counter 0
 		F=overflow_count*0x10000L+TH0*0x100L+TL0;
-
-		printf("\rf=%luHz", F);
+		printf("\rf=%luHz", F); // print frequency
+		
+	    // Read 14-bit value from the pins configured as analog inputs
+		v[0] = Volts_at_Pin(QFP32_MUX_P2_1);
+		v[1] = Volts_at_Pin(QFP32_MUX_P2_2);
+		printf ("V@P2.1=%7.5fV, V@P2.2=%7.5fV\r\n", v[0], v[1]); // print voltages
+		
 		printf("\x1b[0K"); // ANSI: Clear from cursor to end of line.
-	}
-	
+		waitms(1000);
+	 }  
 }
