@@ -237,7 +237,7 @@ void main (void)
 
 	while(1)
 	{
-		
+	
 		// Measure full period at pin P1.0 using timer 0
 		//TR0=0; 						// Stop timer 0
 		//TMOD=0B_0000_0001; 			// Set timer 0 as 16-bit timer
@@ -250,11 +250,11 @@ void main (void)
 		// [TH0,TL0] is half the period in multiples of 12/CLK, so:
 		//Period=(TH0*0x100+TL0)*4; 	// Assume Period is unsigned int
 		
-		// Measures half full period
+		// Measures half period
 		// Start tracking the reference signal
-//		AMX0P=LQFP32_MUX_P1_7;
+//		ADC0MX=QFP32_MUX_P1_7;
 //		ADINT = 0;
-//		AD0BUSY=1;
+//		ADBUSY=1;
 //		while (!ADINT); // Wait for conversion to complete
 		// Reset the timer
 //		TL0=0;
