@@ -191,9 +191,17 @@ unsigned int ADC_at_Pin(unsigned char pin)
 	return (ADC0);
 }
 
+unsigned int Get_ADC (void)
+{
+	ADINT = 0;
+	ADBUSY = 1;
+	while (!ADINT); // Wait for conversion to complete
+	return (ADC0);
+}
+
 float Volts_at_Pin(unsigned char pin)
 {
-	 return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
+	return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
 }
 
 void TIMER0_Init(void)
@@ -208,10 +216,10 @@ void TIMER0_Init(void)
 //--------------------------//
 //			Main			//
 //--------------------------//
+
 void main (void)
 {
 	
-	float v[2];
 	TIMER0_Init();
 
     waitms(500); // Give PuTTy a chance to start before sending
@@ -229,53 +237,77 @@ void main (void)
 
 	while(1)
 	{
+		
 		// Measure full period at pin P1.0 using timer 0
-		TR0=0; 						// Stop timer 0
-		TMOD=0B_0000_0001; 			// Set timer 0 as 16-bit timer
-		TH0=0; TL0=0; 				// Reset the timer
-		while (P1_0==1); 			// Wait for the signal to be zero
-		while (P1_0==0); 			// Wait for the signal to be one
-		TR0=1; 						// Start timing
-		while (P1_0==1); 			// Wait for the signal to be zero
-		TR0=0; 						// Stop timer 0
+		//TR0=0; 						// Stop timer 0
+		//TMOD=0B_0000_0001; 			// Set timer 0 as 16-bit timer
+		//TH0=0; TL0=0; 				// Reset the timer
+		//while (P2_1==1); 			// Wait for the signal to be zero
+		//while (P2_1==0); 			// Wait for the signal to be one
+		//TR0=1; 						// Start timing
+		//while (P2_1==1); 			// Wait for the signal to be zero
+		//TR0=0; 						// Stop timer 0
 		// [TH0,TL0] is half the period in multiples of 12/CLK, so:
-		Period=(TH0*0x100+TL0)*4; 	// Assume Period is unsigned int
+		//Period=(TH0*0x100+TL0)*4; 	// Assume Period is unsigned int
+		
+		// Measures half full period
+		// Start tracking the reference signal
+//		AMX0P=LQFP32_MUX_P1_7;
+//		ADINT = 0;
+//		AD0BUSY=1;
+//		while (!ADINT); // Wait for conversion to complete
+		// Reset the timer
+//		TL0=0;
+//		TH0=0;
+//		while (Get_ADC()!=0); // Wait for the signal to be zero
+//		while (Get_ADC()==0); // Wait for the signal to be positive
+//		TR0=1; // Start the timer 0
+//		while (Get_ADC()!=0); // Wait for the signal to be zero again
+		//TR0=0; // Stop timer 0
+		//half_period=TH0*256.0+TL0; // The 16-bit number [TH0-TL0]
+		// Time from the beginning of the sine wave to its peak
+		//overflow_count=65536-(half_period/2);
 
-		if (count >= 10){
-			v1_max = 0;
-			v2_max = 0;
-		}
+		
+		//if (count >= 10) {
+		//	v1_max = 0;
+		//	v2_max = 0;
+		//}
 
 		v1 = Volts_at_Pin(QFP32_MUX_P2_1);				// gets the amplitude at pin 2.1
-		if (Volts_at_Pin(QFP32_MUX_P2_1) < v1_last){	// if the value higher that last time
+		if (v1 > v1_last){	// if the value higher that last time
 			v1_max = v1;
 		}
+		v1_last = v1;
+
 		v2 = Volts_at_Pin(QFP32_MUX_P2_2);				// gets the amplitude at pin 2.2
-		if (Volts_at_Pin(QFP32_MUX_P2_2) < v2_last){
+		if (v2 > v2_last){
 			v2_max = v2;
 		}
-		printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\n", v1_max, v2_max); //print the two values for max amplitude
-		printf("\x1b[0K"); // ANSI: Clear from cursor to end of line.
-		count++;
-
-
-		"""
-		float Phase_Shift;
+		v2_last = v2;
+		
+		
+	//	float Phase_Shift;
+		//float time_difference; 
 
 		// Find phase shift between signals
-		TR0=0; // Stop timer 0
-		TMOD=0B_0000_0001; 			// Set timer 0 as 16-bit timer
-		TH0=0; TL0=0; 				// Reset the timer
-		while (P2_1==1); 			// Wait for the signal to be zero
+	//	TR0=0; // Stop timer 0
+	//	TMOD=0B_0000_0001; 			// Set timer 0 as 16-bit timer
+	//	TH0=0; TL0=0; 				// Reset the timer
+	//	while (P2_1==1); 			// Wait for the signal to be zero
 		// start timer
-		TR0=1;
-		while (P2_2==1); 			// Wait for other signal to hit zero
-		TR0=0;
+	//	TR0=1;
+//		while (P2_2==1); 			// Wait for other signal to hit zero
+//		TR0=0;
 		
 		// Do some math to find phase shift
-		time_difference = (TH0*0x100+TL0) // idk what numbers are in TH0 and TL0
-		Phase_Shift=(TH0*0x100+TL0);	//  
+		//time_difference = (TH0*0x100+TL0) 			// idk what numbers are in TH0 and TL0, 12/clk frequency?
+//		Phase_Shift = (time_difference * 360) / Period;   // we now have the phase shift   
+		//printf(" Phase shift: %f ", );
 
-		"""
+		count += 1;
+		printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
+		//printf("\x1b[0K"); // ANSI: Clear from cursor to end of line
+		
 	 }
 }

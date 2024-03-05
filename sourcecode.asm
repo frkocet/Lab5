@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-; This file was generated Mon Mar 04 20:14:46 2024
+; This file was generated Mon Mar 04 21:33:28 2024
 ;--------------------------------------------------------
 $name sourcecode
 $optc51 --model-small
@@ -28,6 +28,7 @@ $printf_float
 	public _main
 	public _TIMER0_Init
 	public _Volts_at_Pin
+	public _Get_ADC
 	public _ADC_at_Pin
 	public _InitPinADC
 	public _waitms
@@ -40,7 +41,6 @@ $printf_float
 	public _v1_max
 	public _v2_last
 	public _v1_last
-	public _v
 	public _Period
 	public _F
 	public _count
@@ -501,8 +501,6 @@ _F:
 	ds 4
 _Period:
 	ds 4
-_v:
-	ds 16
 _v1_last:
 	ds 4
 _v2_last:
@@ -889,16 +887,36 @@ L007001?:
 	mov	dph,(_ADC0 >> 8)
 	ret
 ;------------------------------------------------------------
+;Allocation info for local variables in function 'Get_ADC'
+;------------------------------------------------------------
+;------------------------------------------------------------
+;	sourcecode.c:194: unsigned int Get_ADC (void)
+;	-----------------------------------------
+;	 function Get_ADC
+;	-----------------------------------------
+_Get_ADC:
+;	sourcecode.c:196: ADINT = 0;
+	clr	_ADINT
+;	sourcecode.c:197: ADBUSY = 1;
+	setb	_ADBUSY
+;	sourcecode.c:198: while (!ADINT); // Wait for conversion to complete
+L008001?:
+	jnb	_ADINT,L008001?
+;	sourcecode.c:199: return (ADC0);
+	mov	dpl,_ADC0
+	mov	dph,(_ADC0 >> 8)
+	ret
+;------------------------------------------------------------
 ;Allocation info for local variables in function 'Volts_at_Pin'
 ;------------------------------------------------------------
 ;pin                       Allocated to registers r2 
 ;------------------------------------------------------------
-;	sourcecode.c:194: float Volts_at_Pin(unsigned char pin)
+;	sourcecode.c:202: float Volts_at_Pin(unsigned char pin)
 ;	-----------------------------------------
 ;	 function Volts_at_Pin
 ;	-----------------------------------------
 _Volts_at_Pin:
-;	sourcecode.c:196: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
+;	sourcecode.c:204: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
 	lcall	_ADC_at_Pin
 	lcall	___uint2fs
 	mov	r2,dpl
@@ -909,7 +927,7 @@ _Volts_at_Pin:
 	push	ar3
 	push	ar4
 	push	ar5
-	mov	dptr,#0x3333
+	mov	dptr,#0x923A
 	mov	b,#0x53
 	mov	a,#0x40
 	lcall	___fsmul
@@ -949,33 +967,33 @@ _Volts_at_Pin:
 ;Allocation info for local variables in function 'TIMER0_Init'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	sourcecode.c:199: void TIMER0_Init(void)
+;	sourcecode.c:207: void TIMER0_Init(void)
 ;	-----------------------------------------
 ;	 function TIMER0_Init
 ;	-----------------------------------------
 _TIMER0_Init:
-;	sourcecode.c:201: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
+;	sourcecode.c:209: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
 	anl	_TMOD,#0xF0
-;	sourcecode.c:202: TMOD|=0b_0000_0101; // Timer/Counter 0 used as a 16-bit counter
+;	sourcecode.c:210: TMOD|=0b_0000_0101; // Timer/Counter 0 used as a 16-bit counter
 	orl	_TMOD,#0x05
-;	sourcecode.c:203: TR0=0; // Stop Timer/Counter 0
+;	sourcecode.c:211: TR0=0; // Stop Timer/Counter 0
 	clr	_TR0
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	sourcecode.c:206: void main (void)
+;	sourcecode.c:220: void main (void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	sourcecode.c:210: TIMER0_Init();
+;	sourcecode.c:223: TIMER0_Init();
 	lcall	_TIMER0_Init
-;	sourcecode.c:212: waitms(500); // Give PuTTy a chance to start before sending
+;	sourcecode.c:225: waitms(500); // Give PuTTy a chance to start before sending
 	mov	dptr,#0x01F4
 	lcall	_waitms
-;	sourcecode.c:213: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
+;	sourcecode.c:226: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
 	mov	a,#__str_0
 	push	acc
 	mov	a,#(__str_0 >> 8)
@@ -986,8 +1004,8 @@ _main:
 	dec	sp
 	dec	sp
 	dec	sp
-;	sourcecode.c:218: __FILE__, __DATE__, __TIME__);
-;	sourcecode.c:217: "Compiled: %s, %s\n\n",
+;	sourcecode.c:231: __FILE__, __DATE__, __TIME__);
+;	sourcecode.c:230: "Compiled: %s, %s\n\n",
 	mov	a,#__str_4
 	push	acc
 	mov	a,#(__str_4 >> 8)
@@ -1016,153 +1034,93 @@ _main:
 	mov	a,sp
 	add	a,#0xf4
 	mov	sp,a
-;	sourcecode.c:220: InitPinADC(2, 1); // Configure P2.1 as analog input
+;	sourcecode.c:233: InitPinADC(2, 1); // Configure P2.1 as analog input
 	mov	_InitPinADC_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_InitPinADC
-;	sourcecode.c:221: InitPinADC(2, 2); // Configure P2.2 as analog input
+;	sourcecode.c:234: InitPinADC(2, 2); // Configure P2.2 as analog input
 	mov	_InitPinADC_PARM_2,#0x02
 	mov	dpl,#0x02
 	lcall	_InitPinADC
-;	sourcecode.c:223: InitADC();
+;	sourcecode.c:236: InitADC();
 	lcall	_InitADC
-;	sourcecode.c:225: while(1)
-L010017?:
-;	sourcecode.c:228: TR0=0; 						// Stop timer 0
-	clr	_TR0
-;	sourcecode.c:229: TMOD=0B_0000_0001; 			// Set timer 0 as 16-bit timer
-	mov	_TMOD,#0x01
-;	sourcecode.c:230: TH0=0; TL0=0; 				// Reset the timer
-	mov	_TH0,#0x00
-	mov	_TL0,#0x00
-;	sourcecode.c:231: while (P1_0==1); 			// Wait for the signal to be zero
-L010001?:
-	jb	_P1_0,L010001?
-;	sourcecode.c:232: while (P1_0==0); 			// Wait for the signal to be one
-L010004?:
-	jnb	_P1_0,L010004?
-;	sourcecode.c:233: TR0=1; 						// Start timing
-	setb	_TR0
-;	sourcecode.c:234: while (P1_0==1); 			// Wait for the signal to be zero
-L010007?:
-	jb	_P1_0,L010007?
-;	sourcecode.c:235: TR0=0; 						// Stop timer 0
-	clr	_TR0
-;	sourcecode.c:237: Period=(TH0*0x100+TL0)*4; 	// Assume Period is unsigned int
-	mov	r3,_TH0
-	mov	r2,#0x00
-	mov	r4,_TL0
-	mov	r5,#0x00
-	mov	a,r4
-	add	a,r2
-	mov	r2,a
-	mov	a,r5
-	addc	a,r3
-	xch	a,r2
-	add	a,acc
-	xch	a,r2
-	rlc	a
-	xch	a,r2
-	add	a,acc
-	xch	a,r2
-	rlc	a
-	mov	r3,a
-	mov	_Period,r2
-	mov	a,r3
-	mov	(_Period + 1),a
-	rlc	a
-	subb	a,acc
-	mov	(_Period + 2),a
-	mov	(_Period + 3),a
-;	sourcecode.c:239: if (count >= 10){
-	clr	c
-	mov	a,_count
-	subb	a,#0x0A
-	mov	a,(_count + 1)
-	subb	a,#0x00
-	jc	L010011?
-;	sourcecode.c:240: v1_max = 0;
-	mov	_v1_max,#0x00
-	mov	(_v1_max + 1),#0x00
-	mov	(_v1_max + 2),#0x00
-	mov	(_v1_max + 3),#0x00
-;	sourcecode.c:241: v2_max = 0;
-	mov	_v2_max,#0x00
-	mov	(_v2_max + 1),#0x00
-	mov	(_v2_max + 2),#0x00
-	mov	(_v2_max + 3),#0x00
-L010011?:
-;	sourcecode.c:244: v1 = Volts_at_Pin(QFP32_MUX_P2_1);		// gets the amplitude at pin 2.1
+;	sourcecode.c:238: while(1)
+L011006?:
+;	sourcecode.c:277: v1 = Volts_at_Pin(QFP32_MUX_P2_1);				// gets the amplitude at pin 2.1
 	mov	dpl,#0x0E
 	lcall	_Volts_at_Pin
 	mov	_v1,dpl
 	mov	(_v1 + 1),dph
 	mov	(_v1 + 2),b
 	mov	(_v1 + 3),a
-;	sourcecode.c:245: if (Volts_at_Pin(QFP32_MUX_P2_1) < v1_last){	// if the value higher that last time
-	mov	dpl,#0x0E
-	lcall	_Volts_at_Pin
-	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
-	mov	r5,a
+;	sourcecode.c:278: if (v1 > v1_last){	// if the value higher that last time
 	push	_v1_last
 	push	(_v1_last + 1)
 	push	(_v1_last + 2)
 	push	(_v1_last + 3)
-	mov	dpl,r2
-	mov	dph,r3
-	mov	b,r4
-	mov	a,r5
-	lcall	___fslt
+	mov	dpl,_v1
+	mov	dph,(_v1 + 1)
+	mov	b,(_v1 + 2)
+	mov	a,(_v1 + 3)
+	lcall	___fsgt
 	mov	r2,dpl
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
 	mov	a,r2
-	jz	L010013?
-;	sourcecode.c:246: v1_max = v1;
+	jz	L011002?
+;	sourcecode.c:279: v1_max = v1;
 	mov	_v1_max,_v1
 	mov	(_v1_max + 1),(_v1 + 1)
 	mov	(_v1_max + 2),(_v1 + 2)
 	mov	(_v1_max + 3),(_v1 + 3)
-L010013?:
-;	sourcecode.c:248: v2 = Volts_at_Pin(QFP32_MUX_P2_2);		// gets the amplitude at pin 2.2
+L011002?:
+;	sourcecode.c:281: v1_last = v1;
+	mov	_v1_last,_v1
+	mov	(_v1_last + 1),(_v1 + 1)
+	mov	(_v1_last + 2),(_v1 + 2)
+	mov	(_v1_last + 3),(_v1 + 3)
+;	sourcecode.c:283: v2 = Volts_at_Pin(QFP32_MUX_P2_2);				// gets the amplitude at pin 2.2
 	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
 	mov	_v2,dpl
 	mov	(_v2 + 1),dph
 	mov	(_v2 + 2),b
 	mov	(_v2 + 3),a
-;	sourcecode.c:249: if (Volts_at_Pin(QFP32_MUX_P2_2) < v2_last){
-	mov	dpl,#0x0F
-	lcall	_Volts_at_Pin
-	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
-	mov	r5,a
+;	sourcecode.c:284: if (v2 > v2_last){
 	push	_v2_last
 	push	(_v2_last + 1)
 	push	(_v2_last + 2)
 	push	(_v2_last + 3)
-	mov	dpl,r2
-	mov	dph,r3
-	mov	b,r4
-	mov	a,r5
-	lcall	___fslt
+	mov	dpl,_v2
+	mov	dph,(_v2 + 1)
+	mov	b,(_v2 + 2)
+	mov	a,(_v2 + 3)
+	lcall	___fsgt
 	mov	r2,dpl
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
 	mov	a,r2
-	jz	L010015?
-;	sourcecode.c:250: v2_max = v2;
+	jz	L011004?
+;	sourcecode.c:285: v2_max = v2;
 	mov	_v2_max,_v2
 	mov	(_v2_max + 1),(_v2 + 1)
 	mov	(_v2_max + 2),(_v2 + 2)
 	mov	(_v2_max + 3),(_v2 + 3)
-L010015?:
-;	sourcecode.c:252: printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,", v1_max, v2_max); //print the two values for max amplitude
+L011004?:
+;	sourcecode.c:287: v2_last = v2;
+	mov	_v2_last,_v2
+	mov	(_v2_last + 1),(_v2 + 1)
+	mov	(_v2_last + 2),(_v2 + 2)
+	mov	(_v2_last + 3),(_v2 + 3)
+;	sourcecode.c:308: count += 1;
+	inc	_count
+	clr	a
+	cjne	a,_count,L011015?
+	inc	(_count + 1)
+L011015?:
+;	sourcecode.c:309: printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
 	push	_v2_max
 	push	(_v2_max + 1)
 	push	(_v2_max + 2)
@@ -1181,65 +1139,7 @@ L010015?:
 	mov	a,sp
 	add	a,#0xf5
 	mov	sp,a
-;	sourcecode.c:260: v[0] = Volts_at_Pin(QFP32_MUX_P2_1);
-	mov	dpl,#0x0E
-	lcall	_Volts_at_Pin
-	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
-	mov	r5,a
-	mov	_v,r2
-	mov	(_v + 1),r3
-	mov	(_v + 2),r4
-	mov	(_v + 3),r5
-;	sourcecode.c:261: v[1] = Volts_at_Pin(QFP32_MUX_P2_2);
-	mov	dpl,#0x0F
-	lcall	_Volts_at_Pin
-	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
-	mov	r5,a
-	mov	(_v + 0x0004),r2
-	mov	((_v + 0x0004) + 1),r3
-	mov	((_v + 0x0004) + 2),r4
-	mov	((_v + 0x0004) + 3),r5
-;	sourcecode.c:262: printf ("V@P2.1=%7.5fV, V@P2.2=%7.5fV", v[0], v[1]); // print voltages
-	push	(_v + 0x0004)
-	push	((_v + 0x0004) + 1)
-	push	((_v + 0x0004) + 2)
-	push	((_v + 0x0004) + 3)
-	push	_v
-	push	(_v + 1)
-	push	(_v + 2)
-	push	(_v + 3)
-	mov	a,#__str_6
-	push	acc
-	mov	a,#(__str_6 >> 8)
-	push	acc
-	mov	a,#0x80
-	push	acc
-	lcall	_printf
-	mov	a,sp
-	add	a,#0xf5
-	mov	sp,a
-;	sourcecode.c:264: printf("\x1b[0K"); // ANSI: Clear from cursor to end of line.
-	mov	a,#__str_7
-	push	acc
-	mov	a,#(__str_7 >> 8)
-	push	acc
-	mov	a,#0x80
-	push	acc
-	lcall	_printf
-	dec	sp
-	dec	sp
-	dec	sp
-;	sourcecode.c:265: ++count;
-	inc	_count
-	clr	a
-	cjne	a,_count,L010036?
-	inc	(_count + 1)
-L010036?:
-	ljmp	L010017?
+	ljmp	L011006?
 	rseg R_CSEG
 
 	rseg R_XINIT
@@ -1265,17 +1165,11 @@ __str_3:
 	db 'Mar  4 2024'
 	db 0x00
 __str_4:
-	db '20:14:46'
+	db '21:33:28'
 	db 0x00
 __str_5:
 	db 'Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,'
-	db 0x00
-__str_6:
-	db 'V@P2.1=%7.5fV, V@P2.2=%7.5fV'
-	db 0x00
-__str_7:
-	db 0x1B
-	db '[0K'
+	db 0x0D
 	db 0x00
 
 	CSEG
