@@ -252,7 +252,7 @@ void main (void)
 		
 		// Measures half period
 		// Start tracking the reference signal
-//		ADC0MX=QFP32_MUX_P1_7;
+//		ADC0MX=QFP32_MUX_P2_1;
 //		ADINT = 0;
 //		ADBUSY=1;
 //		while (!ADINT); // Wait for conversion to complete

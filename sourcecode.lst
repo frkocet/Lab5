@@ -1,7 +1,7 @@
 0000              1   ;--------------------------------------------------------
 0000              2   ; File Created by C51
 0000              3   ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-0000              4   ; This file was generated Mon Mar 04 21:33:28 2024
+0000              4   ; This file was generated Tue Mar 05 10:09:38 2024
 0000              5   ;--------------------------------------------------------
                   5   $name sourcecode
                   6   $optc51 --model-small
@@ -635,7 +635,7 @@
 001E            635   ;        sourcecode.c:61: while ((CLKSEL & 0x80) == 0);
 001E            636   L002001?:
 001E E5A9       637            mov     a,_CLKSEL
-0020 30E748     638            jnb     acc.7,L002001?
+0020 30E768     638            jnb     acc.7,L002001?
 0023            639   ;        sourcecode.c:62: CLKSEL = 0x03;
 0023 75A903     640            mov     _CLKSEL,#0x03
 0026            641   ;        sourcecode.c:63: CLKSEL = 0x03;
@@ -643,7 +643,7 @@
 0029            643   ;        sourcecode.c:64: while ((CLKSEL & 0x80) == 0);
 0029            644   L002004?:
 0029 E5A9       645            mov     a,_CLKSEL
-002B 30E7C8     646            jnb     acc.7,L002004?
+002B 30E7E8     646            jnb     acc.7,L002004?
 002E            647   ;        sourcecode.c:69: P0MDOUT |= 0x10; // Enable UART0 TX as push-pull output
 002E 43A410     648            orl     _P0MDOUT,#0x10
 0031            649   ;        sourcecode.c:70: XBR0     = 0x01; // Enable UART0 on P0.4(TX) and P0.5(RX)                     
@@ -729,7 +729,7 @@
 0086            729   ;        sourcecode.c:142: while (!(TMR3CN0 & 0x80));  // Wait for overflow
 0086            730   L004001?:
 0086 E591       731            mov     a,_TMR3CN0
-0088 30E7C8     732            jnb     acc.7,L004001?
+0088 30E7E8     732            jnb     acc.7,L004001?
 008B            733   ;        sourcecode.c:143: TMR3CN0 &= ~(0x80);         // Clear overflow indicator
 008B 53917F     734            anl     _TMR3CN0,#0x7F
 008E            735   ;        sourcecode.c:140: for (i = 0; i < us; i++)       // Count <us> overflows
@@ -766,7 +766,7 @@
 00A4            766   ;        sourcecode.c:153: for (k=0; k<4; k++) Timer3us(250);
 00A4 7E00       767            mov     r6,#0x00
 00A6            768   L005001?:
-00A6 BE0408     769            cjne    r6,#0x04,L005018?
+00A6 BE0428     769            cjne    r6,#0x04,L005018?
 00A9            770   L005018?:
 00A9 5000       771            jnc     L005007?
 00AB 7582FA     772            mov     dpl,#0xFA
@@ -786,7 +786,7 @@
 00C8            786   L005007?:
 00C8            787   ;        sourcecode.c:152: for(j=0; j<ms; j++)
 00C8 0C         788            inc     r4
-00C9 BC0048     789            cjne    r4,#0x00,L005005?
+00C9 BC0068     789            cjne    r4,#0x00,L005005?
 00CC 0D         790            inc     r5
 00CD 8000       791            sjmp    L005005?
 00CF            792   L005009?:
@@ -812,19 +812,19 @@
 00DB            812   L006011?:
 00DB 25E0       813            add     a,acc
 00DD            814   L006013?:
-00DD D5F008     815            djnz    b,L006011?
+00DD D5F028     815            djnz    b,L006011?
 00E0 FB         816            mov     r3,a
 00E1            817   ;        sourcecode.c:164: SFRPAGE = 0x20;
 00E1 75A720     818            mov     _SFRPAGE,#0x20
 00E4            819   ;        sourcecode.c:165: switch (portno)
-00E4 BA0048     820            cjne    r2,#0x00,L006014?
+00E4 BA0068     820            cjne    r2,#0x00,L006014?
 00E7 8000       821            sjmp    L006001?
 00E9            822   L006014?:
-00E9 BA01C8     823            cjne    r2,#0x01,L006015?
+00E9 BA01E8     823            cjne    r2,#0x01,L006015?
 00EC 8000       824            sjmp    L006002?
 00EE            825   L006015?:
 00EE            826   ;        sourcecode.c:167: case 0:
-00EE BA0248     827            cjne    r2,#0x02,L006005?
+00EE BA0268     827            cjne    r2,#0x02,L006005?
 00F1 8000       828            sjmp    L006003?
 00F3            829   L006001?:
 00F3            830   ;        sourcecode.c:168: P0MDIN &= (~mask); // Set pin as analog input
@@ -881,7 +881,7 @@
 0118 D2EC       881            setb    _ADBUSY
 011A            882   ;        sourcecode.c:190: while (!ADINT); // Wait for conversion to complete
 011A            883   L007001?:
-011A 30EDC8     884            jnb     _ADINT,L007001?
+011A 30EDE8     884            jnb     _ADINT,L007001?
 011D            885   ;        sourcecode.c:191: return (ADC0);
 011D 85BD82     886            mov     dpl,_ADC0
 0120 85BE83     887            mov     dph,(_ADC0 >> 8)
@@ -901,7 +901,7 @@
 0126 D2EC       901            setb    _ADBUSY
 0128            902   ;        sourcecode.c:198: while (!ADINT); // Wait for conversion to complete
 0128            903   L008001?:
-0128 30ED08     904            jnb     _ADINT,L008001?
+0128 30ED28     904            jnb     _ADINT,L008001?
 012B            905   ;        sourcecode.c:199: return (ADC0);
 012B 85BD82     906            mov     dpl,_ADC0
 012E 85BE83     907            mov     dph,(_ADC0 >> 8)
@@ -994,9 +994,9 @@
 0199 9001F4     994            mov     dptr,#0x01F4
 019C 120000     995            lcall   _waitms
 019F            996   ;        sourcecode.c:226: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
-019F 7448       997            mov     a,#__str_0
+019F 7468       997            mov     a,#__str_0
 01A1 C0E0       998            push    acc
-01A3 74BF       999            mov     a,#(__str_0 >> 8)
+01A3 74C0       999            mov     a,#(__str_0 >> 8)
 01A5 C0E0      1000            push    acc
 01A7 7480      1001            mov     a,#0x80
 01A9 C0E0      1002            push    acc
@@ -1006,27 +1006,27 @@
 01B2 1581      1006            dec     sp
 01B4           1007   ;        sourcecode.c:231: __FILE__, __DATE__, __TIME__);
 01B4           1008   ;        sourcecode.c:230: "Compiled: %s, %s\n\n",
-01B4 74C8      1009            mov     a,#__str_4
+01B4 74E8      1009            mov     a,#__str_4
 01B6 C0E0      1010            push    acc
-01B8 74BF      1011            mov     a,#(__str_4 >> 8)
+01B8 74C0      1011            mov     a,#(__str_4 >> 8)
 01BA C0E0      1012            push    acc
 01BC 7480      1013            mov     a,#0x80
 01BE C0E0      1014            push    acc
-01C0 7408      1015            mov     a,#__str_3
+01C0 7428      1015            mov     a,#__str_3
 01C2 C0E0      1016            push    acc
-01C4 74C0      1017            mov     a,#(__str_3 >> 8)
+01C4 74C1      1017            mov     a,#(__str_3 >> 8)
 01C6 C0E0      1018            push    acc
 01C8 7480      1019            mov     a,#0x80
 01CA C0E0      1020            push    acc
-01CC 7448      1021            mov     a,#__str_2
+01CC 7468      1021            mov     a,#__str_2
 01CE C0E0      1022            push    acc
-01D0 74C0      1023            mov     a,#(__str_2 >> 8)
+01D0 74C1      1023            mov     a,#(__str_2 >> 8)
 01D2 C0E0      1024            push    acc
 01D4 7480      1025            mov     a,#0x80
 01D6 C0E0      1026            push    acc
-01D8 7488      1027            mov     a,#__str_1
+01D8 74A8      1027            mov     a,#__str_1
 01DA C0E0      1028            push    acc
-01DC 74C0      1029            mov     a,#(__str_1 >> 8)
+01DC 74C1      1029            mov     a,#(__str_1 >> 8)
 01DE C0E0      1030            push    acc
 01E0 7480      1031            mov     a,#0x80
 01E2 C0E0      1032            push    acc
@@ -1117,7 +1117,7 @@
 0296           1117   ;        sourcecode.c:308: count += 1;
 0296 0558      1118            inc     _count
 0298 E4        1119            clr     a
-0299 B558C8    1120            cjne    a,_count,L011015?
+0299 B558E8    1120            cjne    a,_count,L011015?
 029C 0559      1121            inc     (_count + 1)
 029E           1122   L011015?:
 029E           1123   ;        sourcecode.c:309: printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
@@ -1129,9 +1129,9 @@
 02A8 C019      1129            push    (_v1_max + 1)
 02AA C01A      1130            push    (_v1_max + 2)
 02AC C01B      1131            push    (_v1_max + 3)
-02AE 7408      1132            mov     a,#__str_5
+02AE 7428      1132            mov     a,#__str_5
 02B0 C0E0      1133            push    acc
-02B2 74C2      1134            mov     a,#(__str_5 >> 8)
+02B2 74C3      1134            mov     a,#(__str_5 >> 8)
 02B4 C0E0      1135            push    acc
 02B6 7480      1136            mov     a,#0x80
 02B8 C0E0      1137            push    acc
@@ -1171,13 +1171,13 @@
      64652E63
 003E 00        1163            db 0x00
 003F           1164   __str_3:
-003F 4D617220  1165            db 'Mar  4 2024'
-     20342032
+003F 4D617220  1165            db 'Mar  5 2024'
+     20352032
      303234
 004A 00        1166            db 0x00
 004B           1167   __str_4:
-004B 32313A33  1168            db '21:33:28'
-     333A3238
+004B 31303A30  1168            db '10:09:38'
+     393A3338
 0053 00        1169            db 0x00
 0054           1170   __str_5:
 0054 4D617820  1171            db 'Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,'
