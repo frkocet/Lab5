@@ -11,6 +11,12 @@
 #define SARCLK 18000000L
 
 unsigned char overflow_count;
+unsigned int count;
+unsigned long F;
+unsigned long Period;
+float v[4];
+float v1_last = 0; float v2_last = 0; float v1_max = 0; float v2_max = 0;
+float v1 = 0; float v2 = 0;
 
 char _c51_external_startup (void)
 {
@@ -197,11 +203,14 @@ void TIMER0_Init(void)
 	TR0=0; // Stop Timer/Counter 0
 }
 
+
+
+//--------------------------//
+//			Main			//
+//--------------------------//
 void main (void)
 {
-	unsigned long F;
-	unsigned long Period;
-	float v[4];
+	
 	
 	TIMER0_Init();
 
@@ -220,26 +229,40 @@ void main (void)
 
 	while(1)
 	{
+		// Measure full period at pin P1.0 using timer 0
+		TR0=0; 						// Stop timer 0
+		TMOD=0B_0000_0001; 			// Set timer 0 as 16-bit timer
+		TH0=0; TL0=0; 				// Reset the timer
+		while (P1_0==1); 			// Wait for the signal to be zero
+		while (P1_0==0); 			// Wait for the signal to be one
+		TR0=1; 						// Start timing
+		while (P1_0==1); 			// Wait for the signal to be zero
+		TR0=0; 						// Stop timer 0
+		// [TH0,TL0] is half the period in multiples of 12/CLK, so:
+		Period=(TH0*0x100+TL0)*4; 	// Assume Period is unsigned int
+
+		if (count >= 10){
+			v1_max = 0;
+			v2_max = 0;
+		}
+
+		v1 = Volts_at_Pin(QFP32_MUX_P2_1);		// gets the amplitude at pin 2.1
+		if (Volts_at_Pin(QFP32_MUX_P2_1) < v1_last){	// if the value higher that last time
+			v1_max = v1;
+		}
+		v2 = Volts_at_Pin(QFP32_MUX_P2_2);		// gets the amplitude at pin 2.2
+		if (Volts_at_Pin(QFP32_MUX_P2_2) < v2_last){
+			v2_max = v2;
+		}
+		printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\n", v1_max, v2_max); //print the two values for max amplitude
+		printf("\x1b[0K"); // ANSI: Clear from cursor to end of line.
+
 		"""
-		TL0=0;
-		TH0=0;
-		overflow_count=0;
-		TF0=0;
-		TR0=1; // Start Timer/Counter 0
-		//waitms(1000);
-		TR0=0; // Stop Timer/Counter 0
-		F=overflow_count*0x10000L+TH0*0x100L+TL0;
-		printf("\rf=%luHz ", F); // print frequency
-
-		Period = 1/F;
+		// Find phase shift between signals
+		//if (v1 == 0) {
+			
+		//}
 		"""
-		
-		
-		
-		
-
-
-
 		
 	    // Read 14-bit value from the pins configured as analog inputs
 		v[0] = Volts_at_Pin(QFP32_MUX_P2_1);
@@ -247,6 +270,6 @@ void main (void)
 		printf ("V@P2.1=%7.5fV, V@P2.2=%7.5fV", v[0], v[1]); // print voltages
 		
 		printf("\x1b[0K"); // ANSI: Clear from cursor to end of line.
-		waitms(1);
+		++count;
 	 }  
 }
