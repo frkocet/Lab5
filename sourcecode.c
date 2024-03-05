@@ -1,6 +1,5 @@
 // Lab 5
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <EFM8LB1.h>
@@ -201,6 +200,7 @@ void TIMER0_Init(void)
 void main (void)
 {
 	unsigned long F;
+	unsigned long Period;
 	float v[4];
 	
 	TIMER0_Init();
@@ -220,22 +220,33 @@ void main (void)
 
 	while(1)
 	{
+		"""
 		TL0=0;
 		TH0=0;
 		overflow_count=0;
 		TF0=0;
 		TR0=1; // Start Timer/Counter 0
-		waitms(1000);
+		//waitms(1000);
 		TR0=0; // Stop Timer/Counter 0
 		F=overflow_count*0x10000L+TH0*0x100L+TL0;
-		printf("\rf=%luHz", F); // print frequency
+		printf("\rf=%luHz ", F); // print frequency
+
+		Period = 1/F;
+		"""
+		
+		
+		
+		
+
+
+
 		
 	    // Read 14-bit value from the pins configured as analog inputs
 		v[0] = Volts_at_Pin(QFP32_MUX_P2_1);
 		v[1] = Volts_at_Pin(QFP32_MUX_P2_2);
-		printf ("V@P2.1=%7.5fV, V@P2.2=%7.5fV\r\n", v[0], v[1]); // print voltages
+		printf ("V@P2.1=%7.5fV, V@P2.2=%7.5fV", v[0], v[1]); // print voltages
 		
 		printf("\x1b[0K"); // ANSI: Clear from cursor to end of line.
-		waitms(1000);
+		waitms(1);
 	 }  
 }
