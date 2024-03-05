@@ -14,7 +14,7 @@ unsigned char overflow_count;
 unsigned int count;
 unsigned long F;
 unsigned long Period;
-float v[4];
+
 float v1_last = 0; float v2_last = 0; float v1_max = 0; float v2_max = 0;
 float v1 = 0; float v2 = 0;
 
@@ -153,7 +153,7 @@ void waitms (unsigned int ms)
 		for (k=0; k<4; k++) Timer3us(250);
 }
 
-#define VDD 3.3000 // The measured value of VDD in volts
+#define VDD 3.3058 // The measured value of VDD in volts
 
 void InitPinADC (unsigned char portno, unsigned char pinno)
 {
@@ -211,7 +211,7 @@ void TIMER0_Init(void)
 void main (void)
 {
 	
-	
+	float v[2];
 	TIMER0_Init();
 
     waitms(500); // Give PuTTy a chance to start before sending
@@ -246,30 +246,36 @@ void main (void)
 			v2_max = 0;
 		}
 
-		v1 = Volts_at_Pin(QFP32_MUX_P2_1);		// gets the amplitude at pin 2.1
+		v1 = Volts_at_Pin(QFP32_MUX_P2_1);				// gets the amplitude at pin 2.1
 		if (Volts_at_Pin(QFP32_MUX_P2_1) < v1_last){	// if the value higher that last time
 			v1_max = v1;
 		}
-		v2 = Volts_at_Pin(QFP32_MUX_P2_2);		// gets the amplitude at pin 2.2
+		v2 = Volts_at_Pin(QFP32_MUX_P2_2);				// gets the amplitude at pin 2.2
 		if (Volts_at_Pin(QFP32_MUX_P2_2) < v2_last){
 			v2_max = v2;
 		}
 		printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\n", v1_max, v2_max); //print the two values for max amplitude
 		printf("\x1b[0K"); // ANSI: Clear from cursor to end of line.
+		count++;
+
 
 		"""
+		float Phase_Shift;
+
 		// Find phase shift between signals
-		//if (v1 == 0) {
-			
-		//}
+		TR0=0; // Stop timer 0
+		TMOD=0B_0000_0001; 			// Set timer 0 as 16-bit timer
+		TH0=0; TL0=0; 				// Reset the timer
+		while (P2_1==1); 			// Wait for the signal to be zero
+		// start timer
+		TR0=1;
+		while (P2_2==1); 			// Wait for other signal to hit zero
+		TR0=0;
+		
+		// Do some math to find phase shift
+		time_difference = (TH0*0x100+TL0) // idk what numbers are in TH0 and TL0
+		Phase_Shift=(TH0*0x100+TL0);	//  
+
 		"""
-		
-	    // Read 14-bit value from the pins configured as analog inputs
-		v[0] = Volts_at_Pin(QFP32_MUX_P2_1);
-		v[1] = Volts_at_Pin(QFP32_MUX_P2_2);
-		printf ("V@P2.1=%7.5fV, V@P2.2=%7.5fV", v[0], v[1]); // print voltages
-		
-		printf("\x1b[0K"); // ANSI: Clear from cursor to end of line.
-		++count;
-	 }  
+	 }
 }
