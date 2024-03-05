@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-; This file was generated Tue Mar 05 10:09:38 2024
+; This file was generated Tue Mar 05 10:52:46 2024
 ;--------------------------------------------------------
 $name sourcecode
 $optc51 --model-small
@@ -1165,7 +1165,7 @@ __str_3:
 	db 'Mar  5 2024'
 	db 0x00
 __str_4:
-	db '10:09:38'
+	db '10:52:46'
 	db 0x00
 __str_5:
 	db 'Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,'
