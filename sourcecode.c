@@ -219,7 +219,7 @@ void TIMER0_Init(void)
 
 void main (void)
 {
-	
+	float period;
 	TIMER0_Init();
 
     waitms(500); // Give PuTTy a chance to start before sending
@@ -238,7 +238,7 @@ void main (void)
 	while(1)
 	{
 	
-		// Measure full period at pin P1.0 using timer 0
+		// Measure full period at pin Px.x using timer 0
 		//TR0=0; 						// Stop timer 0
 		//TMOD=0B_0000_0001; 			// Set timer 0 as 16-bit timer
 		//TH0=0; TL0=0; 				// Reset the timer
@@ -268,7 +268,46 @@ void main (void)
 		// Time from the beginning of the sine wave to its peak
 		//overflow_count=65536-(half_period/2);
 
-		
+		// measure the period of the signal at pin x.x
+		// Reset the counter
+		TL0=0; 
+		TH0=0;
+		TF0=0;
+		overflow_count=0;
+
+		printf("here1\n");
+		while(P2_1 !=0); // Wait for the signal to be zero
+		printf("halfway\n");
+		while(P2_1 !=1)
+			printf("%f\r", P2_1); // Wait for the signal to be one
+		printf("balls\nw");
+
+		TR0=1; // Start the timer
+		while(P2_1 !=0) // Wait for the signal to be zero
+		{
+			if(TF0==1) // Did the 16-bit timer overflow?
+			{
+				TF0=0;
+				overflow_count++;
+			}
+		}
+		while(P2_1!=1) // Wait for the signal to be one
+		{
+			if(TF0==1) // Did the 16-bit timer overflow?
+			{
+				TF0=0;
+				overflow_count++;
+			}
+		}
+		TR0=0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
+		period=(overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+		// Send the period to the serial port
+		printf( " \rT=%f ms    ", period*1000.0);
+
+
+
+
+
 		//if (count >= 10) {
 		//	v1_max = 0;
 		//	v2_max = 0;

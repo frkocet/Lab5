@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-; This file was generated Tue Mar 05 10:52:46 2024
+; This file was generated Tue Mar 05 11:10:02 2024
 ;--------------------------------------------------------
 $name sourcecode
 $optc51 --model-small
@@ -982,6 +982,7 @@ _TIMER0_Init:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
+;period                    Allocated to registers r2 r3 r4 r5 
 ;------------------------------------------------------------
 ;	sourcecode.c:220: void main (void)
 ;	-----------------------------------------
@@ -1045,15 +1046,252 @@ _main:
 ;	sourcecode.c:236: InitADC();
 	lcall	_InitADC
 ;	sourcecode.c:238: while(1)
-L011006?:
-;	sourcecode.c:277: v1 = Volts_at_Pin(QFP32_MUX_P2_1);				// gets the amplitude at pin 2.1
+L011022?:
+;	sourcecode.c:273: TL0=0; 
+	mov	_TL0,#0x00
+;	sourcecode.c:274: TH0=0;
+	mov	_TH0,#0x00
+;	sourcecode.c:275: TF0=0;
+	clr	_TF0
+;	sourcecode.c:276: overflow_count=0;
+	mov	_overflow_count,#0x00
+;	sourcecode.c:278: printf("here1\n");
+	mov	a,#__str_5
+	push	acc
+	mov	a,#(__str_5 >> 8)
+	push	acc
+	mov	a,#0x80
+	push	acc
+	lcall	_printf
+	dec	sp
+	dec	sp
+	dec	sp
+;	sourcecode.c:279: while(P2_1 !=0); // Wait for the signal to be zero
+L011001?:
+	jb	_P2_1,L011001?
+;	sourcecode.c:280: printf("halfway\n");
+	mov	a,#__str_6
+	push	acc
+	mov	a,#(__str_6 >> 8)
+	push	acc
+	mov	a,#0x80
+	push	acc
+	lcall	_printf
+	dec	sp
+	dec	sp
+	dec	sp
+;	sourcecode.c:281: printf("%f\n", P2_1);
+	mov	c,_P2_1
+	clr	a
+	rlc	a
+	mov	r2,a
+	mov	r3,#0x00
+	push	ar2
+	push	ar3
+	mov	a,#__str_7
+	push	acc
+	mov	a,#(__str_7 >> 8)
+	push	acc
+	mov	a,#0x80
+	push	acc
+	lcall	_printf
+	mov	a,sp
+	add	a,#0xfb
+	mov	sp,a
+;	sourcecode.c:282: while(P2_1 !=1); // Wait for the signal to be one
+L011004?:
+	jnb	_P2_1,L011004?
+;	sourcecode.c:283: printf("balls\nw");
+	mov	a,#__str_8
+	push	acc
+	mov	a,#(__str_8 >> 8)
+	push	acc
+	mov	a,#0x80
+	push	acc
+	lcall	_printf
+	dec	sp
+	dec	sp
+	dec	sp
+;	sourcecode.c:285: TR0=1; // Start the timer
+	setb	_TR0
+;	sourcecode.c:286: while(P2_1 !=0) // Wait for the signal to be zero
+L011009?:
+	jnb	_P2_1,L011014?
+;	sourcecode.c:288: if(TF0==1) // Did the 16-bit timer overflow?
+;	sourcecode.c:290: TF0=0;
+	jbc	_TF0,L011042?
+	sjmp	L011009?
+L011042?:
+;	sourcecode.c:291: overflow_count++;
+	inc	_overflow_count
+;	sourcecode.c:294: while(P2_1!=1) // Wait for the signal to be one
+	sjmp	L011009?
+L011014?:
+	jb	_P2_1,L011016?
+;	sourcecode.c:296: if(TF0==1) // Did the 16-bit timer overflow?
+;	sourcecode.c:298: TF0=0;
+	jbc	_TF0,L011044?
+	sjmp	L011014?
+L011044?:
+;	sourcecode.c:299: overflow_count++;
+	inc	_overflow_count
+	sjmp	L011014?
+L011016?:
+;	sourcecode.c:302: TR0=0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
+	clr	_TR0
+;	sourcecode.c:303: period=(overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+	mov	dpl,_overflow_count
+	lcall	___uchar2fs
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	dptr,#0x0000
+	mov	b,#0x80
+	mov	a,#0x47
+	lcall	___fsmul
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	dpl,_TH0
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	___uchar2fs
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	mov	dptr,#0x0000
+	mov	b,#0x80
+	mov	a,#0x43
+	lcall	___fsmul
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsadd
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	r6,_TL0
+	mov	r7,#0x00
+	mov	dpl,r6
+	mov	dph,r7
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	___sint2fs
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsadd
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	dptr,#0xF4FC
+	mov	b,#0x32
+	mov	a,#0x34
+	lcall	___fsmul
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	sourcecode.c:305: printf( " \rT=%f ms    ", period*1000.0);
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	dptr,#0x0000
+	mov	b,#0x7A
+	mov	a,#0x44
+	lcall	___fsmul
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	a,#__str_9
+	push	acc
+	mov	a,#(__str_9 >> 8)
+	push	acc
+	mov	a,#0x80
+	push	acc
+	lcall	_printf
+	mov	a,sp
+	add	a,#0xf9
+	mov	sp,a
+;	sourcecode.c:316: v1 = Volts_at_Pin(QFP32_MUX_P2_1);				// gets the amplitude at pin 2.1
 	mov	dpl,#0x0E
 	lcall	_Volts_at_Pin
 	mov	_v1,dpl
 	mov	(_v1 + 1),dph
 	mov	(_v1 + 2),b
 	mov	(_v1 + 3),a
-;	sourcecode.c:278: if (v1 > v1_last){	// if the value higher that last time
+;	sourcecode.c:317: if (v1 > v1_last){	// if the value higher that last time
 	push	_v1_last
 	push	(_v1_last + 1)
 	push	(_v1_last + 2)
@@ -1068,26 +1306,26 @@ L011006?:
 	add	a,#0xfc
 	mov	sp,a
 	mov	a,r2
-	jz	L011002?
-;	sourcecode.c:279: v1_max = v1;
+	jz	L011018?
+;	sourcecode.c:318: v1_max = v1;
 	mov	_v1_max,_v1
 	mov	(_v1_max + 1),(_v1 + 1)
 	mov	(_v1_max + 2),(_v1 + 2)
 	mov	(_v1_max + 3),(_v1 + 3)
-L011002?:
-;	sourcecode.c:281: v1_last = v1;
+L011018?:
+;	sourcecode.c:320: v1_last = v1;
 	mov	_v1_last,_v1
 	mov	(_v1_last + 1),(_v1 + 1)
 	mov	(_v1_last + 2),(_v1 + 2)
 	mov	(_v1_last + 3),(_v1 + 3)
-;	sourcecode.c:283: v2 = Volts_at_Pin(QFP32_MUX_P2_2);				// gets the amplitude at pin 2.2
+;	sourcecode.c:322: v2 = Volts_at_Pin(QFP32_MUX_P2_2);				// gets the amplitude at pin 2.2
 	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
 	mov	_v2,dpl
 	mov	(_v2 + 1),dph
 	mov	(_v2 + 2),b
 	mov	(_v2 + 3),a
-;	sourcecode.c:284: if (v2 > v2_last){
+;	sourcecode.c:323: if (v2 > v2_last){
 	push	_v2_last
 	push	(_v2_last + 1)
 	push	(_v2_last + 2)
@@ -1102,25 +1340,25 @@ L011002?:
 	add	a,#0xfc
 	mov	sp,a
 	mov	a,r2
-	jz	L011004?
-;	sourcecode.c:285: v2_max = v2;
+	jz	L011020?
+;	sourcecode.c:324: v2_max = v2;
 	mov	_v2_max,_v2
 	mov	(_v2_max + 1),(_v2 + 1)
 	mov	(_v2_max + 2),(_v2 + 2)
 	mov	(_v2_max + 3),(_v2 + 3)
-L011004?:
-;	sourcecode.c:287: v2_last = v2;
+L011020?:
+;	sourcecode.c:326: v2_last = v2;
 	mov	_v2_last,_v2
 	mov	(_v2_last + 1),(_v2 + 1)
 	mov	(_v2_last + 2),(_v2 + 2)
 	mov	(_v2_last + 3),(_v2 + 3)
-;	sourcecode.c:308: count += 1;
+;	sourcecode.c:347: count += 1;
 	inc	_count
 	clr	a
-	cjne	a,_count,L011015?
+	cjne	a,_count,L011047?
 	inc	(_count + 1)
-L011015?:
-;	sourcecode.c:309: printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
+L011047?:
+;	sourcecode.c:348: printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
 	push	_v2_max
 	push	(_v2_max + 1)
 	push	(_v2_max + 2)
@@ -1129,9 +1367,9 @@ L011015?:
 	push	(_v1_max + 1)
 	push	(_v1_max + 2)
 	push	(_v1_max + 3)
-	mov	a,#__str_5
+	mov	a,#__str_10
 	push	acc
-	mov	a,#(__str_5 >> 8)
+	mov	a,#(__str_10 >> 8)
 	push	acc
 	mov	a,#0x80
 	push	acc
@@ -1139,7 +1377,7 @@ L011015?:
 	mov	a,sp
 	add	a,#0xf5
 	mov	sp,a
-	ljmp	L011006?
+	ljmp	L011022?
 	rseg R_CSEG
 
 	rseg R_XINIT
@@ -1165,9 +1403,31 @@ __str_3:
 	db 'Mar  5 2024'
 	db 0x00
 __str_4:
-	db '10:52:46'
+	db '11:10:01'
 	db 0x00
 __str_5:
+	db 'here1'
+	db 0x0A
+	db 0x00
+__str_6:
+	db 'halfway'
+	db 0x0A
+	db 0x00
+__str_7:
+	db '%f'
+	db 0x0A
+	db 0x00
+__str_8:
+	db 'balls'
+	db 0x0A
+	db 'w'
+	db 0x00
+__str_9:
+	db ' '
+	db 0x0D
+	db 'T=%f ms    '
+	db 0x00
+__str_10:
 	db 'Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,'
 	db 0x0D
 	db 0x00
