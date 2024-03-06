@@ -276,14 +276,14 @@ void main (void)
 		overflow_count=0;
 
 		printf("here1\n");
-		while(P2_1 !=0); // Wait for the signal to be zero
+		while(P0_6 !=0); // Wait for the signal to be zero
 		printf("halfway\n");
-		while(P2_1 !=1)
-			printf("%f\r", P2_1); // Wait for the signal to be one
-		printf("balls\nw");
+		while(P0_6 !=1)
+			printf("P2_1:%2.2f, V@P2_1:%3.3f,  P2_2:%2.2f, V@P2_2:%3.3f\r", P2_1, Volts_at_Pin(QFP32_MUX_P2_1), P2_2, Volts_at_Pin(QFP32_MUX_P2_2)); // Wait for the signal to be one
+		printf("balls\n");
 
 		TR0=1; // Start the timer
-		while(P2_1 !=0) // Wait for the signal to be zero
+		while(P0_6 !=0) // Wait for the signal to be zero
 		{
 			if(TF0==1) // Did the 16-bit timer overflow?
 			{
@@ -291,7 +291,7 @@ void main (void)
 				overflow_count++;
 			}
 		}
-		while(P2_1!=1) // Wait for the signal to be one
+		while(P0_6!=1) // Wait for the signal to be one
 		{
 			if(TF0==1) // Did the 16-bit timer overflow?
 			{

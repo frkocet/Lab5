@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-; This file was generated Tue Mar 05 11:10:02 2024
+; This file was generated Tue Mar 05 20:59:22 2024
 ;--------------------------------------------------------
 $name sourcecode
 $optc51 --model-small
@@ -513,6 +513,10 @@ _v1:
 	ds 4
 _v2:
 	ds 4
+_main_sloc0_1_0:
+	ds 2
+_main_sloc1_1_0:
+	ds 4
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -983,6 +987,8 @@ _TIMER0_Init:
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
 ;period                    Allocated to registers r2 r3 r4 r5 
+;sloc0                     Allocated with name '_main_sloc0_1_0'
+;sloc1                     Allocated with name '_main_sloc1_1_0'
 ;------------------------------------------------------------
 ;	sourcecode.c:220: void main (void)
 ;	-----------------------------------------
@@ -1066,9 +1072,9 @@ L011022?:
 	dec	sp
 	dec	sp
 	dec	sp
-;	sourcecode.c:279: while(P2_1 !=0); // Wait for the signal to be zero
+;	sourcecode.c:279: while(P0_6 !=0); // Wait for the signal to be zero
 L011001?:
-	jb	_P2_1,L011001?
+	jb	_P0_6,L011001?
 ;	sourcecode.c:280: printf("halfway\n");
 	mov	a,#__str_6
 	push	acc
@@ -1080,14 +1086,44 @@ L011001?:
 	dec	sp
 	dec	sp
 	dec	sp
-;	sourcecode.c:281: printf("%f\n", P2_1);
+;	sourcecode.c:281: while(P0_6 !=1)
+L011004?:
+	jb	_P0_6,L011006?
+;	sourcecode.c:282: printf("P2_1:%2.2f, V@P2_1:%3.3f,  P2_2:%2.2f, V@P2_2:%3.3f\r", P2_1, Volts_at_Pin(QFP32_MUX_P2_1), P2_2, Volts_at_Pin(QFP32_MUX_P2_2)); // Wait for the signal to be one
+	mov	dpl,#0x0F
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	c,_P2_2
+	clr	a
+	rlc	a
+	mov	_main_sloc0_1_0,a
+	mov	(_main_sloc0_1_0 + 1),#0x00
+	mov	dpl,#0x0E
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	_Volts_at_Pin
+	mov	_main_sloc1_1_0,dpl
+	mov	(_main_sloc1_1_0 + 1),dph
+	mov	(_main_sloc1_1_0 + 2),b
+	mov	(_main_sloc1_1_0 + 3),a
 	mov	c,_P2_1
 	clr	a
 	rlc	a
-	mov	r2,a
-	mov	r3,#0x00
-	push	ar2
-	push	ar3
+	mov	r6,a
+	mov	r7,#0x00
+	push	_main_sloc0_1_0
+	push	(_main_sloc0_1_0 + 1)
+	push	_main_sloc1_1_0
+	push	(_main_sloc1_1_0 + 1)
+	push	(_main_sloc1_1_0 + 2)
+	push	(_main_sloc1_1_0 + 3)
+	push	ar6
+	push	ar7
 	mov	a,#__str_7
 	push	acc
 	mov	a,#(__str_7 >> 8)
@@ -1096,12 +1132,11 @@ L011001?:
 	push	acc
 	lcall	_printf
 	mov	a,sp
-	add	a,#0xfb
+	add	a,#0xf1
 	mov	sp,a
-;	sourcecode.c:282: while(P2_1 !=1); // Wait for the signal to be one
-L011004?:
-	jnb	_P2_1,L011004?
-;	sourcecode.c:283: printf("balls\nw");
+	sjmp	L011004?
+L011006?:
+;	sourcecode.c:283: printf("balls\n");
 	mov	a,#__str_8
 	push	acc
 	mov	a,#(__str_8 >> 8)
@@ -1114,9 +1149,9 @@ L011004?:
 	dec	sp
 ;	sourcecode.c:285: TR0=1; // Start the timer
 	setb	_TR0
-;	sourcecode.c:286: while(P2_1 !=0) // Wait for the signal to be zero
+;	sourcecode.c:286: while(P0_6 !=0) // Wait for the signal to be zero
 L011009?:
-	jnb	_P2_1,L011014?
+	jnb	_P0_6,L011014?
 ;	sourcecode.c:288: if(TF0==1) // Did the 16-bit timer overflow?
 ;	sourcecode.c:290: TF0=0;
 	jbc	_TF0,L011042?
@@ -1124,10 +1159,10 @@ L011009?:
 L011042?:
 ;	sourcecode.c:291: overflow_count++;
 	inc	_overflow_count
-;	sourcecode.c:294: while(P2_1!=1) // Wait for the signal to be one
+;	sourcecode.c:294: while(P0_6!=1) // Wait for the signal to be one
 	sjmp	L011009?
 L011014?:
-	jb	_P2_1,L011016?
+	jb	_P0_6,L011016?
 ;	sourcecode.c:296: if(TF0==1) // Did the 16-bit timer overflow?
 ;	sourcecode.c:298: TF0=0;
 	jbc	_TF0,L011044?
@@ -1403,7 +1438,7 @@ __str_3:
 	db 'Mar  5 2024'
 	db 0x00
 __str_4:
-	db '11:10:01'
+	db '20:59:21'
 	db 0x00
 __str_5:
 	db 'here1'
@@ -1414,13 +1449,12 @@ __str_6:
 	db 0x0A
 	db 0x00
 __str_7:
-	db '%f'
-	db 0x0A
+	db 'P2_1:%2.2f, V@P2_1:%3.3f,  P2_2:%2.2f, V@P2_2:%3.3f'
+	db 0x0D
 	db 0x00
 __str_8:
 	db 'balls'
 	db 0x0A
-	db 'w'
 	db 0x00
 __str_9:
 	db ' '
