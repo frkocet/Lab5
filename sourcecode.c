@@ -11,7 +11,7 @@
 #define SARCLK 18000000L
 
 unsigned char overflow_count;
-unsigned int count;
+unsigned int count = 0;
 unsigned long F;
 unsigned long Period;
 
@@ -207,7 +207,7 @@ float Volts_at_Pin(unsigned char pin)
 void TIMER0_Init(void)
 {
 	TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
-	TMOD|=0b_0000_0101; // Timer/Counter 0 used as a 16-bit counter
+	TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
 	TR0=0; // Stop Timer/Counter 0
 }
 
@@ -220,6 +220,9 @@ void TIMER0_Init(void)
 void main (void)
 {
 	float period;
+	float Phase_Shift;
+	float time_difference;
+
 	TIMER0_Init();
 
     waitms(500); // Give PuTTy a chance to start before sending
@@ -268,19 +271,17 @@ void main (void)
 		// Time from the beginning of the sine wave to its peak
 		//overflow_count=65536-(half_period/2);
 
-		// measure the period of the signal at pin x.x
+		// measure the period of the signal at pin 0.6
 		// Reset the counter
 		TL0=0; 
 		TH0=0;
 		TF0=0;
 		overflow_count=0;
 
-		printf("here1\n");
+printf("here1\n");
 		while(P0_6 !=0); // Wait for the signal to be zero
-		printf("halfway\n");
+printf("halfway\n");
 		while(P0_6 !=1)
-			printf("P2_1:%2.2f, V@P2_1:%3.3f,  P2_2:%2.2f, V@P2_2:%3.3f\r", P2_1, Volts_at_Pin(QFP32_MUX_P2_1), P2_2, Volts_at_Pin(QFP32_MUX_P2_2)); // Wait for the signal to be one
-		printf("balls\n");
 
 		TR0=1; // Start the timer
 		while(P0_6 !=0) // Wait for the signal to be zero
@@ -300,10 +301,12 @@ void main (void)
 			}
 		}
 		TR0=0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
-		period=(overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
-		// Send the period to the serial port
-		printf( " \rT=%f ms    ", period*1000.0);
 
+
+		period=(overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+		// Prints to console
+		printf( " T=%5.5fms,  logic P0_6:%d, V@P2_1:%3.3f, V@P2_2:%3.3f \r", period*1000.0, P0_6, Volts_at_Pin(QFP32_MUX_P2_1), Volts_at_Pin(QFP32_MUX_P2_2));
+		//printf("\x1b[0K"); // ANSI: Clear from cursor to end of line
 
 
 
@@ -324,10 +327,7 @@ void main (void)
 			v2_max = v2;
 		}
 		v2_last = v2;
-		
-		
-	//	float Phase_Shift;
-		//float time_difference; 
+		 
 
 		// Find phase shift between signals
 	//	TR0=0; // Stop timer 0
@@ -345,7 +345,7 @@ void main (void)
 		//printf(" Phase shift: %f ", );
 
 		count += 1;
-		printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
+		//printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
 		//printf("\x1b[0K"); // ANSI: Clear from cursor to end of line
 		
 	 }
