@@ -22,7 +22,7 @@ putty:
 	@Taskkill /IM putty.exe /F 2>NUL | wait 500
 	cmd /c start putty -serial $(COMPORT) -sercfg 115200,8,n,1,N
 
-Build&Run: $(OBJS)
+make: $(OBJS)
 	$(CC) $(OBJS)
 	@Taskkill /IM putty.exe /F 2>NUL | wait 500
 	EFM8_prog.exe -ft230 -r sourcecode.hex
