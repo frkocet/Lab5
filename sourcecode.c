@@ -11,11 +11,10 @@
 #define SARCLK 18000000L
 
 unsigned char overflow_count;
-unsigned int count = 0;
 unsigned long F;
 unsigned long Period;
 
-float v1_last = 0; float v2_last = 0; float v1_max = 0; float v2_max = 0;
+float v1_max = 0; float v2_max = 0;
 float v1 = 0; float v2 = 0;
 
 char _c51_external_startup (void)
@@ -148,9 +147,13 @@ void Timer3us(unsigned char us)
 void waitms (unsigned int ms)
 {
 	unsigned int j;
-	unsigned char k;
-	for(j=0; j<ms; j++)
-		for (k=0; k<4; k++) Timer3us(250);
+	for(j=ms; j!=0; j--)
+	{
+		Timer3us(249);
+		Timer3us(249);
+		Timer3us(249);
+		Timer3us(250);
+	}
 }
 
 #define VDD 3.3058 // The measured value of VDD in volts
@@ -240,94 +243,51 @@ void main (void)
 
 	while(1)
 	{
-	
-		// Measure full period at pin Px.x using timer 0
-		//TR0=0; 						// Stop timer 0
-		//TMOD=0B_0000_0001; 			// Set timer 0 as 16-bit timer
-		//TH0=0; TL0=0; 				// Reset the timer
-		//while (P2_1==1); 			// Wait for the signal to be zero
-		//while (P2_1==0); 			// Wait for the signal to be one
-		//TR0=1; 						// Start timing
-		//while (P2_1==1); 			// Wait for the signal to be zero
-		//TR0=0; 						// Stop timer 0
-		// [TH0,TL0] is half the period in multiples of 12/CLK, so:
-		//Period=(TH0*0x100+TL0)*4; 	// Assume Period is unsigned int
 		
-		// Measures half period
-		// Start tracking the reference signal
-//		ADC0MX=QFP32_MUX_P2_1;
-//		ADINT = 0;
-//		ADBUSY=1;
-//		while (!ADINT); // Wait for conversion to complete
-		// Reset the timer
-//		TL0=0;
-//		TH0=0;
-//		while (Get_ADC()!=0); // Wait for the signal to be zero
-//		while (Get_ADC()==0); // Wait for the signal to be positive
-//		TR0=1; // Start the timer 0
-//		while (Get_ADC()!=0); // Wait for the signal to be zero again
-		//TR0=0; // Stop timer 0
-		//half_period=TH0*256.0+TL0; // The 16-bit number [TH0-TL0]
-		// Time from the beginning of the sine wave to its peak
-		//overflow_count=65536-(half_period/2);
-
-		// measure the period of the signal at pin 0.6
-		// Reset the counter
-		TL0=0; 
-		TH0=0;
-		TF0=0;
-		overflow_count=0;
-
-printf("here1\n");
-		while(P0_6 !=0); // Wait for the signal to be zero
-printf("halfway\n");
-		while(P0_6 !=1)
-
-		TR0=1; // Start the timer
-		while(P0_6 !=0) // Wait for the signal to be zero
-		{
-			if(TF0==1) // Did the 16-bit timer overflow?
-			{
-				TF0=0;
+		while(1){
+			printf("%lf\n", Volts_at_Pin(P2_1));
+		}
+		
+    	// Reset the counter
+		TL0 = 0; 
+		TH0 = 0;
+		TF0 = 0;
+		overflow_count = 0;
+		
+		while (P0_6 != 0); // Wait for the signal to be zero
+		while (P0_6 != 1); // Wait for the signal to be one
+		TR0 = 1; // Start the timer
+		while (P0_6 != 0) { // Wait for the signal to be zero
+			if (TF0 == 1) { // Did the 16-bit timer overflow?
+				TF0 = 0;
 				overflow_count++;
 			}
 		}
-		while(P0_6!=1) // Wait for the signal to be one
-		{
-			if(TF0==1) // Did the 16-bit timer overflow?
-			{
-				TF0=0;
+		while (P0_6 != 1) { // Wait for the signal to be one
+			if (TF0 == 1) { // Did the 16-bit timer overflow?
+				TF0 = 0;
 				overflow_count++;
 			}
 		}
-		TR0=0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
+		TR0 = 0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
+		period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
 
+		while(P0_6 != 0) //wait for zero cross of reference
+		while(P0_6 != 1)
+		waitms(period/4);
+		v1_max = Volts_at_Pin(P2_1);
 
-		period=(overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
-		// Prints to console
-		printf( " T=%5.5fms,  logic P0_6:%d, V@P2_1:%3.3f, V@P2_2:%3.3f \r", period*1000.0, P0_6, Volts_at_Pin(QFP32_MUX_P2_1), Volts_at_Pin(QFP32_MUX_P2_2));
-		//printf("\x1b[0K"); // ANSI: Clear from cursor to end of line
+		while(P2_2 != 0) //wait for zero cross of other signal
+		while(P2_2 != 1)
+		waitms(period/4);
+		v2_max = Volts_at_Pin(P2_2);
+		
+		
+			
+		// Send the period to the serial port
+		//printf( "\rT=%f ms    ", period*1000.0);
+		
 
-
-
-
-		//if (count >= 10) {
-		//	v1_max = 0;
-		//	v2_max = 0;
-		//}
-
-		v1 = Volts_at_Pin(QFP32_MUX_P2_1);				// gets the amplitude at pin 2.1
-		if (v1 > v1_last){	// if the value higher that last time
-			v1_max = v1;
-		}
-		v1_last = v1;
-
-		v2 = Volts_at_Pin(QFP32_MUX_P2_2);				// gets the amplitude at pin 2.2
-		if (v2 > v2_last){
-			v2_max = v2;
-		}
-		v2_last = v2;
-		 
 
 		// Find phase shift between signals
 	//	TR0=0; // Stop timer 0
@@ -340,12 +300,11 @@ printf("halfway\n");
 //		TR0=0;
 		
 		// Do some math to find phase shift
-		//time_difference = (TH0*0x100+TL0) 			// idk what numbers are in TH0 and TL0, 12/clk frequency?
+//		time_difference = (TH0*0x100+TL0) 			// idk what numbers are in TH0 and TL0, 12/clk frequency?
 //		Phase_Shift = (time_difference * 360) / Period;   // we now have the phase shift   
-		//printf(" Phase shift: %f ", );
+//		printf(" Phase shift: %f ", );
 
-		count += 1;
-		//printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
+		printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
 		//printf("\x1b[0K"); // ANSI: Clear from cursor to end of line
 		
 	 }

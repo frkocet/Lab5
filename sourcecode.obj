@@ -15,95 +15,75 @@ R_GSINIT,code,0000,NO
 R_BSEG,bit,0000,NO
 R_XSEG,xdata,0000,NO
 BIT_BANK,data,0000,OV
-R_CONST,code,008D,NO
+R_CONST,code,0086,NO
 rbank0,data,0000,OV
 R_PSEG,xdata,0000,NO
-R_DINIT,code,004D,NO
-R_DSEG,data,002D,NO
+R_DINIT,code,0030,NO
+R_DSEG,data,001D,NO
 R_OSEG,data,0001,OV
 R_IXSEG,xdata,0000,NO
 R_ISEG,idata,0000,NO
 R_HOME,code,0000,NO
 R_XINIT,code,0000,NO
-R_CSEG,code,0436,NO
+R_CSEG,code,0228,NO
 </SEGMENTS>
 
 <LOCALS>
 L002004?,R_CSEG,0029,0000
 L002001?,R_CSEG,001E,0000
-_main_sloc0_1_0,R_DSEG,0027,0004
-L006015?,R_CSEG,00EE,0000
-L006014?,R_CSEG,00E9,0000
-L006013?,R_CSEG,00DD,0000
-L006011?,R_CSEG,00DB,0000
-_main_sloc1_1_0,R_DSEG,002B,0002
+L006015?,R_CSEG,00E5,0000
+L006014?,R_CSEG,00E0,0000
+L006013?,R_CSEG,00D4,0000
+L006011?,R_CSEG,00D2,0000
 L004007?,R_CSEG,0091,0000
 L004004?,R_CSEG,0081,0000
 L004001?,R_CSEG,0086,0000
-_main_period_1_63,R_DSEG,0023,0004
-L011018?,R_CSEG,03D5,0000
-L011016?,R_CSEG,022F,0000
-L011014?,R_CSEG,0223,0000
-L005009?,R_CSEG,00CF,0000
-L005007?,R_CSEG,00C8,0000
-L005005?,R_CSEG,009D,0000
-L005001?,R_CSEG,00A6,0000
-L011022?,R_CSEG,0202,0000
-L011020?,R_CSEG,041F,0000
-L011046?,R_CSEG,0433,0000
-L006005?,R_CSEG,010F,0000
-L006003?,R_CSEG,0107,0000
-L011043?,R_CSEG,022B,0000
-L006002?,R_CSEG,00FD,0000
-L006001?,R_CSEG,00F3,0000
-L011041?,R_CSEG,021F,0000
-L007001?,R_CSEG,011A,0000
-L011009?,R_CSEG,0217,0000
+_main_period_1_64,R_DSEG,0019,0004
+L005001?,R_CSEG,0099,0000
+L006005?,R_CSEG,0106,0000
+L006003?,R_CSEG,00FE,0000
+L006002?,R_CSEG,00F4,0000
+L006001?,R_CSEG,00EA,0000
+L007001?,R_CSEG,0111,0000
 __str_0,R_CONST,0000,0000
 __str_1,R_CONST,0005,0000
 __str_2,R_CONST,0032,0000
 __str_3,R_CONST,003F,0000
 __str_4,R_CONST,004B,0000
 __str_5,R_CONST,0054,0000
-L011004?,R_CSEG,0210,0000
-L011001?,R_CSEG,020D,0000
-L008001?,R_CSEG,0128,0000
-L005018?,R_CSEG,00A9,0000
+__str_6,R_CONST,0059,0000
+L011002?,R_CSEG,01F9,0000
+L008001?,R_CSEG,011F,0000
+L005011?,R_CSEG,00C5,0000
+L005010?,R_CSEG,00A0,0000
 </LOCALS>
 
 <PUBLICS>
-_InitPinADC,R_CSEG,00D0,0000
-_TIMER0_Init,R_CSEG,018D,0000
-_Volts_at_Pin,R_CSEG,0132,0000
-_main,R_CSEG,0196,0000
-_count,R_DSEG,0001,0002
-_v2_last,R_DSEG,000F,0004
+_InitPinADC,R_CSEG,00C7,0000
+_TIMER0_Init,R_CSEG,0184,0000
+_Volts_at_Pin,R_CSEG,0129,0000
+_main,R_CSEG,018D,0000
 __c51_external_startup,R_CSEG,0000,0000
-_v1,R_DSEG,001B,0004
-_v2,R_DSEG,001F,0004
+_v1,R_DSEG,0011,0004
+_v2,R_DSEG,0015,0004
 _InitPinADC_PARM_2,R_OSEG,0000,0001
-_F,R_DSEG,0003,0004
-_Get_ADC,R_CSEG,0124,0000
-_v1_last,R_DSEG,000B,0004
-_v1_max,R_DSEG,0013,0004
-_v2_max,R_DSEG,0017,0004
+_F,R_DSEG,0001,0004
+_Get_ADC,R_CSEG,011B,0000
+_v1_max,R_DSEG,0009,0004
+_v2_max,R_DSEG,000D,0004
 _InitADC,R_CSEG,0051,0000
 _overflow_count,R_DSEG,0000,0001
-_Period,R_DSEG,0007,0004
+_Period,R_DSEG,0005,0004
 _Timer3us,R_CSEG,006B,0000
-_ADC_at_Pin,R_CSEG,0113,0000
+_ADC_at_Pin,R_CSEG,010A,0000
 _waitms,R_CSEG,0095,0000
 </PUBLICS>
 
 <EXTERNALS>
 ___uint2fs,any,0000,0000
-___fsgt,any,0000,0000
 ___fsmul,any,0000,0000
-___uchar2fs,any,0000,0000
-___fsadd,any,0000,0000
 _printf,any,0000,0000
 _crt0,any,0000,0000
-___sint2fs,any,0000,0000
 ___fsdiv,any,0000,0000
 </EXTERNALS>
 
@@ -133,17 +113,6 @@ ___fsdiv,any,0000,0000
 </CODE>
 
 <CODE R_DINIT>
-E4
-F5 data8(_count;)
-F5 data8(_count;0x0001;+;)
-75 data8(_v1_last;) 00
-75 data8(_v1_last;0x0001;+;) 00
-75 data8(_v1_last;0x0002;+;) 00
-75 data8(_v1_last;0x0003;+;) 00
-75 data8(_v2_last;) 00
-75 data8(_v2_last;0x0001;+;) 00
-75 data8(_v2_last;0x0002;+;) 00
-75 data8(_v2_last;0x0003;+;) 00
 75 data8(_v1_max;) 00
 75 data8(_v1_max;0x0001;+;) 00
 75 data8(_v1_max;0x0002;+;) 00
@@ -223,36 +192,25 @@ E5 91
 22
 AA 82
 AB 83
-7C 00
-7D 00
-C3
-EC
-9A
-ED
-9B
-50 rel2(L005009?;)
-7E 00
-BE 04 rel3(L005018?;)
-50 rel2(L005007?;)
-75 82 FA
+BA 00 rel3(L005010?;)
+BB 00 rel3(L005010?;)
+22
+75 82 F9
 C0 02
 C0 03
-C0 04
-C0 05
-C0 06
 12 addr16(_Timer3us;)  
-D0 06
-D0 05
-D0 04
+75 82 F9
+12 addr16(_Timer3us;)  
+75 82 F9
+12 addr16(_Timer3us;)  
+75 82 FA
+12 addr16(_Timer3us;)  
 D0 03
 D0 02
-0E
+1A
+BA FF rel3(L005011?;)
+1B
 80 rel2(L005001?;)
-0C
-BC 00 rel3(L005005?;)
-0D
-80 rel2(L005005?;)
-22
 AA 82
 85 data8(_InitPinADC_PARM_2;) F0
 05 F0
@@ -401,185 +359,19 @@ F5 81
 75 82 02
 12 addr16(_InitPinADC;)  
 12 addr16(_InitADC;)  
-75 8A 00
-75 8C 00
-C2 8D
-75 data8(_overflow_count;) 00
-20 86 rel3(L011001?;)
-20 86 rel3(L011009?;)
-D2 8C
-80 rel2(L011004?;)
-30 86 rel3(L011014?;)
-10 8D rel3(L011041?;)
-80 rel2(L011009?;)
-05 data8(_overflow_count;)
-80 rel2(L011009?;)
-20 86 rel3(L011016?;)
-10 8D rel3(L011043?;)
-80 rel2(L011014?;)
-05 data8(_overflow_count;)
-80 rel2(L011014?;)
-C2 8C
-85 data8(_overflow_count;) 82
-12 addr16(___uchar2fs;)  
-AA 82
-AB 83
-AC F0
-FD
-C0 02
-C0 03
-C0 04
-C0 05
-90 00 00
-75 F0 80
-74 47
-12 addr16(___fsmul;)  
-AA 82
-AB 83
-AC F0
-FD
-E5 81
-24 FC
-F5 81
-85 8C 82
-C0 02
-C0 03
-C0 04
-C0 05
-12 addr16(___uchar2fs;)  
-AE 82
-AF 83
-A8 F0
-F9
-C0 06
-C0 07
-C0 00
-C0 01
-90 00 00
-75 F0 80
-74 43
-12 addr16(___fsmul;)  
-AE 82
-AF 83
-A8 F0
-F9
-E5 81
-24 FC
-F5 81
-D0 05
-D0 04
-D0 03
-D0 02
-C0 06
-C0 07
-C0 00
-C0 01
-8A 82
-8B 83
-8C F0
-ED
-12 addr16(___fsadd;)  
-AA 82
-AB 83
-AC F0
-FD
-E5 81
-24 FC
-F5 81
-AE 8A
-7F 00
-8E 82
-8F 83
-C0 02
-C0 03
-C0 04
-C0 05
-12 addr16(___sint2fs;)  
-AE 82
-AF 83
-A8 F0
-F9
-D0 05
-D0 04
-D0 03
-D0 02
-C0 06
-C0 07
-C0 00
-C0 01
-8A 82
-8B 83
-8C F0
-ED
-12 addr16(___fsadd;)  
-AA 82
-AB 83
-AC F0
-FD
-E5 81
-24 FC
-F5 81
-C0 02
-C0 03
-C0 04
-C0 05
-90 F4 FC
-75 F0 32
-74 34
-12 addr16(___fsmul;)  
-85 82 data8(_main_period_1_63;)
-85 83 data8(_main_period_1_63;0x0001;+;)
-85 F0 data8(_main_period_1_63;0x0002;+;)
-F5 data8(_main_period_1_63;0x0003;+;)
-E5 81
-24 FC
-F5 81
-75 82 0F
-12 addr16(_Volts_at_Pin;)  
-AE 82
-AF 83
-A8 F0
-F9
-75 82 0E
-C0 06
-C0 07
-C0 00
-C0 01
-12 addr16(_Volts_at_Pin;)  
-85 82 data8(_main_sloc0_1_0;)
-85 83 data8(_main_sloc0_1_0;0x0001;+;)
-85 F0 data8(_main_sloc0_1_0;0x0002;+;)
-F5 data8(_main_sloc0_1_0;0x0003;+;)
-A2 86
+A2 A1
 E4
 33
-F5 data8(_main_sloc1_1_0;)
-75 data8(_main_sloc1_1_0;0x0001;+;) 00
-C0 data8(_main_period_1_63;)
-C0 data8(_main_period_1_63;0x0001;+;)
-C0 data8(_main_period_1_63;0x0002;+;)
-C0 data8(_main_period_1_63;0x0003;+;)
-90 00 00
-75 F0 7A
-74 44
-12 addr16(___fsmul;)  
-AC 82
-AD 83
-AA F0
-FB
-E5 81
-24 FC
-F5 81
-C0 data8(_main_sloc0_1_0;)
-C0 data8(_main_sloc0_1_0;0x0001;+;)
-C0 data8(_main_sloc0_1_0;0x0002;+;)
-C0 data8(_main_sloc0_1_0;0x0003;+;)
-C0 data8(_main_sloc1_1_0;)
-C0 data8(_main_sloc1_1_0;0x0001;+;)
-C0 04
-C0 05
+F5 82
+12 addr16(_Volts_at_Pin;)  
+AA 82
+AB 83
+AC F0
+FD
 C0 02
 C0 03
+C0 04
+C0 05
 74 data8(__str_5;)
 C0 E0
 74 data8(__str_5;0x0008;>>;)
@@ -588,71 +380,9 @@ C0 E0
 C0 E0
 12 addr16(_printf;)  
 E5 81
-24 EF
+24 F9
 F5 81
-75 82 0E
-12 addr16(_Volts_at_Pin;)  
-85 82 data8(_v1;)
-85 83 data8(_v1;0x0001;+;)
-85 F0 data8(_v1;0x0002;+;)
-F5 data8(_v1;0x0003;+;)
-C0 data8(_v1_last;)
-C0 data8(_v1_last;0x0001;+;)
-C0 data8(_v1_last;0x0002;+;)
-C0 data8(_v1_last;0x0003;+;)
-85 data8(_v1;) 82
-85 data8(_v1;0x0001;+;) 83
-85 data8(_v1;0x0002;+;) F0
-E5 data8(_v1;0x0003;+;)
-12 addr16(___fsgt;)  
-AA 82
-E5 81
-24 FC
-F5 81
-EA
-60 rel2(L011018?;)
-85 data8(_v1;) data8(_v1_max;)
-85 data8(_v1;0x0001;+;) data8(_v1_max;0x0001;+;)
-85 data8(_v1;0x0002;+;) data8(_v1_max;0x0002;+;)
-85 data8(_v1;0x0003;+;) data8(_v1_max;0x0003;+;)
-85 data8(_v1;) data8(_v1_last;)
-85 data8(_v1;0x0001;+;) data8(_v1_last;0x0001;+;)
-85 data8(_v1;0x0002;+;) data8(_v1_last;0x0002;+;)
-85 data8(_v1;0x0003;+;) data8(_v1_last;0x0003;+;)
-75 82 0F
-12 addr16(_Volts_at_Pin;)  
-85 82 data8(_v2;)
-85 83 data8(_v2;0x0001;+;)
-85 F0 data8(_v2;0x0002;+;)
-F5 data8(_v2;0x0003;+;)
-C0 data8(_v2_last;)
-C0 data8(_v2_last;0x0001;+;)
-C0 data8(_v2_last;0x0002;+;)
-C0 data8(_v2_last;0x0003;+;)
-85 data8(_v2;) 82
-85 data8(_v2;0x0001;+;) 83
-85 data8(_v2;0x0002;+;) F0
-E5 data8(_v2;0x0003;+;)
-12 addr16(___fsgt;)  
-AA 82
-E5 81
-24 FC
-F5 81
-EA
-60 rel2(L011020?;)
-85 data8(_v2;) data8(_v2_max;)
-85 data8(_v2;0x0001;+;) data8(_v2_max;0x0001;+;)
-85 data8(_v2;0x0002;+;) data8(_v2_max;0x0002;+;)
-85 data8(_v2;0x0003;+;) data8(_v2_max;0x0003;+;)
-85 data8(_v2;) data8(_v2_last;)
-85 data8(_v2;0x0001;+;) data8(_v2_last;0x0001;+;)
-85 data8(_v2;0x0002;+;) data8(_v2_last;0x0002;+;)
-85 data8(_v2;0x0003;+;) data8(_v2_last;0x0003;+;)
-05 data8(_count;)
-E4
-B5 data8(_count;) rel3(L011046?;)
-05 data8(_count;0x0001;+;)
-02 addr16(L011022?;)  
+80 rel2(L011002?;)
 </CODE>
 
 <CODE R_CSEG>
@@ -675,14 +405,16 @@ B5 data8(_count;) rel3(L011046?;)
 00
 73 6F 75 72 63 65 63 6F 64 65 2E 63 
 00
-4D 61 72 20 20 35 20 32 30 32 34 
+4D 61 72 20 20 36 20 32 30 32 34 
 00
-32 31 3A 33 34 3A 32 38 
+30 33 3A 30 33 3A 31 35 
 00
-20 54 3D 25 35 2E 35 66 6D 73 2C 20 20 6C 6F 67 69
-63 20 50 30 5F 36 3A 25 64 2C 20 56 40 50 32 5F
-31 3A 25 33 2E 33 66 2C 20 56 40 50 32 5F 32 3A
-25 33 2E 33 66 20 
+25 6C 66 
+0A
+00
+4D 61 78 20 41 6D 70 20 40 70 32 2E 31 3D 25 37 2E
+35 66 56 2C 20 4D 61 78 20 41 6D 70 20 40 70 32
+2E 32 3D 25 37 2E 35 66 56 2C 
 0D
 00
 </CODE>
