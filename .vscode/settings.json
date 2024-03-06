@@ -57,5 +57,9 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "makefile.makefilePath": "C:\\Users\\ethan\\OneDrive - UBC\\Desktop\\Lab5\\sourcecode.mk",
-  "C_Cpp.errorSquiggles": "enabled"
+  "C_Cpp.errorSquiggles": "enabled",
+  "files.associations": {
+    "*.h51": "8051",
+    "stdlib.h": "c"
+  }
 }

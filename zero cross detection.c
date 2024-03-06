@@ -1,5 +1,3 @@
-// Lab 5
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <EFM8LB1.h>

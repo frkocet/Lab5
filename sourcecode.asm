@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-; This file was generated Wed Mar 06 12:27:35 2024
+; This file was generated Wed Mar 06 13:49:48 2024
 ;--------------------------------------------------------
 $name sourcecode
 $optc51 --model-small
@@ -38,8 +38,6 @@ $printf_float
 	public _v1
 	public _v2_max
 	public _v1_max
-	public _Period
-	public _F
 	public _overflow_count
 ;--------------------------------------------------------
 ; Special Function Registers
@@ -491,10 +489,6 @@ _TFRQ           BIT 0xdf
 	rseg R_DSEG
 _overflow_count:
 	ds 1
-_F:
-	ds 4
-_Period:
-	ds 4
 _v1_max:
 	ds 4
 _v2_max:
@@ -504,6 +498,8 @@ _v1:
 _v2:
 	ds 4
 _main_period_1_61:
+	ds 4
+_main_Phase_Shift_1_61:
 	ds 4
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
@@ -559,22 +555,22 @@ _InitPinADC_PARM_2:
 ; data variables initialization
 ;--------------------------------------------------------
 	rseg R_DINIT
-;	sourcecode.c:17: float v1_max = 0; float v2_max = 0;
+;	sourcecode.c:15: float v1_max = 0; float v2_max = 0;
 	mov	_v1_max,#0x00
 	mov	(_v1_max + 1),#0x00
 	mov	(_v1_max + 2),#0x00
 	mov	(_v1_max + 3),#0x00
-;	sourcecode.c:17: float v1 = 0; float v2 = 0;
+;	sourcecode.c:15: float v1 = 0; float v2 = 0;
 	mov	_v2_max,#0x00
 	mov	(_v2_max + 1),#0x00
 	mov	(_v2_max + 2),#0x00
 	mov	(_v2_max + 3),#0x00
-;	sourcecode.c:18: 
+;	sourcecode.c:16: 
 	mov	_v1,#0x00
 	mov	(_v1 + 1),#0x00
 	mov	(_v1 + 2),#0x00
 	mov	(_v1 + 3),#0x00
-;	sourcecode.c:18: float v1 = 0; float v2 = 0;
+;	sourcecode.c:16: float v1 = 0; float v2 = 0;
 	mov	_v2,#0x00
 	mov	(_v2 + 1),#0x00
 	mov	(_v2 + 2),#0x00
@@ -588,95 +584,95 @@ _InitPinADC_PARM_2:
 ;Allocation info for local variables in function '_c51_external_startup'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	sourcecode.c:20: char _c51_external_startup (void)
+;	sourcecode.c:18: char _c51_external_startup (void)
 ;	-----------------------------------------
 ;	 function _c51_external_startup
 ;	-----------------------------------------
 __c51_external_startup:
 	using	0
-;	sourcecode.c:23: SFRPAGE = 0x00;
+;	sourcecode.c:21: SFRPAGE = 0x00;
 	mov	_SFRPAGE,#0x00
-;	sourcecode.c:24: WDTCN = 0xDE; //First key
+;	sourcecode.c:22: WDTCN = 0xDE; //First key
 	mov	_WDTCN,#0xDE
-;	sourcecode.c:25: WDTCN = 0xAD; //Second key
+;	sourcecode.c:23: WDTCN = 0xAD; //Second key
 	mov	_WDTCN,#0xAD
-;	sourcecode.c:27: VDM0CN=0x80;       // enable VDD monitor
+;	sourcecode.c:25: VDM0CN=0x80;       // enable VDD monitor
 	mov	_VDM0CN,#0x80
-;	sourcecode.c:28: RSTSRC=0x02|0x04;  // Enable reset on missing clock detector and VDD
+;	sourcecode.c:26: RSTSRC=0x02|0x04;  // Enable reset on missing clock detector and VDD
 	mov	_RSTSRC,#0x06
-;	sourcecode.c:35: SFRPAGE = 0x10;
+;	sourcecode.c:33: SFRPAGE = 0x10;
 	mov	_SFRPAGE,#0x10
-;	sourcecode.c:36: PFE0CN  = 0x20; // SYSCLK < 75 MHz.
+;	sourcecode.c:34: PFE0CN  = 0x20; // SYSCLK < 75 MHz.
 	mov	_PFE0CN,#0x20
-;	sourcecode.c:37: SFRPAGE = 0x00;
+;	sourcecode.c:35: SFRPAGE = 0x00;
 	mov	_SFRPAGE,#0x00
-;	sourcecode.c:58: CLKSEL = 0x00;
+;	sourcecode.c:56: CLKSEL = 0x00;
 	mov	_CLKSEL,#0x00
-;	sourcecode.c:59: CLKSEL = 0x00;
+;	sourcecode.c:57: CLKSEL = 0x00;
 	mov	_CLKSEL,#0x00
-;	sourcecode.c:60: while ((CLKSEL & 0x80) == 0);
+;	sourcecode.c:58: while ((CLKSEL & 0x80) == 0);
 L002001?:
 	mov	a,_CLKSEL
 	jnb	acc.7,L002001?
-;	sourcecode.c:61: CLKSEL = 0x03;
+;	sourcecode.c:59: CLKSEL = 0x03;
 	mov	_CLKSEL,#0x03
-;	sourcecode.c:62: CLKSEL = 0x03;
+;	sourcecode.c:60: CLKSEL = 0x03;
 	mov	_CLKSEL,#0x03
-;	sourcecode.c:63: while ((CLKSEL & 0x80) == 0);
+;	sourcecode.c:61: while ((CLKSEL & 0x80) == 0);
 L002004?:
 	mov	a,_CLKSEL
 	jnb	acc.7,L002004?
-;	sourcecode.c:68: P0MDOUT |= 0x10; // Enable UART0 TX as push-pull output
+;	sourcecode.c:66: P0MDOUT |= 0x10; // Enable UART0 TX as push-pull output
 	orl	_P0MDOUT,#0x10
-;	sourcecode.c:69: XBR0     = 0x01; // Enable UART0 on P0.4(TX) and P0.5(RX)                     
+;	sourcecode.c:67: XBR0     = 0x01; // Enable UART0 on P0.4(TX) and P0.5(RX)                     
 	mov	_XBR0,#0x01
-;	sourcecode.c:70: XBR1     = 0X00;
+;	sourcecode.c:68: XBR1     = 0X00;
 	mov	_XBR1,#0x00
-;	sourcecode.c:71: XBR2     = 0x40; // Enable crossbar and weak pull-ups
+;	sourcecode.c:69: XBR2     = 0x40; // Enable crossbar and weak pull-ups
 	mov	_XBR2,#0x40
-;	sourcecode.c:77: SCON0 = 0x10;
+;	sourcecode.c:75: SCON0 = 0x10;
 	mov	_SCON0,#0x10
-;	sourcecode.c:78: TH1 = 0x100-((SYSCLK/BAUDRATE)/(2L*12L));
+;	sourcecode.c:76: TH1 = 0x100-((SYSCLK/BAUDRATE)/(2L*12L));
 	mov	_TH1,#0xE6
-;	sourcecode.c:79: TL1 = TH1;      // Init Timer1
+;	sourcecode.c:77: TL1 = TH1;      // Init Timer1
 	mov	_TL1,_TH1
-;	sourcecode.c:80: TMOD &= ~0xf0;  // TMOD: timer 1 in 8-bit auto-reload
+;	sourcecode.c:78: TMOD &= ~0xf0;  // TMOD: timer 1 in 8-bit auto-reload
 	anl	_TMOD,#0x0F
-;	sourcecode.c:81: TMOD |=  0x20;                       
+;	sourcecode.c:79: TMOD |=  0x20;                       
 	orl	_TMOD,#0x20
-;	sourcecode.c:82: TR1 = 1; // START Timer1
+;	sourcecode.c:80: TR1 = 1; // START Timer1
 	setb	_TR1
-;	sourcecode.c:83: TI = 1;  // Indicate TX0 ready
+;	sourcecode.c:81: TI = 1;  // Indicate TX0 ready
 	setb	_TI
-;	sourcecode.c:85: return 0;
+;	sourcecode.c:83: return 0;
 	mov	dpl,#0x00
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'InitADC'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	sourcecode.c:88: void InitADC (void)
+;	sourcecode.c:86: void InitADC (void)
 ;	-----------------------------------------
 ;	 function InitADC
 ;	-----------------------------------------
 _InitADC:
-;	sourcecode.c:90: SFRPAGE = 0x00;
+;	sourcecode.c:88: SFRPAGE = 0x00;
 	mov	_SFRPAGE,#0x00
-;	sourcecode.c:91: ADEN=0; // Disable ADC
+;	sourcecode.c:89: ADEN=0; // Disable ADC
 	clr	_ADEN
-;	sourcecode.c:96: (0x0 << 0) ; // Accumulate n conversions: 0x0: 1, 0x1:4, 0x2:8, 0x3:16, 0x4:32
+;	sourcecode.c:94: (0x0 << 0) ; // Accumulate n conversions: 0x0: 1, 0x1:4, 0x2:8, 0x3:16, 0x4:32
 	mov	_ADC0CN1,#0x80
-;	sourcecode.c:100: (0x0 << 2); // 0:SYSCLK ADCCLK = SYSCLK. 1:HFOSC0 ADCCLK = HFOSC0.
+;	sourcecode.c:98: (0x0 << 2); // 0:SYSCLK ADCCLK = SYSCLK. 1:HFOSC0 ADCCLK = HFOSC0.
 	mov	_ADC0CF0,#0x20
-;	sourcecode.c:104: (0x1E << 0); // Conversion Tracking Time. Tadtk = ADTK / (Fsarclk)
+;	sourcecode.c:102: (0x1E << 0); // Conversion Tracking Time. Tadtk = ADTK / (Fsarclk)
 	mov	_ADC0CF1,#0x1E
-;	sourcecode.c:113: (0x0 << 0) ; // TEMPE. 0: Disable the Temperature Sensor. 1: Enable the Temperature Sensor.
+;	sourcecode.c:111: (0x0 << 0) ; // TEMPE. 0: Disable the Temperature Sensor. 1: Enable the Temperature Sensor.
 	mov	_ADC0CN0,#0x00
-;	sourcecode.c:118: (0x1F << 0); // ADPWR. Power Up Delay Time. Tpwrtime = ((4 * (ADPWR + 1)) + 2) / (Fadcclk)
+;	sourcecode.c:116: (0x1F << 0); // ADPWR. Power Up Delay Time. Tpwrtime = ((4 * (ADPWR + 1)) + 2) / (Fadcclk)
 	mov	_ADC0CF2,#0x3F
-;	sourcecode.c:122: (0x0 << 0) ; // ADCM. 0x0: ADBUSY, 0x1: TIMER0, 0x2: TIMER2, 0x3: TIMER3, 0x4: CNVSTR, 0x5: CEX5, 0x6: TIMER4, 0x7: TIMER5, 0x8: CLU0, 0x9: CLU1, 0xA: CLU2, 0xB: CLU3
+;	sourcecode.c:120: (0x0 << 0) ; // ADCM. 0x0: ADBUSY, 0x1: TIMER0, 0x2: TIMER2, 0x3: TIMER3, 0x4: CNVSTR, 0x5: CEX5, 0x6: TIMER4, 0x7: TIMER5, 0x8: CLU0, 0x9: CLU1, 0xA: CLU2, 0xB: CLU3
 	mov	_ADC0CN2,#0x00
-;	sourcecode.c:124: ADEN=1; // Enable ADC
+;	sourcecode.c:122: ADEN=1; // Enable ADC
 	setb	_ADEN
 	ret
 ;------------------------------------------------------------
@@ -685,40 +681,40 @@ _InitADC:
 ;us                        Allocated to registers r2 
 ;i                         Allocated to registers r3 
 ;------------------------------------------------------------
-;	sourcecode.c:128: void Timer3us(unsigned char us)
+;	sourcecode.c:126: void Timer3us(unsigned char us)
 ;	-----------------------------------------
 ;	 function Timer3us
 ;	-----------------------------------------
 _Timer3us:
 	mov	r2,dpl
-;	sourcecode.c:133: CKCON0|=0b_0100_0000;
+;	sourcecode.c:131: CKCON0|=0b_0100_0000;
 	orl	_CKCON0,#0x40
-;	sourcecode.c:135: TMR3RL = (-(SYSCLK)/1000000L); // Set Timer3 to overflow in 1us.
+;	sourcecode.c:133: TMR3RL = (-(SYSCLK)/1000000L); // Set Timer3 to overflow in 1us.
 	mov	_TMR3RL,#0xB8
 	mov	(_TMR3RL >> 8),#0xFF
-;	sourcecode.c:136: TMR3 = TMR3RL;                 // Initialize Timer3 for first overflow
+;	sourcecode.c:134: TMR3 = TMR3RL;                 // Initialize Timer3 for first overflow
 	mov	_TMR3,_TMR3RL
 	mov	(_TMR3 >> 8),(_TMR3RL >> 8)
-;	sourcecode.c:138: TMR3CN0 = 0x04;                 // Sart Timer3 and clear overflow flag
+;	sourcecode.c:136: TMR3CN0 = 0x04;                 // Sart Timer3 and clear overflow flag
 	mov	_TMR3CN0,#0x04
-;	sourcecode.c:139: for (i = 0; i < us; i++)       // Count <us> overflows
+;	sourcecode.c:137: for (i = 0; i < us; i++)       // Count <us> overflows
 	mov	r3,#0x00
 L004004?:
 	clr	c
 	mov	a,r3
 	subb	a,r2
 	jnc	L004007?
-;	sourcecode.c:141: while (!(TMR3CN0 & 0x80));  // Wait for overflow
+;	sourcecode.c:139: while (!(TMR3CN0 & 0x80));  // Wait for overflow
 L004001?:
 	mov	a,_TMR3CN0
 	jnb	acc.7,L004001?
-;	sourcecode.c:142: TMR3CN0 &= ~(0x80);         // Clear overflow indicator
+;	sourcecode.c:140: TMR3CN0 &= ~(0x80);         // Clear overflow indicator
 	anl	_TMR3CN0,#0x7F
-;	sourcecode.c:139: for (i = 0; i < us; i++)       // Count <us> overflows
+;	sourcecode.c:137: for (i = 0; i < us; i++)       // Count <us> overflows
 	inc	r3
 	sjmp	L004004?
 L004007?:
-;	sourcecode.c:144: TMR3CN0 = 0 ;                   // Stop Timer3 and clear overflow flag
+;	sourcecode.c:142: TMR3CN0 = 0 ;                   // Stop Timer3 and clear overflow flag
 	mov	_TMR3CN0,#0x00
 	ret
 ;------------------------------------------------------------
@@ -728,14 +724,14 @@ L004007?:
 ;j                         Allocated to registers r4 r5 
 ;k                         Allocated to registers r6 
 ;------------------------------------------------------------
-;	sourcecode.c:147: void waitms (unsigned int ms)
+;	sourcecode.c:145: void waitms (unsigned int ms)
 ;	-----------------------------------------
 ;	 function waitms
 ;	-----------------------------------------
 _waitms:
 	mov	r2,dpl
 	mov	r3,dph
-;	sourcecode.c:151: for(j=0; j<ms; j++)
+;	sourcecode.c:149: for(j=0; j<ms; j++)
 	mov	r4,#0x00
 	mov	r5,#0x00
 L005005?:
@@ -745,7 +741,7 @@ L005005?:
 	mov	a,r5
 	subb	a,r3
 	jnc	L005009?
-;	sourcecode.c:152: for (k=0; k<4; k++) Timer3us(250);
+;	sourcecode.c:150: for (k=0; k<4; k++) Timer3us(250);
 	mov	r6,#0x00
 L005001?:
 	cjne	r6,#0x04,L005018?
@@ -766,7 +762,7 @@ L005018?:
 	inc	r6
 	sjmp	L005001?
 L005007?:
-;	sourcecode.c:151: for(j=0; j<ms; j++)
+;	sourcecode.c:149: for(j=0; j<ms; j++)
 	inc	r4
 	cjne	r4,#0x00,L005005?
 	inc	r5
@@ -780,13 +776,13 @@ L005009?:
 ;portno                    Allocated to registers r2 
 ;mask                      Allocated to registers r3 
 ;------------------------------------------------------------
-;	sourcecode.c:157: void InitPinADC (unsigned char portno, unsigned char pinno)
+;	sourcecode.c:155: void InitPinADC (unsigned char portno, unsigned char pinno)
 ;	-----------------------------------------
 ;	 function InitPinADC
 ;	-----------------------------------------
 _InitPinADC:
 	mov	r2,dpl
-;	sourcecode.c:161: mask=1<<pinno;
+;	sourcecode.c:159: mask=1<<pinno;
 	mov	b,_InitPinADC_PARM_2
 	inc	b
 	mov	a,#0x01
@@ -796,54 +792,54 @@ L006011?:
 L006013?:
 	djnz	b,L006011?
 	mov	r3,a
-;	sourcecode.c:163: SFRPAGE = 0x20;
+;	sourcecode.c:161: SFRPAGE = 0x20;
 	mov	_SFRPAGE,#0x20
-;	sourcecode.c:164: switch (portno)
+;	sourcecode.c:162: switch (portno)
 	cjne	r2,#0x00,L006014?
 	sjmp	L006001?
 L006014?:
 	cjne	r2,#0x01,L006015?
 	sjmp	L006002?
 L006015?:
-;	sourcecode.c:166: case 0:
+;	sourcecode.c:164: case 0:
 	cjne	r2,#0x02,L006005?
 	sjmp	L006003?
 L006001?:
-;	sourcecode.c:167: P0MDIN &= (~mask); // Set pin as analog input
+;	sourcecode.c:165: P0MDIN &= (~mask); // Set pin as analog input
 	mov	a,r3
 	cpl	a
 	mov	r2,a
 	anl	_P0MDIN,a
-;	sourcecode.c:168: P0SKIP |= mask; // Skip Crossbar decoding for this pin
+;	sourcecode.c:166: P0SKIP |= mask; // Skip Crossbar decoding for this pin
 	mov	a,r3
 	orl	_P0SKIP,a
-;	sourcecode.c:169: break;
-;	sourcecode.c:170: case 1:
+;	sourcecode.c:167: break;
+;	sourcecode.c:168: case 1:
 	sjmp	L006005?
 L006002?:
-;	sourcecode.c:171: P1MDIN &= (~mask); // Set pin as analog input
+;	sourcecode.c:169: P1MDIN &= (~mask); // Set pin as analog input
 	mov	a,r3
 	cpl	a
 	mov	r2,a
 	anl	_P1MDIN,a
-;	sourcecode.c:172: P1SKIP |= mask; // Skip Crossbar decoding for this pin
+;	sourcecode.c:170: P1SKIP |= mask; // Skip Crossbar decoding for this pin
 	mov	a,r3
 	orl	_P1SKIP,a
-;	sourcecode.c:173: break;
-;	sourcecode.c:174: case 2:
+;	sourcecode.c:171: break;
+;	sourcecode.c:172: case 2:
 	sjmp	L006005?
 L006003?:
-;	sourcecode.c:175: P2MDIN &= (~mask); // Set pin as analog input
+;	sourcecode.c:173: P2MDIN &= (~mask); // Set pin as analog input
 	mov	a,r3
 	cpl	a
 	mov	r2,a
 	anl	_P2MDIN,a
-;	sourcecode.c:176: P2SKIP |= mask; // Skip Crossbar decoding for this pin
+;	sourcecode.c:174: P2SKIP |= mask; // Skip Crossbar decoding for this pin
 	mov	a,r3
 	orl	_P2SKIP,a
-;	sourcecode.c:180: }
+;	sourcecode.c:178: }
 L006005?:
-;	sourcecode.c:181: SFRPAGE = 0x00;
+;	sourcecode.c:179: SFRPAGE = 0x00;
 	mov	_SFRPAGE,#0x00
 	ret
 ;------------------------------------------------------------
@@ -851,20 +847,20 @@ L006005?:
 ;------------------------------------------------------------
 ;pin                       Allocated to registers 
 ;------------------------------------------------------------
-;	sourcecode.c:184: unsigned int ADC_at_Pin(unsigned char pin)
+;	sourcecode.c:182: unsigned int ADC_at_Pin(unsigned char pin)
 ;	-----------------------------------------
 ;	 function ADC_at_Pin
 ;	-----------------------------------------
 _ADC_at_Pin:
 	mov	_ADC0MX,dpl
-;	sourcecode.c:187: ADINT = 0;
+;	sourcecode.c:185: ADINT = 0;
 	clr	_ADINT
-;	sourcecode.c:188: ADBUSY = 1;     // Convert voltage at the pin
+;	sourcecode.c:186: ADBUSY = 1;     // Convert voltage at the pin
 	setb	_ADBUSY
-;	sourcecode.c:189: while (!ADINT); // Wait for conversion to complete
+;	sourcecode.c:187: while (!ADINT); // Wait for conversion to complete
 L007001?:
 	jnb	_ADINT,L007001?
-;	sourcecode.c:190: return (ADC0);
+;	sourcecode.c:188: return (ADC0);
 	mov	dpl,_ADC0
 	mov	dph,(_ADC0 >> 8)
 	ret
@@ -873,12 +869,12 @@ L007001?:
 ;------------------------------------------------------------
 ;pin                       Allocated to registers r2 
 ;------------------------------------------------------------
-;	sourcecode.c:201: float Volts_at_Pin(unsigned char pin)
+;	sourcecode.c:199: float Volts_at_Pin(unsigned char pin)
 ;	-----------------------------------------
 ;	 function Volts_at_Pin
 ;	-----------------------------------------
 _Volts_at_Pin:
-;	sourcecode.c:203: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
+;	sourcecode.c:201: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
 	lcall	_ADC_at_Pin
 	lcall	___uint2fs
 	mov	r2,dpl
@@ -929,16 +925,16 @@ _Volts_at_Pin:
 ;Allocation info for local variables in function 'TIMER0_Init'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	sourcecode.c:206: void TIMER0_Init(void)
+;	sourcecode.c:204: void TIMER0_Init(void)
 ;	-----------------------------------------
 ;	 function TIMER0_Init
 ;	-----------------------------------------
 _TIMER0_Init:
-;	sourcecode.c:208: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
+;	sourcecode.c:206: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
 	anl	_TMOD,#0xF0
-;	sourcecode.c:209: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
+;	sourcecode.c:207: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
 	orl	_TMOD,#0x01
-;	sourcecode.c:210: TR0=0; // Stop Timer/Counter 0
+;	sourcecode.c:208: TR0=0; // Stop Timer/Counter 0
 	clr	_TR0
 	ret
 ;------------------------------------------------------------
@@ -946,19 +942,19 @@ _TIMER0_Init:
 ;------------------------------------------------------------
 ;period                    Allocated with name '_main_period_1_61'
 ;Phase_Shift               Allocated with name '_main_Phase_Shift_1_61'
-;time_difference           Allocated with name '_main_time_difference_1_61'
+;time_difference           Allocated to registers r2 r3 r4 r5 
 ;------------------------------------------------------------
-;	sourcecode.c:219: void main (void)
+;	sourcecode.c:217: void main (void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	sourcecode.c:225: TIMER0_Init();
+;	sourcecode.c:223: TIMER0_Init();
 	lcall	_TIMER0_Init
-;	sourcecode.c:227: waitms(500); // Give PuTTy a chance to start before sending
+;	sourcecode.c:225: waitms(500); // Give PuTTy a chance to start before sending
 	mov	dptr,#0x01F4
 	lcall	_waitms
-;	sourcecode.c:228: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
+;	sourcecode.c:226: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
 	mov	a,#__str_0
 	push	acc
 	mov	a,#(__str_0 >> 8)
@@ -969,8 +965,8 @@ _main:
 	dec	sp
 	dec	sp
 	dec	sp
-;	sourcecode.c:233: __FILE__, __DATE__, __TIME__);
-;	sourcecode.c:232: "Compiled: %s, %s\n\n",
+;	sourcecode.c:231: __FILE__, __DATE__, __TIME__);
+;	sourcecode.c:230: "Compiled: %s, %s\n\n",
 	mov	a,#__str_4
 	push	acc
 	mov	a,#(__str_4 >> 8)
@@ -999,21 +995,62 @@ _main:
 	mov	a,sp
 	add	a,#0xf4
 	mov	sp,a
-;	sourcecode.c:235: InitPinADC(2, 1); // Configure P2.1 as analog input
+;	sourcecode.c:233: InitPinADC(2, 1); // Configure P2.1 as analog input
 	mov	_InitPinADC_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_InitPinADC
-;	sourcecode.c:236: InitPinADC(2, 2); // Configure P2.2 as analog input
+;	sourcecode.c:234: InitPinADC(2, 2); // Configure P2.2 as analog input
 	mov	_InitPinADC_PARM_2,#0x02
 	mov	dpl,#0x02
 	lcall	_InitPinADC
-;	sourcecode.c:238: InitADC();
+;	sourcecode.c:236: InitADC();
 	lcall	_InitADC
-;	sourcecode.c:243: while(1)
-L010002?:
-;	sourcecode.c:244: printf("%f\n",Volts_at_Pin(QFP32_MUX_P2_2));
-	mov	dpl,#0x0F
-	lcall	_Volts_at_Pin
+;	sourcecode.c:238: while(1)
+L010038?:
+;	sourcecode.c:241: TL0 = 0; 
+	mov	_TL0,#0x00
+;	sourcecode.c:242: TH0 = 0;
+	mov	_TH0,#0x00
+;	sourcecode.c:243: TF0 = 0;
+	clr	_TF0
+;	sourcecode.c:244: overflow_count = 0;
+	mov	_overflow_count,#0x00
+;	sourcecode.c:246: while (P0_6 != 0); // Wait for the signal to be zero
+L010001?:
+	jb	_P0_6,L010001?
+;	sourcecode.c:247: while (P0_6 != 1); // Wait for the signal to be one
+L010004?:
+	jnb	_P0_6,L010004?
+;	sourcecode.c:248: TR0 = 1; // Start the timer
+	setb	_TR0
+;	sourcecode.c:249: while (P0_6 != 0) { // Wait for the signal to be zero
+L010009?:
+	jnb	_P0_6,L010014?
+;	sourcecode.c:250: if (TF0 == 1) { // Did the 16-bit timer overflow?
+;	sourcecode.c:251: TF0 = 0;
+	jbc	_TF0,L010066?
+	sjmp	L010009?
+L010066?:
+;	sourcecode.c:252: overflow_count++;
+	inc	_overflow_count
+;	sourcecode.c:255: while (P0_6 != 1) { // Wait for the signal to be one
+	sjmp	L010009?
+L010014?:
+	jb	_P0_6,L010016?
+;	sourcecode.c:256: if (TF0 == 1) { // Did the 16-bit timer overflow?
+;	sourcecode.c:257: TF0 = 0;
+	jbc	_TF0,L010068?
+	sjmp	L010014?
+L010068?:
+;	sourcecode.c:258: overflow_count++;
+	inc	_overflow_count
+	sjmp	L010014?
+L010016?:
+;	sourcecode.c:261: TR0 = 0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
+	clr	_TR0
+;	sourcecode.c:262: period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+	mov	dpl,_overflow_count
+	lcall	___uchar2fs
 	mov	r2,dpl
 	mov	r3,dph
 	mov	r4,b
@@ -1022,6 +1059,437 @@ L010002?:
 	push	ar3
 	push	ar4
 	push	ar5
+	mov	dptr,#0x0000
+	mov	b,#0x80
+	mov	a,#0x47
+	lcall	___fsmul
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	dpl,_TH0
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	___uchar2fs
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	mov	dptr,#0x0000
+	mov	b,#0x80
+	mov	a,#0x43
+	lcall	___fsmul
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsadd
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	r6,_TL0
+	mov	r7,#0x00
+	mov	dpl,r6
+	mov	dph,r7
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	___sint2fs
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsadd
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	dptr,#0xF4FC
+	mov	b,#0x32
+	mov	a,#0x34
+	lcall	___fsmul
+	mov	_main_period_1_61,dpl
+	mov	(_main_period_1_61 + 1),dph
+	mov	(_main_period_1_61 + 2),b
+	mov	(_main_period_1_61 + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	sourcecode.c:264: while(P0_6 != 0) //wait for zero cross of reference
+	clr	a
+	push	acc
+	push	acc
+	mov	a,#0x80
+	push	acc
+	mov	a,#0x40
+	push	acc
+	mov	dpl,_main_period_1_61
+	mov	dph,(_main_period_1_61 + 1)
+	mov	b,(_main_period_1_61 + 2)
+	mov	a,(_main_period_1_61 + 3)
+	lcall	___fsdiv
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+L010020?:
+	jnb	_P0_6,L010022?
+;	sourcecode.c:265: while(P0_6 != 1)
+L010017?:
+	jb	_P0_6,L010020?
+;	sourcecode.c:266: waitms(period/4);
+	mov	dpl,r6
+	mov	dph,r7
+	mov	b,r0
+	mov	a,r1
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	lcall	___fs2uint
+	lcall	_waitms
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar6
+	sjmp	L010017?
+L010022?:
+;	sourcecode.c:267: v1_max = Volts_at_Pin(QFP32_MUX_P2_1);
+	mov	dpl,#0x0E
+	lcall	_Volts_at_Pin
+	mov	_v1_max,dpl
+	mov	(_v1_max + 1),dph
+	mov	(_v1_max + 2),b
+	mov	(_v1_max + 3),a
+;	sourcecode.c:269: while(P2_2 != 0) //wait for zero cross of other signal
+	clr	a
+	push	acc
+	push	acc
+	mov	a,#0x80
+	push	acc
+	mov	a,#0x40
+	push	acc
+	mov	dpl,_main_period_1_61
+	mov	dph,(_main_period_1_61 + 1)
+	mov	b,(_main_period_1_61 + 2)
+	mov	a,(_main_period_1_61 + 3)
+	lcall	___fsdiv
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+L010026?:
+	jnb	_P2_2,L010028?
+;	sourcecode.c:270: while(P2_2 != 1)
+L010023?:
+	jb	_P2_2,L010026?
+;	sourcecode.c:271: waitms(period/4);
+	mov	dpl,r6
+	mov	dph,r7
+	mov	b,r0
+	mov	a,r1
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	lcall	___fs2uint
+	lcall	_waitms
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar6
+	sjmp	L010023?
+L010028?:
+;	sourcecode.c:272: v2_max = Volts_at_Pin(QFP32_MUX_P2_2);
+	mov	dpl,#0x0F
+	lcall	_Volts_at_Pin
+	mov	_v2_max,dpl
+	mov	(_v2_max + 1),dph
+	mov	(_v2_max + 2),b
+	mov	(_v2_max + 3),a
+;	sourcecode.c:280: TR0=0; // Stop timer 0
+	clr	_TR0
+;	sourcecode.c:281: overflow_count = 0;
+	mov	_overflow_count,#0x00
+;	sourcecode.c:282: TH0=0; TL0=0; TF0 = 0; 		// Reset the timer
+	mov	_TH0,#0x00
+	mov	_TL0,#0x00
+	clr	_TF0
+;	sourcecode.c:284: while (P0_6 != 0); 			// Wait for reference signal to be zero
+L010029?:
+	jb	_P0_6,L010029?
+;	sourcecode.c:285: TR0=1; // start timer
+	setb	_TR0
+;	sourcecode.c:286: P3_2=1; //set pin high for testing
+	setb	_P3_2
+;	sourcecode.c:288: while (P0_1 != 0) { 		// Wait for test signal to hit zero
+L010034?:
+	jnb	_P0_1,L010036?
+;	sourcecode.c:289: if (TF0 == 1) { // Did the 16-bit timer overflow?
+;	sourcecode.c:290: TF0 = 0;
+	jbc	_TF0,L010075?
+	sjmp	L010034?
+L010075?:
+;	sourcecode.c:291: overflow_count++;
+	inc	_overflow_count
+	sjmp	L010034?
+L010036?:
+;	sourcecode.c:294: TR0=0;
+	clr	_TR0
+;	sourcecode.c:295: P3_2=0;
+	clr	_P3_2
+;	sourcecode.c:298: time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+	mov	dpl,_overflow_count
+	lcall	___uchar2fs
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	mov	dptr,#0x0000
+	mov	b,#0x80
+	mov	a,#0x47
+	lcall	___fsmul
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	dpl,_TH0
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	lcall	___uchar2fs
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	dptr,#0x0000
+	mov	b,#0x80
+	mov	a,#0x43
+	lcall	___fsmul
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar6
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	dpl,r6
+	mov	dph,r7
+	mov	b,r0
+	mov	a,r1
+	lcall	___fsadd
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	r6,_TL0
+	mov	r7,#0x00
+	mov	dpl,r6
+	mov	dph,r7
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	___sint2fs
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsadd
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	dptr,#0xF4FC
+	mov	b,#0x32
+	mov	a,#0x34
+	lcall	___fsmul
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	sourcecode.c:299: Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	dptr,#0x0000
+	mov	b,#0xB4
+	mov	a,#0x43
+	lcall	___fsmul
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	push	_main_period_1_61
+	push	(_main_period_1_61 + 1)
+	push	(_main_period_1_61 + 2)
+	push	(_main_period_1_61 + 3)
+	mov	dpl,r6
+	mov	dph,r7
+	mov	b,r0
+	mov	a,r1
+	lcall	___fsdiv
+	mov	_main_Phase_Shift_1_61,dpl
+	mov	(_main_Phase_Shift_1_61 + 1),dph
+	mov	(_main_Phase_Shift_1_61 + 2),b
+	mov	(_main_Phase_Shift_1_61 + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	sourcecode.c:301: printf("Period: T=%fms, Time difference: %5.5fms, Phase shift: %f \n", period*1000.0, time_difference*1000.0, Phase_Shift);
+	mov	dptr,#0x0000
+	mov	b,#0x7A
+	mov	a,#0x44
+	lcall	___fsmul
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	push	_main_period_1_61
+	push	(_main_period_1_61 + 1)
+	push	(_main_period_1_61 + 2)
+	push	(_main_period_1_61 + 3)
+	mov	dptr,#0x0000
+	mov	b,#0x7A
+	mov	a,#0x44
+	lcall	___fsmul
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	push	_main_Phase_Shift_1_61
+	push	(_main_Phase_Shift_1_61 + 1)
+	push	(_main_Phase_Shift_1_61 + 2)
+	push	(_main_Phase_Shift_1_61 + 3)
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
 	mov	a,#__str_5
 	push	acc
 	mov	a,#(__str_5 >> 8)
@@ -1030,10 +1498,9 @@ L010002?:
 	push	acc
 	lcall	_printf
 	mov	a,sp
-	add	a,#0xf9
+	add	a,#0xf1
 	mov	sp,a
-;	sourcecode.c:302: printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
-	sjmp	L010002?
+	ljmp	L010038?
 	rseg R_CSEG
 
 	rseg R_XINIT
@@ -1059,15 +1526,11 @@ __str_3:
 	db 'Mar  6 2024'
 	db 0x00
 __str_4:
-	db '12:27:35'
+	db '13:49:47'
 	db 0x00
 __str_5:
-	db '%f'
+	db 'Period: T=%fms, Time difference: %5.5fms, Phase shift: %f '
 	db 0x0A
-	db 0x00
-__str_6:
-	db 'Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,'
-	db 0x0D
 	db 0x00
 
 	CSEG
