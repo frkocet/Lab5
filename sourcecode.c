@@ -147,13 +147,9 @@ void Timer3us(unsigned char us)
 void waitms (unsigned int ms)
 {
 	unsigned int j;
-	for(j=ms; j!=0; j--)
-	{
-		Timer3us(249);
-		Timer3us(249);
-		Timer3us(249);
-		Timer3us(250);
-	}
+	unsigned char k;
+	for(j=0; j<ms; j++)
+		for (k=0; k<4; k++) Timer3us(250);
 }
 
 #define VDD 3.3058 // The measured value of VDD in volts
@@ -194,13 +190,13 @@ unsigned int ADC_at_Pin(unsigned char pin)
 	return (ADC0);
 }
 
-unsigned int Get_ADC (void)
-{
-	ADINT = 0;
-	ADBUSY = 1;
-	while (!ADINT); // Wait for conversion to complete
-	return (ADC0);
-}
+//unsigned int Get_ADC (void)
+//{
+	//ADINT = 0;
+	//ADBUSY = 1;
+	//while (!ADINT); // Wait for conversion to complete
+	//return (ADC0);
+//}
 
 float Volts_at_Pin(unsigned char pin)
 {
@@ -243,8 +239,10 @@ void main (void)
 
 	while(1)
 	{
-		
-		
+
+			while(1)
+				printf("%f\n",Volts_at_Pin(QFP32_MUX_P2_2));
+
     	// Reset the counter
 		TL0 = 0; 
 		TH0 = 0;
@@ -272,12 +270,12 @@ void main (void)
 		while(P0_6 != 0) //wait for zero cross of reference
 		while(P0_6 != 1)
 		waitms(period/4);
-		v1_max = Volts_at_Pin(P2_1);
+		v1_max = Volts_at_Pin(QFP32_MUX_P2_1);
 
 		while(P2_2 != 0) //wait for zero cross of other signal
 		while(P2_2 != 1)
 		waitms(period/4);
-		v2_max = Volts_at_Pin(P2_2);
+		v2_max = Volts_at_Pin(QFP32_MUX_P2_2);
 		
 		
 			

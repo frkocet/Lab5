@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-; This file was generated Wed Mar 06 03:13:18 2024
+; This file was generated Wed Mar 06 12:27:35 2024
 ;--------------------------------------------------------
 $name sourcecode
 $optc51 --model-small
@@ -28,7 +28,6 @@ $printf_float
 	public _main
 	public _TIMER0_Init
 	public _Volts_at_Pin
-	public _Get_ADC
 	public _ADC_at_Pin
 	public _InitPinADC
 	public _waitms
@@ -504,7 +503,7 @@ _v1:
 	ds 4
 _v2:
 	ds 4
-_main_period_1_64:
+_main_period_1_61:
 	ds 4
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
@@ -726,7 +725,8 @@ L004007?:
 ;Allocation info for local variables in function 'waitms'
 ;------------------------------------------------------------
 ;ms                        Allocated to registers r2 r3 
-;j                         Allocated to registers r2 r3 
+;j                         Allocated to registers r4 r5 
+;k                         Allocated to registers r6 
 ;------------------------------------------------------------
 ;	sourcecode.c:147: void waitms (unsigned int ms)
 ;	-----------------------------------------
@@ -735,34 +735,44 @@ L004007?:
 _waitms:
 	mov	r2,dpl
 	mov	r3,dph
-;	sourcecode.c:150: for(j=ms; j!=0; j--)
+;	sourcecode.c:151: for(j=0; j<ms; j++)
+	mov	r4,#0x00
+	mov	r5,#0x00
+L005005?:
+	clr	c
+	mov	a,r4
+	subb	a,r2
+	mov	a,r5
+	subb	a,r3
+	jnc	L005009?
+;	sourcecode.c:152: for (k=0; k<4; k++) Timer3us(250);
+	mov	r6,#0x00
 L005001?:
-	cjne	r2,#0x00,L005010?
-	cjne	r3,#0x00,L005010?
-	ret
-L005010?:
-;	sourcecode.c:152: Timer3us(249);
-	mov	dpl,#0xF9
+	cjne	r6,#0x04,L005018?
+L005018?:
+	jnc	L005007?
+	mov	dpl,#0xFA
 	push	ar2
 	push	ar3
+	push	ar4
+	push	ar5
+	push	ar6
 	lcall	_Timer3us
-;	sourcecode.c:153: Timer3us(249);
-	mov	dpl,#0xF9
-	lcall	_Timer3us
-;	sourcecode.c:154: Timer3us(249);
-	mov	dpl,#0xF9
-	lcall	_Timer3us
-;	sourcecode.c:155: Timer3us(250);
-	mov	dpl,#0xFA
-	lcall	_Timer3us
+	pop	ar6
+	pop	ar5
+	pop	ar4
 	pop	ar3
 	pop	ar2
-;	sourcecode.c:150: for(j=ms; j!=0; j--)
-	dec	r2
-	cjne	r2,#0xff,L005011?
-	dec	r3
-L005011?:
+	inc	r6
 	sjmp	L005001?
+L005007?:
+;	sourcecode.c:151: for(j=0; j<ms; j++)
+	inc	r4
+	cjne	r4,#0x00,L005005?
+	inc	r5
+	sjmp	L005005?
+L005009?:
+	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'InitPinADC'
 ;------------------------------------------------------------
@@ -770,13 +780,13 @@ L005011?:
 ;portno                    Allocated to registers r2 
 ;mask                      Allocated to registers r3 
 ;------------------------------------------------------------
-;	sourcecode.c:161: void InitPinADC (unsigned char portno, unsigned char pinno)
+;	sourcecode.c:157: void InitPinADC (unsigned char portno, unsigned char pinno)
 ;	-----------------------------------------
 ;	 function InitPinADC
 ;	-----------------------------------------
 _InitPinADC:
 	mov	r2,dpl
-;	sourcecode.c:165: mask=1<<pinno;
+;	sourcecode.c:161: mask=1<<pinno;
 	mov	b,_InitPinADC_PARM_2
 	inc	b
 	mov	a,#0x01
@@ -786,54 +796,54 @@ L006011?:
 L006013?:
 	djnz	b,L006011?
 	mov	r3,a
-;	sourcecode.c:167: SFRPAGE = 0x20;
+;	sourcecode.c:163: SFRPAGE = 0x20;
 	mov	_SFRPAGE,#0x20
-;	sourcecode.c:168: switch (portno)
+;	sourcecode.c:164: switch (portno)
 	cjne	r2,#0x00,L006014?
 	sjmp	L006001?
 L006014?:
 	cjne	r2,#0x01,L006015?
 	sjmp	L006002?
 L006015?:
-;	sourcecode.c:170: case 0:
+;	sourcecode.c:166: case 0:
 	cjne	r2,#0x02,L006005?
 	sjmp	L006003?
 L006001?:
-;	sourcecode.c:171: P0MDIN &= (~mask); // Set pin as analog input
+;	sourcecode.c:167: P0MDIN &= (~mask); // Set pin as analog input
 	mov	a,r3
 	cpl	a
 	mov	r2,a
 	anl	_P0MDIN,a
-;	sourcecode.c:172: P0SKIP |= mask; // Skip Crossbar decoding for this pin
+;	sourcecode.c:168: P0SKIP |= mask; // Skip Crossbar decoding for this pin
 	mov	a,r3
 	orl	_P0SKIP,a
-;	sourcecode.c:173: break;
-;	sourcecode.c:174: case 1:
+;	sourcecode.c:169: break;
+;	sourcecode.c:170: case 1:
 	sjmp	L006005?
 L006002?:
-;	sourcecode.c:175: P1MDIN &= (~mask); // Set pin as analog input
+;	sourcecode.c:171: P1MDIN &= (~mask); // Set pin as analog input
 	mov	a,r3
 	cpl	a
 	mov	r2,a
 	anl	_P1MDIN,a
-;	sourcecode.c:176: P1SKIP |= mask; // Skip Crossbar decoding for this pin
+;	sourcecode.c:172: P1SKIP |= mask; // Skip Crossbar decoding for this pin
 	mov	a,r3
 	orl	_P1SKIP,a
-;	sourcecode.c:177: break;
-;	sourcecode.c:178: case 2:
+;	sourcecode.c:173: break;
+;	sourcecode.c:174: case 2:
 	sjmp	L006005?
 L006003?:
-;	sourcecode.c:179: P2MDIN &= (~mask); // Set pin as analog input
+;	sourcecode.c:175: P2MDIN &= (~mask); // Set pin as analog input
 	mov	a,r3
 	cpl	a
 	mov	r2,a
 	anl	_P2MDIN,a
-;	sourcecode.c:180: P2SKIP |= mask; // Skip Crossbar decoding for this pin
+;	sourcecode.c:176: P2SKIP |= mask; // Skip Crossbar decoding for this pin
 	mov	a,r3
 	orl	_P2SKIP,a
-;	sourcecode.c:184: }
+;	sourcecode.c:180: }
 L006005?:
-;	sourcecode.c:185: SFRPAGE = 0x00;
+;	sourcecode.c:181: SFRPAGE = 0x00;
 	mov	_SFRPAGE,#0x00
 	ret
 ;------------------------------------------------------------
@@ -841,40 +851,20 @@ L006005?:
 ;------------------------------------------------------------
 ;pin                       Allocated to registers 
 ;------------------------------------------------------------
-;	sourcecode.c:188: unsigned int ADC_at_Pin(unsigned char pin)
+;	sourcecode.c:184: unsigned int ADC_at_Pin(unsigned char pin)
 ;	-----------------------------------------
 ;	 function ADC_at_Pin
 ;	-----------------------------------------
 _ADC_at_Pin:
 	mov	_ADC0MX,dpl
-;	sourcecode.c:191: ADINT = 0;
+;	sourcecode.c:187: ADINT = 0;
 	clr	_ADINT
-;	sourcecode.c:192: ADBUSY = 1;     // Convert voltage at the pin
+;	sourcecode.c:188: ADBUSY = 1;     // Convert voltage at the pin
 	setb	_ADBUSY
-;	sourcecode.c:193: while (!ADINT); // Wait for conversion to complete
+;	sourcecode.c:189: while (!ADINT); // Wait for conversion to complete
 L007001?:
 	jnb	_ADINT,L007001?
-;	sourcecode.c:194: return (ADC0);
-	mov	dpl,_ADC0
-	mov	dph,(_ADC0 >> 8)
-	ret
-;------------------------------------------------------------
-;Allocation info for local variables in function 'Get_ADC'
-;------------------------------------------------------------
-;------------------------------------------------------------
-;	sourcecode.c:197: unsigned int Get_ADC (void)
-;	-----------------------------------------
-;	 function Get_ADC
-;	-----------------------------------------
-_Get_ADC:
-;	sourcecode.c:199: ADINT = 0;
-	clr	_ADINT
-;	sourcecode.c:200: ADBUSY = 1;
-	setb	_ADBUSY
-;	sourcecode.c:201: while (!ADINT); // Wait for conversion to complete
-L008001?:
-	jnb	_ADINT,L008001?
-;	sourcecode.c:202: return (ADC0);
+;	sourcecode.c:190: return (ADC0);
 	mov	dpl,_ADC0
 	mov	dph,(_ADC0 >> 8)
 	ret
@@ -883,12 +873,12 @@ L008001?:
 ;------------------------------------------------------------
 ;pin                       Allocated to registers r2 
 ;------------------------------------------------------------
-;	sourcecode.c:205: float Volts_at_Pin(unsigned char pin)
+;	sourcecode.c:201: float Volts_at_Pin(unsigned char pin)
 ;	-----------------------------------------
 ;	 function Volts_at_Pin
 ;	-----------------------------------------
 _Volts_at_Pin:
-;	sourcecode.c:207: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
+;	sourcecode.c:203: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
 	lcall	_ADC_at_Pin
 	lcall	___uint2fs
 	mov	r2,dpl
@@ -939,36 +929,36 @@ _Volts_at_Pin:
 ;Allocation info for local variables in function 'TIMER0_Init'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	sourcecode.c:210: void TIMER0_Init(void)
+;	sourcecode.c:206: void TIMER0_Init(void)
 ;	-----------------------------------------
 ;	 function TIMER0_Init
 ;	-----------------------------------------
 _TIMER0_Init:
-;	sourcecode.c:212: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
+;	sourcecode.c:208: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
 	anl	_TMOD,#0xF0
-;	sourcecode.c:213: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
+;	sourcecode.c:209: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
 	orl	_TMOD,#0x01
-;	sourcecode.c:214: TR0=0; // Stop Timer/Counter 0
+;	sourcecode.c:210: TR0=0; // Stop Timer/Counter 0
 	clr	_TR0
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;period                    Allocated with name '_main_period_1_64'
-;Phase_Shift               Allocated with name '_main_Phase_Shift_1_64'
-;time_difference           Allocated with name '_main_time_difference_1_64'
+;period                    Allocated with name '_main_period_1_61'
+;Phase_Shift               Allocated with name '_main_Phase_Shift_1_61'
+;time_difference           Allocated with name '_main_time_difference_1_61'
 ;------------------------------------------------------------
-;	sourcecode.c:223: void main (void)
+;	sourcecode.c:219: void main (void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	sourcecode.c:229: TIMER0_Init();
+;	sourcecode.c:225: TIMER0_Init();
 	lcall	_TIMER0_Init
-;	sourcecode.c:231: waitms(500); // Give PuTTy a chance to start before sending
+;	sourcecode.c:227: waitms(500); // Give PuTTy a chance to start before sending
 	mov	dptr,#0x01F4
 	lcall	_waitms
-;	sourcecode.c:232: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
+;	sourcecode.c:228: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
 	mov	a,#__str_0
 	push	acc
 	mov	a,#(__str_0 >> 8)
@@ -979,8 +969,8 @@ _main:
 	dec	sp
 	dec	sp
 	dec	sp
-;	sourcecode.c:237: __FILE__, __DATE__, __TIME__);
-;	sourcecode.c:236: "Compiled: %s, %s\n\n",
+;	sourcecode.c:233: __FILE__, __DATE__, __TIME__);
+;	sourcecode.c:232: "Compiled: %s, %s\n\n",
 	mov	a,#__str_4
 	push	acc
 	mov	a,#(__str_4 >> 8)
@@ -1009,23 +999,20 @@ _main:
 	mov	a,sp
 	add	a,#0xf4
 	mov	sp,a
-;	sourcecode.c:239: InitPinADC(2, 1); // Configure P2.1 as analog input
+;	sourcecode.c:235: InitPinADC(2, 1); // Configure P2.1 as analog input
 	mov	_InitPinADC_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_InitPinADC
-;	sourcecode.c:240: InitPinADC(2, 2); // Configure P2.2 as analog input
+;	sourcecode.c:236: InitPinADC(2, 2); // Configure P2.2 as analog input
 	mov	_InitPinADC_PARM_2,#0x02
 	mov	dpl,#0x02
 	lcall	_InitPinADC
-;	sourcecode.c:242: InitADC();
+;	sourcecode.c:238: InitADC();
 	lcall	_InitADC
-;	sourcecode.c:247: while(1){
-L011002?:
-;	sourcecode.c:248: printf("%lf\n", Volts_at_Pin(P2_1));
-	mov	c,_P2_1
-	clr	a
-	rlc	a
-	mov	dpl,a
+;	sourcecode.c:243: while(1)
+L010002?:
+;	sourcecode.c:244: printf("%f\n",Volts_at_Pin(QFP32_MUX_P2_2));
+	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
 	mov	r2,dpl
 	mov	r3,dph
@@ -1045,8 +1032,8 @@ L011002?:
 	mov	a,sp
 	add	a,#0xf9
 	mov	sp,a
-;	sourcecode.c:307: printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
-	sjmp	L011002?
+;	sourcecode.c:302: printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
+	sjmp	L010002?
 	rseg R_CSEG
 
 	rseg R_XINIT
@@ -1072,10 +1059,10 @@ __str_3:
 	db 'Mar  6 2024'
 	db 0x00
 __str_4:
-	db '03:13:18'
+	db '12:27:35'
 	db 0x00
 __str_5:
-	db '%lf'
+	db '%f'
 	db 0x0A
 	db 0x00
 __str_6:
