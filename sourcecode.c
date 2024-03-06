@@ -244,9 +244,6 @@ void main (void)
 	while(1)
 	{
 		
-		while(1){
-			printf("%lf\n", Volts_at_Pin(P2_1));
-		}
 		
     	// Reset the counter
 		TL0 = 0; 
