@@ -202,13 +202,6 @@ unsigned int ADC_at_Pin(unsigned char pin)
 	return (ADC0);
 }
 
-//unsigned int Get_ADC (void)
-//{
-	//ADINT = 0;
-	//ADBUSY = 1;
-	//while (!ADINT); // Wait for conversion to complete
-	//return (ADC0);
-//}
 
 float Volts_at_Pin(unsigned char pin)
 {
@@ -220,6 +213,11 @@ void TIMER0_Init(void)
 	TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
 	TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
 	TR0=0; // Stop Timer/Counter 0
+}
+
+void Timer2_Init(void) // initialize timer 2
+{
+
 }
 
 void LCD_pulse (void)
@@ -301,14 +299,20 @@ void LCDprint2(char * string, unsigned char line, unsigned char col)
 //--------------------------//
 //			Main			//
 //--------------------------//
-
 void main (void)
 {
 	float period;
 	float Phase_Shift;
 	float time_difference;
+	float frequency;
+
+	unsigned char str_frequency[6];
+	unsigned char str_vref[6];
+	unsigned char str_vtest[6];
+	unsigned char str_phase[6];
 
 	TIMER0_Init();
+	Timer2_Init(); //initialize and start timer 2
 
 	// Configure the LCD
 	LCD_4BIT();
@@ -324,7 +328,7 @@ void main (void)
 	// Starting message on LCD, looks like:
 	// 'F : X X H z       P H : _ X X X'
 	// 'V R : X . X X     V T : X . X X'
-	LCDprint2("F:XXHz   PH:±XXX", 1, 0); //string, row, column
+	LCDprint2("F:XXHz  PH:.XXX ", 1, 0); //string, row, column
 	LCDprint2("VR:X.XX  VT:X.XX", 2, 0); //string, row, column
 	
 	InitPinADC(2, 1); // Configure P2.1 as analog input
@@ -339,6 +343,12 @@ void main (void)
 		TH0 = 0;
 		TF0 = 0;
 		overflow_count = 0;
+
+		// Reset timer 2 so it doesnt overflow
+		TL2 = 0;
+		TH2 = 0;
+		TF2 = 0;
+
 		
 		while(Volts_at_Pin(QFP32_MUX_P2_2) > 0); // Wait for the signal to be zero
 		while(Volts_at_Pin(QFP32_MUX_P2_2) == 0); // Wait for the signal to be one
@@ -358,6 +368,7 @@ void main (void)
 		TR0 = 0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
 		period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK)*(2);
 
+		frequency = 1.0/period;
 
 		while(Volts_at_Pin(QFP32_MUX_P2_2) > 0);
 		while(Volts_at_Pin(QFP32_MUX_P2_2) == 0);
@@ -399,28 +410,32 @@ void main (void)
 
 		printf("T=%fms, Phase: %f, v1_Rms:%f, v2_Rms:%f\r", 
 		period*1000.0, Phase_Shift, v1_rms, v2_rms);
-		//printf("\x1b[0K"); // ANSI: Clear from cursor to end of line
 
+		if (Phase_Shift > 180) {
+			Phase_Shift = 360 - Phase_Shift;
+			LCDprint2("-", 1, 11);
+		}
+		else {
+			LCDprint2(" ", 1, 11);
+		}
 
 		/////////////////LCD DISPLAYING/////////////////
-		// Create variables 
-		float frequency = 1/period; 
-		unsigned char str_frequency[16];
-		unsigned char str_vref[16];
-		unsigned char str_vtest[16];
-		unsigned char str_phase[16];
-
+		
 		// Convert floats to strings
-		sprintf(str_frequency, "%f", frequency);
-		sprintf(str_vref, "%f", v1_rms);
-		sprintf(str_vtest, "%f", v2_rms); 
-		sprintf(str_phase, "%f", Phase_Shift); 
-
+		sprintf(str_frequency, "%2.0f", frequency);
+		sprintf(str_vref, "%1.2f", v1_rms);	
+		sprintf(str_vtest, "%1.2f", v2_rms); 
+		sprintf(str_phase, "%3f", Phase_Shift);
+		
 		// Print values on screen 
 		LCDprint2(str_frequency, 1, 2); //string, row, column
-		LCDprint2(str_phase, 1, 13); //string, row, column
+		LCDprint2(str_phase, 1, 12); //string, row, column
 		LCDprint2(str_vref, 2, 3); //string, row, column
 		LCDprint2(str_vtest, 2, 12); //string, row, column
+		
+		// Formatting
+		LCDprint2("Hz ", 1, 4);
+
 		////////////////////////////////////////////////
 		
 	 }

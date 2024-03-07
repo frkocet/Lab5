@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-; This file was generated Thu Mar 07 00:14:16 2024
+; This file was generated Thu Mar 07 02:02:29 2024
 ;--------------------------------------------------------
 $name sourcecode
 $optc51 --model-small
@@ -516,6 +516,16 @@ _LCDprint2_PARM_3:
 	ds 1
 _main_period_1_76:
 	ds 4
+_main_frequency_1_76:
+	ds 4
+_main_str_frequency_1_76:
+	ds 6
+_main_str_vref_1_76:
+	ds 6
+_main_str_vtest_1_76:
+	ds 6
+_main_str_phase_1_76:
+	ds 6
 _main_sloc0_1_0:
 	ds 2
 _main_sloc1_1_0:
@@ -890,12 +900,12 @@ L007001?:
 ;------------------------------------------------------------
 ;pin                       Allocated to registers r2 
 ;------------------------------------------------------------
-;	sourcecode.c:213: float Volts_at_Pin(unsigned char pin)
+;	sourcecode.c:206: float Volts_at_Pin(unsigned char pin)
 ;	-----------------------------------------
 ;	 function Volts_at_Pin
 ;	-----------------------------------------
 _Volts_at_Pin:
-;	sourcecode.c:215: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
+;	sourcecode.c:208: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
 	lcall	_ADC_at_Pin
 	lcall	___uint2fs
 	mov	r2,dpl
@@ -946,33 +956,33 @@ _Volts_at_Pin:
 ;Allocation info for local variables in function 'TIMER0_Init'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	sourcecode.c:218: void TIMER0_Init(void)
+;	sourcecode.c:211: void TIMER0_Init(void)
 ;	-----------------------------------------
 ;	 function TIMER0_Init
 ;	-----------------------------------------
 _TIMER0_Init:
-;	sourcecode.c:220: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
+;	sourcecode.c:213: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
 	anl	_TMOD,#0xF0
-;	sourcecode.c:221: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
+;	sourcecode.c:214: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
 	orl	_TMOD,#0x01
-;	sourcecode.c:222: TR0=0; // Stop Timer/Counter 0
+;	sourcecode.c:215: TR0=0; // Stop Timer/Counter 0
 	clr	_TR0
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_pulse'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	sourcecode.c:225: void LCD_pulse (void)
+;	sourcecode.c:218: void LCD_pulse (void)
 ;	-----------------------------------------
 ;	 function LCD_pulse
 ;	-----------------------------------------
 _LCD_pulse:
-;	sourcecode.c:227: LCD_E=1;
+;	sourcecode.c:220: LCD_E=1;
 	setb	_P2_0
-;	sourcecode.c:228: Timer3us(40);
+;	sourcecode.c:221: Timer3us(40);
 	mov	dpl,#0x28
 	lcall	_Timer3us
-;	sourcecode.c:229: LCD_E=0;
+;	sourcecode.c:222: LCD_E=0;
 	clr	_P2_0
 	ret
 ;------------------------------------------------------------
@@ -980,66 +990,66 @@ _LCD_pulse:
 ;------------------------------------------------------------
 ;x                         Allocated to registers r2 
 ;------------------------------------------------------------
-;	sourcecode.c:232: void LCD_byte (unsigned char x)
+;	sourcecode.c:225: void LCD_byte (unsigned char x)
 ;	-----------------------------------------
 ;	 function LCD_byte
 ;	-----------------------------------------
 _LCD_byte:
 	mov	r2,dpl
-;	sourcecode.c:235: ACC=x; //Send high nible
+;	sourcecode.c:228: ACC=x; //Send high nible
 	mov	_ACC,r2
-;	sourcecode.c:236: LCD_D7=ACC_7;
+;	sourcecode.c:229: LCD_D7=ACC_7;
 	mov	c,_ACC_7
 	mov	_P1_0,c
-;	sourcecode.c:237: LCD_D6=ACC_6;
+;	sourcecode.c:230: LCD_D6=ACC_6;
 	mov	c,_ACC_6
 	mov	_P1_1,c
-;	sourcecode.c:238: LCD_D5=ACC_5;
+;	sourcecode.c:231: LCD_D5=ACC_5;
 	mov	c,_ACC_5
 	mov	_P1_2,c
-;	sourcecode.c:239: LCD_D4=ACC_4;
+;	sourcecode.c:232: LCD_D4=ACC_4;
 	mov	c,_ACC_4
 	mov	_P1_3,c
-;	sourcecode.c:240: LCD_pulse();
+;	sourcecode.c:233: LCD_pulse();
 	push	ar2
 	lcall	_LCD_pulse
-;	sourcecode.c:241: Timer3us(40);
+;	sourcecode.c:234: Timer3us(40);
 	mov	dpl,#0x28
 	lcall	_Timer3us
 	pop	ar2
-;	sourcecode.c:242: ACC=x; //Send low nible
+;	sourcecode.c:235: ACC=x; //Send low nible
 	mov	_ACC,r2
-;	sourcecode.c:243: LCD_D7=ACC_3;
+;	sourcecode.c:236: LCD_D7=ACC_3;
 	mov	c,_ACC_3
 	mov	_P1_0,c
-;	sourcecode.c:244: LCD_D6=ACC_2;
+;	sourcecode.c:237: LCD_D6=ACC_2;
 	mov	c,_ACC_2
 	mov	_P1_1,c
-;	sourcecode.c:245: LCD_D5=ACC_1;
+;	sourcecode.c:238: LCD_D5=ACC_1;
 	mov	c,_ACC_1
 	mov	_P1_2,c
-;	sourcecode.c:246: LCD_D4=ACC_0;
+;	sourcecode.c:239: LCD_D4=ACC_0;
 	mov	c,_ACC_0
 	mov	_P1_3,c
-;	sourcecode.c:247: LCD_pulse();
+;	sourcecode.c:240: LCD_pulse();
 	ljmp	_LCD_pulse
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'WriteData'
 ;------------------------------------------------------------
 ;x                         Allocated to registers r2 
 ;------------------------------------------------------------
-;	sourcecode.c:250: void WriteData (unsigned char x)
+;	sourcecode.c:243: void WriteData (unsigned char x)
 ;	-----------------------------------------
 ;	 function WriteData
 ;	-----------------------------------------
 _WriteData:
 	mov	r2,dpl
-;	sourcecode.c:252: LCD_RS=1;
+;	sourcecode.c:245: LCD_RS=1;
 	setb	_P1_7
-;	sourcecode.c:253: LCD_byte(x);
+;	sourcecode.c:246: LCD_byte(x);
 	mov	dpl,r2
 	lcall	_LCD_byte
-;	sourcecode.c:254: waitms(2);
+;	sourcecode.c:247: waitms(2);
 	mov	dptr,#0x0002
 	ljmp	_waitms
 ;------------------------------------------------------------
@@ -1047,53 +1057,53 @@ _WriteData:
 ;------------------------------------------------------------
 ;x                         Allocated to registers r2 
 ;------------------------------------------------------------
-;	sourcecode.c:257: void WriteCommand (unsigned char x)
+;	sourcecode.c:250: void WriteCommand (unsigned char x)
 ;	-----------------------------------------
 ;	 function WriteCommand
 ;	-----------------------------------------
 _WriteCommand:
 	mov	r2,dpl
-;	sourcecode.c:259: LCD_RS=0;
+;	sourcecode.c:252: LCD_RS=0;
 	clr	_P1_7
-;	sourcecode.c:260: LCD_byte(x);
+;	sourcecode.c:253: LCD_byte(x);
 	mov	dpl,r2
 	lcall	_LCD_byte
-;	sourcecode.c:261: waitms(5);
+;	sourcecode.c:254: waitms(5);
 	mov	dptr,#0x0005
 	ljmp	_waitms
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_4BIT'
 ;------------------------------------------------------------
 ;------------------------------------------------------------
-;	sourcecode.c:264: void LCD_4BIT (void)
+;	sourcecode.c:257: void LCD_4BIT (void)
 ;	-----------------------------------------
 ;	 function LCD_4BIT
 ;	-----------------------------------------
 _LCD_4BIT:
-;	sourcecode.c:266: LCD_E=0; // Resting state of LCD's enable is zero
+;	sourcecode.c:259: LCD_E=0; // Resting state of LCD's enable is zero
 	clr	_P2_0
-;	sourcecode.c:268: waitms(20);
+;	sourcecode.c:261: waitms(20);
 	mov	dptr,#0x0014
 	lcall	_waitms
-;	sourcecode.c:270: WriteCommand(0x33);
+;	sourcecode.c:263: WriteCommand(0x33);
 	mov	dpl,#0x33
 	lcall	_WriteCommand
-;	sourcecode.c:271: WriteCommand(0x33);
+;	sourcecode.c:264: WriteCommand(0x33);
 	mov	dpl,#0x33
 	lcall	_WriteCommand
-;	sourcecode.c:272: WriteCommand(0x32); // Change to 4-bit mode
+;	sourcecode.c:265: WriteCommand(0x32); // Change to 4-bit mode
 	mov	dpl,#0x32
 	lcall	_WriteCommand
-;	sourcecode.c:275: WriteCommand(0x28);
+;	sourcecode.c:268: WriteCommand(0x28);
 	mov	dpl,#0x28
 	lcall	_WriteCommand
-;	sourcecode.c:276: WriteCommand(0x0c);
+;	sourcecode.c:269: WriteCommand(0x0c);
 	mov	dpl,#0x0C
 	lcall	_WriteCommand
-;	sourcecode.c:277: WriteCommand(0x01); // Clear screen command (takes some time)
+;	sourcecode.c:270: WriteCommand(0x01); // Clear screen command (takes some time)
 	mov	dpl,#0x01
 	lcall	_WriteCommand
-;	sourcecode.c:278: waitms(20); // Wait for clear screen command to finsih.
+;	sourcecode.c:271: waitms(20); // Wait for clear screen command to finsih.
 	mov	dptr,#0x0014
 	ljmp	_waitms
 ;------------------------------------------------------------
@@ -1103,7 +1113,7 @@ _LCD_4BIT:
 ;string                    Allocated to registers r2 r3 r4 
 ;j                         Allocated to registers r5 r6 
 ;------------------------------------------------------------
-;	sourcecode.c:281: void LCDprint(char * string, unsigned char line, bit clear)
+;	sourcecode.c:274: void LCDprint(char * string, unsigned char line, bit clear)
 ;	-----------------------------------------
 ;	 function LCDprint
 ;	-----------------------------------------
@@ -1111,7 +1121,7 @@ _LCDprint:
 	mov	r2,dpl
 	mov	r3,dph
 	mov	r4,b
-;	sourcecode.c:285: WriteCommand(line==2?0xc0:0x80);
+;	sourcecode.c:278: WriteCommand(line==2?0xc0:0x80);
 	mov	a,#0x02
 	cjne	a,_LCDprint_PARM_2,L015013?
 	mov	r5,#0xC0
@@ -1124,13 +1134,13 @@ L015014?:
 	push	ar3
 	push	ar4
 	lcall	_WriteCommand
-;	sourcecode.c:286: waitms(5);
+;	sourcecode.c:279: waitms(5);
 	mov	dptr,#0x0005
 	lcall	_waitms
 	pop	ar4
 	pop	ar3
 	pop	ar2
-;	sourcecode.c:287: for(j=0; string[j]!=0; j++)	WriteData(string[j]);// Write the message
+;	sourcecode.c:280: for(j=0; string[j]!=0; j++)	WriteData(string[j]);// Write the message
 	mov	r5,#0x00
 	mov	r6,#0x00
 L015003?:
@@ -1164,7 +1174,7 @@ L015003?:
 	inc	r6
 	sjmp	L015003?
 L015006?:
-;	sourcecode.c:288: if(clear) for(; j<CHARS_PER_LINE; j++) WriteData(' '); // Clear the rest of the line
+;	sourcecode.c:281: if(clear) for(; j<CHARS_PER_LINE; j++) WriteData(' '); // Clear the rest of the line
 	jnb	_LCDprint_PARM_3,L015011?
 	mov	ar2,r5
 	mov	ar3,r6
@@ -1196,7 +1206,7 @@ L015011?:
 ;string                    Allocated to registers r2 r3 r4 
 ;j                         Allocated to registers r5 r6 
 ;------------------------------------------------------------
-;	sourcecode.c:291: void LCDprint2(char * string, unsigned char line, unsigned char col)
+;	sourcecode.c:284: void LCDprint2(char * string, unsigned char line, unsigned char col)
 ;	-----------------------------------------
 ;	 function LCDprint2
 ;	-----------------------------------------
@@ -1204,7 +1214,7 @@ _LCDprint2:
 	mov	r2,dpl
 	mov	r3,dph
 	mov	r4,b
-;	sourcecode.c:295: WriteCommand(line==2?0xc0|col:0x80|col); // Move cursor to line and column
+;	sourcecode.c:288: WriteCommand(line==2?0xc0|col:0x80|col); // Move cursor to line and column
 	mov	a,#0x02
 	cjne	a,_LCDprint2_PARM_2,L016007?
 	mov	a,#0xC0
@@ -1224,7 +1234,7 @@ L016008?:
 	pop	ar4
 	pop	ar3
 	pop	ar2
-;	sourcecode.c:296: for(j=0; string[j]!=0; j++){ 
+;	sourcecode.c:289: for(j=0; string[j]!=0; j++){ 
 	mov	r5,#0x00
 	mov	r6,#0x00
 L016001?:
@@ -1241,7 +1251,7 @@ L016001?:
 	lcall	__gptrget
 	mov	r7,a
 	jz	L016005?
-;	sourcecode.c:297: WriteData(string[j]); // Write the message
+;	sourcecode.c:290: WriteData(string[j]); // Write the message
 	mov	dpl,r7
 	push	ar2
 	push	ar3
@@ -1254,7 +1264,7 @@ L016001?:
 	pop	ar4
 	pop	ar3
 	pop	ar2
-;	sourcecode.c:296: for(j=0; string[j]!=0; j++){ 
+;	sourcecode.c:289: for(j=0; string[j]!=0; j++){ 
 	inc	r5
 	cjne	r5,#0x00,L016001?
 	inc	r6
@@ -1267,22 +1277,27 @@ L016005?:
 ;period                    Allocated with name '_main_period_1_76'
 ;Phase_Shift               Allocated to registers r2 r3 r4 r5 
 ;time_difference           Allocated to registers r2 r3 r4 r5 
+;frequency                 Allocated with name '_main_frequency_1_76'
+;str_frequency             Allocated with name '_main_str_frequency_1_76'
+;str_vref                  Allocated with name '_main_str_vref_1_76'
+;str_vtest                 Allocated with name '_main_str_vtest_1_76'
+;str_phase                 Allocated with name '_main_str_phase_1_76'
 ;sloc0                     Allocated with name '_main_sloc0_1_0'
 ;sloc1                     Allocated with name '_main_sloc1_1_0'
 ;------------------------------------------------------------
-;	sourcecode.c:305: void main (void)
+;	sourcecode.c:297: void main (void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	sourcecode.c:311: TIMER0_Init();
+;	sourcecode.c:309: TIMER0_Init();
 	lcall	_TIMER0_Init
-;	sourcecode.c:314: LCD_4BIT();
+;	sourcecode.c:312: LCD_4BIT();
 	lcall	_LCD_4BIT
-;	sourcecode.c:316: waitms(500); // Give PuTTy a chance to start before sending
+;	sourcecode.c:314: waitms(500); // Give PuTTy a chance to start before sending
 	mov	dptr,#0x01F4
 	lcall	_waitms
-;	sourcecode.c:317: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
+;	sourcecode.c:315: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
 	mov	a,#__str_0
 	push	acc
 	mov	a,#(__str_0 >> 8)
@@ -1293,8 +1308,8 @@ _main:
 	dec	sp
 	dec	sp
 	dec	sp
-;	sourcecode.c:322: __FILE__, __DATE__, __TIME__);
-;	sourcecode.c:321: "Compiled: %s, %s\n\n",
+;	sourcecode.c:320: __FILE__, __DATE__, __TIME__);
+;	sourcecode.c:319: "Compiled: %s, %s\n\n",
 	mov	a,#__str_4
 	push	acc
 	mov	a,#(__str_4 >> 8)
@@ -1323,39 +1338,39 @@ _main:
 	mov	a,sp
 	add	a,#0xf4
 	mov	sp,a
-;	sourcecode.c:327: LCDprint2("F:XXHz   PH:_XXX", 1, 0); //string, row, column
+;	sourcecode.c:325: LCDprint2("F:XXHz  PH:.XXX ", 1, 0); //string, row, column
 	mov	_LCDprint2_PARM_2,#0x01
 	mov	_LCDprint2_PARM_3,#0x00
 	mov	dptr,#__str_5
 	mov	b,#0x80
 	lcall	_LCDprint2
-;	sourcecode.c:328: LCDprint2("VR:X.XX  VT:X.XX", 2, 0); //string, row, column
+;	sourcecode.c:326: LCDprint2("VR:X.XX  VT:X.XX", 2, 0); //string, row, column
 	mov	_LCDprint2_PARM_2,#0x02
 	mov	_LCDprint2_PARM_3,#0x00
 	mov	dptr,#__str_6
 	mov	b,#0x80
 	lcall	_LCDprint2
-;	sourcecode.c:330: InitPinADC(2, 1); // Configure P2.1 as analog input
+;	sourcecode.c:328: InitPinADC(2, 1); // Configure P2.1 as analog input
 	mov	_InitPinADC_PARM_2,#0x01
 	mov	dpl,#0x02
 	lcall	_InitPinADC
-;	sourcecode.c:331: InitPinADC(2, 2); // Configure P2.2 as analog input
+;	sourcecode.c:329: InitPinADC(2, 2); // Configure P2.2 as analog input
 	mov	_InitPinADC_PARM_2,#0x02
 	mov	dpl,#0x02
 	lcall	_InitPinADC
-;	sourcecode.c:333: InitADC();
+;	sourcecode.c:331: InitADC();
 	lcall	_InitADC
-;	sourcecode.c:335: while(1)
-L017046?:
-;	sourcecode.c:338: TL0 = 0; 
+;	sourcecode.c:333: while(1)
+L017049?:
+;	sourcecode.c:336: TL0 = 0; 
 	mov	_TL0,#0x00
-;	sourcecode.c:339: TH0 = 0;
+;	sourcecode.c:337: TH0 = 0;
 	mov	_TH0,#0x00
-;	sourcecode.c:340: TF0 = 0;
+;	sourcecode.c:338: TF0 = 0;
 	clr	_TF0
-;	sourcecode.c:341: overflow_count = 0;
+;	sourcecode.c:339: overflow_count = 0;
 	mov	_overflow_count,#0x00
-;	sourcecode.c:343: while(Volts_at_Pin(QFP32_MUX_P2_2) > 0); // Wait for the signal to be zero
+;	sourcecode.c:341: while(Volts_at_Pin(QFP32_MUX_P2_2) > 0); // Wait for the signal to be zero
 L017001?:
 	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
@@ -1379,7 +1394,7 @@ L017001?:
 	mov	sp,a
 	mov	a,r2
 	jnz	L017001?
-;	sourcecode.c:344: while(Volts_at_Pin(QFP32_MUX_P2_2) == 0); // Wait for the signal to be one
+;	sourcecode.c:342: while(Volts_at_Pin(QFP32_MUX_P2_2) == 0); // Wait for the signal to be one
 L017004?:
 	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
@@ -1394,9 +1409,9 @@ L017004?:
 	clr	b.7 ; Clear the sign bit
 	orl	a,b
 	jz	L017004?
-;	sourcecode.c:345: TR0 = 1; // Start the timer
+;	sourcecode.c:343: TR0 = 1; // Start the timer
 	setb	_TR0
-;	sourcecode.c:346: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be zero
+;	sourcecode.c:344: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be zero
 L017009?:
 	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
@@ -1420,14 +1435,14 @@ L017009?:
 	mov	sp,a
 	mov	a,r2
 	jz	L017014?
-;	sourcecode.c:347: if (TF0 == 1) { // Did the 16-bit timer overflow?
-;	sourcecode.c:348: TF0 = 0;
-	jbc	_TF0,L017078?
+;	sourcecode.c:345: if (TF0 == 1) { // Did the 16-bit timer overflow?
+;	sourcecode.c:346: TF0 = 0;
+	jbc	_TF0,L017082?
 	sjmp	L017009?
-L017078?:
-;	sourcecode.c:349: overflow_count++;
+L017082?:
+;	sourcecode.c:347: overflow_count++;
 	inc	_overflow_count
-;	sourcecode.c:352: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be one
+;	sourcecode.c:350: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be one
 	sjmp	L017009?
 L017014?:
 	mov	dpl,#0x0F
@@ -1452,18 +1467,18 @@ L017014?:
 	mov	sp,a
 	mov	a,r2
 	jz	L017016?
-;	sourcecode.c:353: if (TF0 == 1) { // Did the 16-bit timer overflow?
-;	sourcecode.c:354: TF0 = 0;
-	jbc	_TF0,L017080?
+;	sourcecode.c:351: if (TF0 == 1) { // Did the 16-bit timer overflow?
+;	sourcecode.c:352: TF0 = 0;
+	jbc	_TF0,L017084?
 	sjmp	L017014?
-L017080?:
-;	sourcecode.c:355: overflow_count++;
+L017084?:
+;	sourcecode.c:353: overflow_count++;
 	inc	_overflow_count
 	sjmp	L017014?
 L017016?:
-;	sourcecode.c:358: TR0 = 0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
+;	sourcecode.c:356: TR0 = 0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
 	clr	_TR0
-;	sourcecode.c:359: period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK)*(2);
+;	sourcecode.c:357: period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK)*(2);
 	mov	dpl,_overflow_count
 	lcall	___uchar2fs
 	mov	r2,dpl
@@ -1578,7 +1593,23 @@ L017016?:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	sourcecode.c:362: while(Volts_at_Pin(QFP32_MUX_P2_2) > 0);
+;	sourcecode.c:359: frequency = 1.0/period;
+	push	_main_period_1_76
+	push	(_main_period_1_76 + 1)
+	push	(_main_period_1_76 + 2)
+	push	(_main_period_1_76 + 3)
+	mov	dptr,#0x0000
+	mov	b,#0x80
+	mov	a,#0x3F
+	lcall	___fsdiv
+	mov	_main_frequency_1_76,dpl
+	mov	(_main_frequency_1_76 + 1),dph
+	mov	(_main_frequency_1_76 + 2),b
+	mov	(_main_frequency_1_76 + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	sourcecode.c:361: while(Volts_at_Pin(QFP32_MUX_P2_2) > 0);
 L017017?:
 	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
@@ -1602,7 +1633,7 @@ L017017?:
 	mov	sp,a
 	mov	a,r6
 	jnz	L017017?
-;	sourcecode.c:363: while(Volts_at_Pin(QFP32_MUX_P2_2) == 0);
+;	sourcecode.c:362: while(Volts_at_Pin(QFP32_MUX_P2_2) == 0);
 L017020?:
 	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
@@ -1617,7 +1648,7 @@ L017020?:
 	clr	b.7 ; Clear the sign bit
 	orl	a,b
 	jz	L017020?
-;	sourcecode.c:364: waitms(period*1000/4);
+;	sourcecode.c:363: waitms(period*1000/4);
 	push	_main_period_1_76
 	push	(_main_period_1_76 + 1)
 	push	(_main_period_1_76 + 2)
@@ -1664,7 +1695,7 @@ L017020?:
 	mov	_main_sloc0_1_0,dpl
 	mov  (_main_sloc0_1_0 + 1),dph
 	lcall	_waitms
-;	sourcecode.c:365: v1_rms = Volts_at_Pin(QFP32_MUX_P2_2) / 1.41321356237;
+;	sourcecode.c:364: v1_rms = Volts_at_Pin(QFP32_MUX_P2_2) / 1.41321356237;
 	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
 	mov	r4,dpl
@@ -1695,7 +1726,7 @@ L017020?:
 	pop	ar0
 	pop	ar7
 	pop	ar6
-;	sourcecode.c:367: while(Volts_at_Pin(QFP32_MUX_P2_1) > 0); //wait for zero cross of other signal
+;	sourcecode.c:366: while(Volts_at_Pin(QFP32_MUX_P2_1) > 0); //wait for zero cross of other signal
 L017023?:
 	mov	dpl,#0x0E
 	push	ar6
@@ -1727,7 +1758,7 @@ L017023?:
 	pop	ar6
 	mov	a,r2
 	jnz	L017023?
-;	sourcecode.c:368: while(Volts_at_Pin(QFP32_MUX_P2_1) == 0);
+;	sourcecode.c:367: while(Volts_at_Pin(QFP32_MUX_P2_1) == 0);
 L017026?:
 	mov	dpl,#0x0E
 	push	ar6
@@ -1750,7 +1781,7 @@ L017026?:
 	clr	b.7 ; Clear the sign bit
 	orl	a,b
 	jz	L017026?
-;	sourcecode.c:369: waitms(period*1000/4);
+;	sourcecode.c:368: waitms(period*1000/4);
 	mov	dpl,_main_sloc0_1_0
 	mov	dph,(_main_sloc0_1_0 + 1)
 	push	ar6
@@ -1758,7 +1789,7 @@ L017026?:
 	push	ar0
 	push	ar1
 	lcall	_waitms
-;	sourcecode.c:370: v2_rms = Volts_at_Pin(QFP32_MUX_P2_1) / 1.41321356237;
+;	sourcecode.c:369: v2_rms = Volts_at_Pin(QFP32_MUX_P2_1) / 1.41321356237;
 	mov	dpl,#0x0E
 	lcall	_Volts_at_Pin
 	mov	r2,dpl
@@ -1789,15 +1820,15 @@ L017026?:
 	pop	ar0
 	pop	ar7
 	pop	ar6
-;	sourcecode.c:374: TR0=0; // Stop timer 0
+;	sourcecode.c:373: TR0=0; // Stop timer 0
 	clr	_TR0
-;	sourcecode.c:375: overflow_count = 0;
+;	sourcecode.c:374: overflow_count = 0;
 	mov	_overflow_count,#0x00
-;	sourcecode.c:376: TH0=0; TL0=0; TF0 = 0; 		// Reset the timer
+;	sourcecode.c:375: TH0=0; TL0=0; TF0 = 0; 		// Reset the timer
 	mov	_TH0,#0x00
 	mov	_TL0,#0x00
 	clr	_TF0
-;	sourcecode.c:378: while (Volts_at_Pin(QFP32_MUX_P2_2) != 0); 	
+;	sourcecode.c:377: while (Volts_at_Pin(QFP32_MUX_P2_2) != 0); 	
 L017029?:
 	mov	dpl,#0x0F
 	push	ar6
@@ -1820,7 +1851,7 @@ L017029?:
 	clr	b.7 ; Clear the sign bit
 	orl	a,b
 	jnz	L017029?
-;	sourcecode.c:379: while (Volts_at_Pin(QFP32_MUX_P2_2) == 0); 			// Wait for reference signal to be zero
+;	sourcecode.c:378: while (Volts_at_Pin(QFP32_MUX_P2_2) == 0); 			// Wait for reference signal to be zero
 L017032?:
 	mov	dpl,#0x0F
 	push	ar6
@@ -1843,9 +1874,9 @@ L017032?:
 	clr	b.7 ; Clear the sign bit
 	orl	a,b
 	jz	L017032?
-;	sourcecode.c:380: TR0=1; // start timer
+;	sourcecode.c:379: TR0=1; // start timer
 	setb	_TR0
-;	sourcecode.c:381: while (Volts_at_Pin(QFP32_MUX_P2_1) != 0) {
+;	sourcecode.c:380: while (Volts_at_Pin(QFP32_MUX_P2_1) != 0) {
 L017037?:
 	mov	dpl,#0x0E
 	push	ar6
@@ -1868,14 +1899,14 @@ L017037?:
 	clr	b.7 ; Clear the sign bit
 	orl	a,b
 	jz	L017042?
-;	sourcecode.c:382: if (TF0 == 1) { // Did the 16-bit timer overflow?
-;	sourcecode.c:383: TF0 = 0;
-	jbc	_TF0,L017088?
+;	sourcecode.c:381: if (TF0 == 1) { // Did the 16-bit timer overflow?
+;	sourcecode.c:382: TF0 = 0;
+	jbc	_TF0,L017092?
 	sjmp	L017037?
-L017088?:
-;	sourcecode.c:384: overflow_count++;
+L017092?:
+;	sourcecode.c:383: overflow_count++;
 	inc	_overflow_count
-;	sourcecode.c:387: while (Volts_at_Pin(QFP32_MUX_P2_1) == 0) { // Wait for test signal to hit zero
+;	sourcecode.c:386: while (Volts_at_Pin(QFP32_MUX_P2_1) == 0) { // Wait for test signal to hit zero
 	sjmp	L017037?
 L017042?:
 	mov	dpl,#0x0E
@@ -1899,18 +1930,18 @@ L017042?:
 	clr	b.7 ; Clear the sign bit
 	orl	a,b
 	jnz	L017044?
-;	sourcecode.c:388: if (TF0 == 1) { // Did the 16-bit timer overflow?
-;	sourcecode.c:389: TF0 = 0;
-	jbc	_TF0,L017090?
+;	sourcecode.c:387: if (TF0 == 1) { // Did the 16-bit timer overflow?
+;	sourcecode.c:388: TF0 = 0;
+	jbc	_TF0,L017094?
 	sjmp	L017042?
-L017090?:
-;	sourcecode.c:390: overflow_count++;
+L017094?:
+;	sourcecode.c:389: overflow_count++;
 	inc	_overflow_count
 	sjmp	L017042?
 L017044?:
-;	sourcecode.c:393: TR0=0; // stop timer
+;	sourcecode.c:392: TR0=0; // stop timer
 	clr	_TR0
-;	sourcecode.c:397: time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+;	sourcecode.c:396: time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
 	mov	dpl,_overflow_count
 	push	ar6
 	push	ar7
@@ -2013,7 +2044,7 @@ L017044?:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	sourcecode.c:398: Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
+;	sourcecode.c:397: Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
 	push	ar2
 	push	ar3
 	push	ar4
@@ -2049,7 +2080,11 @@ L017044?:
 	pop	ar0
 	pop	ar7
 	pop	ar6
-;	sourcecode.c:400: printf("T=%fms, Phase: %f, v1_Rms:%f, v2_Rms:%f\r", 
+;	sourcecode.c:399: printf("T=%fms, Phase: %f, v1_Rms:%f, v2_Rms:%f\r", 
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
 	push	_v2_rms
 	push	(_v2_rms + 1)
 	push	(_v2_rms + 2)
@@ -2076,7 +2111,199 @@ L017044?:
 	mov	a,sp
 	add	a,#0xed
 	mov	sp,a
-	ljmp	L017046?
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+;	sourcecode.c:402: if (Phase_Shift > 180) {
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	clr	a
+	push	acc
+	push	acc
+	mov	a,#0x34
+	push	acc
+	mov	a,#0x43
+	push	acc
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsgt
+	mov	r6,dpl
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	mov	a,r6
+	jz	L017046?
+;	sourcecode.c:403: Phase_Shift = 360 - Phase_Shift;
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	dptr,#0x0000
+	mov	b,#0xB4
+	mov	a,#0x43
+	lcall	___fssub
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	sourcecode.c:404: LCDprint2("-", 1, 11);
+	mov	_LCDprint2_PARM_2,#0x01
+	mov	_LCDprint2_PARM_3,#0x0B
+	mov	dptr,#__str_8
+	mov	b,#0x80
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	_LCDprint2
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+	sjmp	L017047?
+L017046?:
+;	sourcecode.c:407: LCDprint2(" ", 1, 11);
+	mov	_LCDprint2_PARM_2,#0x01
+	mov	_LCDprint2_PARM_3,#0x0B
+	mov	dptr,#__str_9
+	mov	b,#0x80
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	lcall	_LCDprint2
+	pop	ar5
+	pop	ar4
+	pop	ar3
+	pop	ar2
+L017047?:
+;	sourcecode.c:413: sprintf(str_frequency, "%2.0f", frequency);
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	push	_main_frequency_1_76
+	push	(_main_frequency_1_76 + 1)
+	push	(_main_frequency_1_76 + 2)
+	push	(_main_frequency_1_76 + 3)
+	mov	a,#__str_10
+	push	acc
+	mov	a,#(__str_10 >> 8)
+	push	acc
+	mov	a,#0x80
+	push	acc
+	mov	a,#_main_str_frequency_1_76
+	push	acc
+	mov	a,#(_main_str_frequency_1_76 >> 8)
+	push	acc
+	mov	a,#0x40
+	push	acc
+	lcall	_sprintf
+	mov	a,sp
+	add	a,#0xf6
+	mov	sp,a
+;	sourcecode.c:414: sprintf(str_vref, "%1.2f", v1_rms);	
+	push	_v1_rms
+	push	(_v1_rms + 1)
+	push	(_v1_rms + 2)
+	push	(_v1_rms + 3)
+	mov	a,#__str_11
+	push	acc
+	mov	a,#(__str_11 >> 8)
+	push	acc
+	mov	a,#0x80
+	push	acc
+	mov	a,#_main_str_vref_1_76
+	push	acc
+	mov	a,#(_main_str_vref_1_76 >> 8)
+	push	acc
+	mov	a,#0x40
+	push	acc
+	lcall	_sprintf
+	mov	a,sp
+	add	a,#0xf6
+	mov	sp,a
+;	sourcecode.c:415: sprintf(str_vtest, "%1.2f", v2_rms); 
+	push	_v2_rms
+	push	(_v2_rms + 1)
+	push	(_v2_rms + 2)
+	push	(_v2_rms + 3)
+	mov	a,#__str_11
+	push	acc
+	mov	a,#(__str_11 >> 8)
+	push	acc
+	mov	a,#0x80
+	push	acc
+	mov	a,#_main_str_vtest_1_76
+	push	acc
+	mov	a,#(_main_str_vtest_1_76 >> 8)
+	push	acc
+	mov	a,#0x40
+	push	acc
+	lcall	_sprintf
+	mov	a,sp
+	add	a,#0xf6
+	mov	sp,a
+;	sourcecode.c:416: sprintf(str_phase, "%3f", Phase_Shift);
+	mov	a,#__str_12
+	push	acc
+	mov	a,#(__str_12 >> 8)
+	push	acc
+	mov	a,#0x80
+	push	acc
+	mov	a,#_main_str_phase_1_76
+	push	acc
+	mov	a,#(_main_str_phase_1_76 >> 8)
+	push	acc
+	mov	a,#0x40
+	push	acc
+	lcall	_sprintf
+	mov	a,sp
+	add	a,#0xf6
+	mov	sp,a
+;	sourcecode.c:419: LCDprint2(str_frequency, 1, 2); //string, row, column
+	mov	_LCDprint2_PARM_2,#0x01
+	mov	_LCDprint2_PARM_3,#0x02
+	mov	dptr,#_main_str_frequency_1_76
+	mov	b,#0x40
+	lcall	_LCDprint2
+;	sourcecode.c:420: LCDprint2(str_phase, 1, 12); //string, row, column
+	mov	_LCDprint2_PARM_2,#0x01
+	mov	_LCDprint2_PARM_3,#0x0C
+	mov	dptr,#_main_str_phase_1_76
+	mov	b,#0x40
+	lcall	_LCDprint2
+;	sourcecode.c:421: LCDprint2(str_vref, 2, 3); //string, row, column
+	mov	_LCDprint2_PARM_2,#0x02
+	mov	_LCDprint2_PARM_3,#0x03
+	mov	dptr,#_main_str_vref_1_76
+	mov	b,#0x40
+	lcall	_LCDprint2
+;	sourcecode.c:422: LCDprint2(str_vtest, 2, 12); //string, row, column
+	mov	_LCDprint2_PARM_2,#0x02
+	mov	_LCDprint2_PARM_3,#0x0C
+	mov	dptr,#_main_str_vtest_1_76
+	mov	b,#0x40
+	lcall	_LCDprint2
+;	sourcecode.c:425: LCDprint2("Hz ", 1, 4);
+	mov	_LCDprint2_PARM_2,#0x01
+	mov	_LCDprint2_PARM_3,#0x04
+	mov	dptr,#__str_13
+	mov	b,#0x80
+	lcall	_LCDprint2
+	ljmp	L017049?
 	rseg R_CSEG
 
 	rseg R_XINIT
@@ -2102,10 +2329,10 @@ __str_3:
 	db 'Mar  7 2024'
 	db 0x00
 __str_4:
-	db '00:14:16'
+	db '02:02:29'
 	db 0x00
 __str_5:
-	db 'F:XXHz   PH:_XXX'
+	db 'F:XXHz  PH:.XXX '
 	db 0x00
 __str_6:
 	db 'VR:X.XX  VT:X.XX'
@@ -2113,6 +2340,24 @@ __str_6:
 __str_7:
 	db 'T=%fms, Phase: %f, v1_Rms:%f, v2_Rms:%f'
 	db 0x0D
+	db 0x00
+__str_8:
+	db '-'
+	db 0x00
+__str_9:
+	db ' '
+	db 0x00
+__str_10:
+	db '%2.0f'
+	db 0x00
+__str_11:
+	db '%1.2f'
+	db 0x00
+__str_12:
+	db '%3f'
+	db 0x00
+__str_13:
+	db 'Hz '
 	db 0x00
 
 	CSEG
