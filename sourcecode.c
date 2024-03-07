@@ -282,8 +282,10 @@ void main (void)
 		TH0=0; TL0=0; TF0 = 0; 		// Reset the timer
 
 		while (P0_6 != 0); 			// Wait for reference signal to be zero
+		waitms(1);
 		TR0=1; // start timer
 		P3_2=1; //set pin high for testing
+		//printf("ref hit 0\n\n");
 
 		while (P0_1 != 0) { 		// Wait for test signal to hit zero
 			if (TF0 == 1) { // Did the 16-bit timer overflow?
@@ -291,14 +293,20 @@ void main (void)
 				overflow_count++;
 			}
 		}
+//		waitms(1);
 		TR0=0;
 		P3_2=0;
+		//printf("test hit 0\n\n");
 
 		// Do some math to find phase shift
-		time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+		printf("overflow count:%d, %d, %d\n", 
+		overflow_count, TH0, TL0);
+		//time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+		time_difference = (TH0*256.0+TL0)*(12.0/SYSCLK);
 		Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
 		
-		printf("Period: T=%fms, Time difference: %5.5fms, Phase shift: %f \n", period*1000.0, time_difference*1000.0, Phase_Shift);
+		printf("T=%fms, Time diff: %5.5fms, Phase: %f \n", 
+		period*1000.0, time_difference*1000.0, Phase_Shift);
 
 
 //		printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
