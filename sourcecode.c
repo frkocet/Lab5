@@ -10,6 +10,7 @@
 #define SYSCLK 72000000L
 #define BAUDRATE 115200L
 #define SARCLK 18000000L
+#define TIMER_2_FREQ 7200L
 
 #define LCD_RS P1_7
 // #define LCD_RW Px_x // Not used in this code.  Connect to GND
@@ -23,6 +24,7 @@
 #define TOGGLE_BUTTON P2_4
 #define HOLD_BUTTON P3_7
 #define LED_OUT P2_1
+#define SWAP_BUTTON P2_5
 
 unsigned char overflow_count;
 
@@ -31,10 +33,11 @@ float v1 = 0; float v2 = 0;
 
 char _c51_external_startup (void)
 {
-	// Disable Watchdog with key sequence
-	SFRPAGE = 0x00;
-	WDTCN = 0xDE; //First key
-	WDTCN = 0xAD; //Second key
+	// Enable Watchdog
+	//SFRPAGE = 0x00;
+	//WDTCN = 0b_0000_0010;
+	//WDTCN = 0xDE; //First key
+	//WDTCN = 0xAD; //Second key
   
 	VDM0CN=0x80;       // enable VDD monitor
 	RSTSRC=0x02|0x04;  // Enable reset on missing clock detector and VDD
@@ -215,10 +218,7 @@ void TIMER0_Init(void)
 	TR0=0; // Stop Timer/Counter 0
 }
 
-void Timer2_Init(void) // initialize timer 2
-{
 
-}
 
 void LCD_pulse (void)
 {
@@ -305,14 +305,17 @@ void main (void)
 	float Phase_Shift;
 	float time_difference;
 	float frequency;
+	float angfrequency;
+	unsigned int bonus_counter = 0; 
 
-	unsigned char str_frequency[6];
-	unsigned char str_vref[6];
-	unsigned char str_vtest[6];
-	unsigned char str_phase[6];
+	unsigned char str_frequency[4];
+	unsigned char str_vref[5];
+	unsigned char str_vtest[5];
+	unsigned char str_phase[4];
+	unsigned char str_period[4]; 
+	unsigned char str_angfrequency[4]; 
 
 	TIMER0_Init();
-	Timer2_Init(); //initialize and start timer 2
 
 	// Configure the LCD
 	LCD_4BIT();
@@ -326,9 +329,9 @@ void main (void)
 	        __FILE__, __DATE__, __TIME__);
 
 	// Starting message on LCD, looks like:
-	// 'F : X X H z       P H : _ X X X'
+	// 'F : X X H z         P : _ X X X'
 	// 'V R : X . X X     V T : X . X X'
-	LCDprint2("F:XXHz  PH:.XXX ", 1, 0); //string, row, column
+	LCDprint2("F:XXHz   P:  .XXX", 1, 0); //string, row, column
 	LCDprint2("VR:X.XX  VT:X.XX", 2, 0); //string, row, column
 	
 	InitPinADC(2, 1); // Configure P2.1 as analog input
@@ -344,10 +347,8 @@ void main (void)
 		TF0 = 0;
 		overflow_count = 0;
 
-		// Reset timer 2 so it doesnt overflow
-		TL2 = 0;
-		TH2 = 0;
-		TF2 = 0;
+		//Feed the dog
+
 
 		
 		while(Volts_at_Pin(QFP32_MUX_P2_2) > 0); // Wait for the signal to be zero
@@ -369,6 +370,7 @@ void main (void)
 		period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK)*(2);
 
 		frequency = 1.0/period;
+		angfrequency = frequency * 2 * 3.1415926535; 
 
 		while(Volts_at_Pin(QFP32_MUX_P2_2) > 0);
 		while(Volts_at_Pin(QFP32_MUX_P2_2) == 0);
@@ -418,23 +420,53 @@ void main (void)
 		else {
 			LCDprint2(" ", 1, 11);
 		}
+		
+		/////////////////BONUS SWAP BUTTON///////////////
+		
+		if (SWAP_BUTTON == 0) {  // Check if the BOOT button between P3.7 and ground is pressed
+			waitms(50); // De-bounce
+			if (SWAP_BUTTON == 0) {
+				while(SWAP_BUTTON == 0); // Wait for push-button release
+				bonus_counter++;
+			}
+		}
+
+		if (bonus_counter == 1) {
+			sprintf(str_period, "%3.1f", period*1000);
+			LCDprint2(str_period, 1, 2); //string, row, column
+			LCDprint2("T:", 1, 0);
+			LCDprint2("ms", 1, 7);
+		} 
+		else if (bonus_counter == 2) {
+			sprintf(str_angfrequency, "%3.0f", angfrequency);
+			LCDprint2(str_angfrequency, 1, 2); //string, row, column
+			LCDprint2("w:", 1, 0);
+			LCDprint2("rad ", 1, 5);
+		} 
+		else {
+			bonus_counter = 0;
+			sprintf(str_frequency, "%2.0f", frequency);
+			LCDprint2(str_frequency, 1, 2); //string, row, column
+			LCDprint2("Hz  ", 1, 4);
+			LCDprint2("F:", 1, 0);
+		}
+		
+		/////////////////////////////////////////////////
+
 
 		/////////////////LCD DISPLAYING/////////////////
 		
 		// Convert floats to strings
-		sprintf(str_frequency, "%2.0f", frequency);
+//		sprintf(str_frequency, "%2.0f", frequency);
 		sprintf(str_vref, "%1.2f", v1_rms);	
 		sprintf(str_vtest, "%1.2f", v2_rms); 
 		sprintf(str_phase, "%3f", Phase_Shift);
 		
 		// Print values on screen 
-		LCDprint2(str_frequency, 1, 2); //string, row, column
+//		LCDprint2(str_frequency, 1, 2); //string, row, column
 		LCDprint2(str_phase, 1, 12); //string, row, column
 		LCDprint2(str_vref, 2, 3); //string, row, column
 		LCDprint2(str_vtest, 2, 12); //string, row, column
-		
-		// Formatting
-		LCDprint2("Hz ", 1, 4);
 
 		////////////////////////////////////////////////
 		

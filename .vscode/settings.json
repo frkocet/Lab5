@@ -60,6 +60,7 @@
   "C_Cpp.errorSquiggles": "enabled",
   "files.associations": {
     "*.h51": "8051",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "stdio.h": "c"
   }
 }
