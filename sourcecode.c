@@ -34,8 +34,8 @@ float v1 = 0; float v2 = 0;
 char _c51_external_startup (void)
 {
 	// Enable Watchdog
-	//SFRPAGE = 0x00;
-	//WDTCN = 0b_0000_0010;
+	SFRPAGE = 0x00;
+	WDTCN = 0b_0000_0010;
 	//WDTCN = 0xDE; //First key
 	//WDTCN = 0xAD; //Second key
   
