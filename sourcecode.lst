@@ -1,7 +1,7 @@
 0000              1   ;--------------------------------------------------------
 0000              2   ; File Created by C51
 0000              3   ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-0000              4   ; This file was generated Thu Mar 07 05:40:12 2024
+0000              4   ; This file was generated Thu Mar 07 06:29:01 2024
 0000              5   ;--------------------------------------------------------
                   5   $name sourcecode
                   6   $optc51 --model-small
@@ -631,83 +631,83 @@
 0000            631   ;        -----------------------------------------
 0000            632   __c51_external_startup:
 0000            633            using   0
-0000            634   ;        sourcecode.c:42: VDM0CN=0x80;       // enable VDD monitor
+0000            634   ;        sourcecode.c:40: VDM0CN=0x80;       // enable VDD monitor
 0000 75FF80     635            mov     _VDM0CN,#0x80
-0003            636   ;        sourcecode.c:43: RSTSRC=0x02|0x04;  // Enable reset on missing clock detector and VDD
+0003            636   ;        sourcecode.c:41: RSTSRC=0x02|0x04;  // Enable reset on missing clock detector and VDD
 0003 75EF06     637            mov     _RSTSRC,#0x06
-0006            638   ;        sourcecode.c:50: SFRPAGE = 0x10;
+0006            638   ;        sourcecode.c:48: SFRPAGE = 0x10;
 0006 75A710     639            mov     _SFRPAGE,#0x10
-0009            640   ;        sourcecode.c:51: PFE0CN  = 0x20; // SYSCLK < 75 MHz.
+0009            640   ;        sourcecode.c:49: PFE0CN  = 0x20; // SYSCLK < 75 MHz.
 0009 75C120     641            mov     _PFE0CN,#0x20
-000C            642   ;        sourcecode.c:52: SFRPAGE = 0x00;
+000C            642   ;        sourcecode.c:50: SFRPAGE = 0x00;
 000C 75A700     643            mov     _SFRPAGE,#0x00
-000F            644   ;        sourcecode.c:73: CLKSEL = 0x00;
+000F            644   ;        sourcecode.c:71: CLKSEL = 0x00;
 000F 75A900     645            mov     _CLKSEL,#0x00
-0012            646   ;        sourcecode.c:74: CLKSEL = 0x00;
+0012            646   ;        sourcecode.c:72: CLKSEL = 0x00;
 0012 75A900     647            mov     _CLKSEL,#0x00
-0015            648   ;        sourcecode.c:75: while ((CLKSEL & 0x80) == 0);
+0015            648   ;        sourcecode.c:73: while ((CLKSEL & 0x80) == 0);
 0015            649   L002001?:
 0015 E5A9       650            mov     a,_CLKSEL
 0017 30E700     651            jnb     acc.7,L002001?
-001A            652   ;        sourcecode.c:76: CLKSEL = 0x03;
+001A            652   ;        sourcecode.c:74: CLKSEL = 0x03;
 001A 75A903     653            mov     _CLKSEL,#0x03
-001D            654   ;        sourcecode.c:77: CLKSEL = 0x03;
+001D            654   ;        sourcecode.c:75: CLKSEL = 0x03;
 001D 75A903     655            mov     _CLKSEL,#0x03
-0020            656   ;        sourcecode.c:78: while ((CLKSEL & 0x80) == 0);
+0020            656   ;        sourcecode.c:76: while ((CLKSEL & 0x80) == 0);
 0020            657   L002004?:
 0020 E5A9       658            mov     a,_CLKSEL
 0022 30E780     659            jnb     acc.7,L002004?
-0025            660   ;        sourcecode.c:83: P0MDOUT |= 0x10; // Enable UART0 TX as push-pull output
+0025            660   ;        sourcecode.c:81: P0MDOUT |= 0x10; // Enable UART0 TX as push-pull output
 0025 43A410     661            orl     _P0MDOUT,#0x10
-0028            662   ;        sourcecode.c:84: XBR0     = 0x01; // Enable UART0 on P0.4(TX) and P0.5(RX)                     
+0028            662   ;        sourcecode.c:82: XBR0     = 0x01; // Enable UART0 on P0.4(TX) and P0.5(RX)                     
 0028 75E101     663            mov     _XBR0,#0x01
-002B            664   ;        sourcecode.c:85: XBR1     = 0X00;
+002B            664   ;        sourcecode.c:83: XBR1     = 0X00;
 002B 75E200     665            mov     _XBR1,#0x00
-002E            666   ;        sourcecode.c:86: XBR2     = 0x40; // Enable crossbar and weak pull-ups
+002E            666   ;        sourcecode.c:84: XBR2     = 0x40; // Enable crossbar and weak pull-ups
 002E 75E340     667            mov     _XBR2,#0x40
-0031            668   ;        sourcecode.c:92: SCON0 = 0x10;
+0031            668   ;        sourcecode.c:90: SCON0 = 0x10;
 0031 759810     669            mov     _SCON0,#0x10
-0034            670   ;        sourcecode.c:93: TH1 = 0x100-((SYSCLK/BAUDRATE)/(2L*12L));
+0034            670   ;        sourcecode.c:91: TH1 = 0x100-((SYSCLK/BAUDRATE)/(2L*12L));
 0034 758DE6     671            mov     _TH1,#0xE6
-0037            672   ;        sourcecode.c:94: TL1 = TH1;      // Init Timer1
+0037            672   ;        sourcecode.c:92: TL1 = TH1;      // Init Timer1
 0037 858D8B     673            mov     _TL1,_TH1
-003A            674   ;        sourcecode.c:95: TMOD &= ~0xf0;  // TMOD: timer 1 in 8-bit auto-reload
+003A            674   ;        sourcecode.c:93: TMOD &= ~0xf0;  // TMOD: timer 1 in 8-bit auto-reload
 003A 53890F     675            anl     _TMOD,#0x0F
-003D            676   ;        sourcecode.c:96: TMOD |=  0x20;                       
+003D            676   ;        sourcecode.c:94: TMOD |=  0x20;                       
 003D 438920     677            orl     _TMOD,#0x20
-0040            678   ;        sourcecode.c:97: TR1 = 1; // START Timer1
+0040            678   ;        sourcecode.c:95: TR1 = 1; // START Timer1
 0040 D28E       679            setb    _TR1
-0042            680   ;        sourcecode.c:98: TI = 1;  // Indicate TX0 ready
+0042            680   ;        sourcecode.c:96: TI = 1;  // Indicate TX0 ready
 0042 D299       681            setb    _TI
-0044            682   ;        sourcecode.c:100: return 0;
+0044            682   ;        sourcecode.c:98: return 0;
 0044 758200     683            mov     dpl,#0x00
 0047 22         684            ret
 0048            685   ;------------------------------------------------------------
 0048            686   ;Allocation info for local variables in function 'InitADC'
 0048            687   ;------------------------------------------------------------
 0048            688   ;------------------------------------------------------------
-0048            689   ;        sourcecode.c:103: void InitADC (void)
+0048            689   ;        sourcecode.c:101: void InitADC (void)
 0048            690   ;        -----------------------------------------
 0048            691   ;         function InitADC
 0048            692   ;        -----------------------------------------
 0048            693   _InitADC:
-0048            694   ;        sourcecode.c:105: SFRPAGE = 0x00;
+0048            694   ;        sourcecode.c:103: SFRPAGE = 0x00;
 0048 75A700     695            mov     _SFRPAGE,#0x00
-004B            696   ;        sourcecode.c:106: ADEN=0; // Disable ADC
+004B            696   ;        sourcecode.c:104: ADEN=0; // Disable ADC
 004B C2EF       697            clr     _ADEN
-004D            698   ;        sourcecode.c:111: (0x0 << 0) ; // Accumulate n conversions: 0x0: 1, 0x1:4, 0x2:8, 0x3:16, 0x4:32
+004D            698   ;        sourcecode.c:109: (0x0 << 0) ; // Accumulate n conversions: 0x0: 1, 0x1:4, 0x2:8, 0x3:16, 0x4:32
 004D 75B280     699            mov     _ADC0CN1,#0x80
-0050            700   ;        sourcecode.c:115: (0x0 << 2); // 0:SYSCLK ADCCLK = SYSCLK. 1:HFOSC0 ADCCLK = HFOSC0.
+0050            700   ;        sourcecode.c:113: (0x0 << 2); // 0:SYSCLK ADCCLK = SYSCLK. 1:HFOSC0 ADCCLK = HFOSC0.
 0050 75BC20     701            mov     _ADC0CF0,#0x20
-0053            702   ;        sourcecode.c:119: (0x1E << 0); // Conversion Tracking Time. Tadtk = ADTK / (Fsarclk)
+0053            702   ;        sourcecode.c:117: (0x1E << 0); // Conversion Tracking Time. Tadtk = ADTK / (Fsarclk)
 0053 75B91E     703            mov     _ADC0CF1,#0x1E
-0056            704   ;        sourcecode.c:128: (0x0 << 0) ; // TEMPE. 0: Disable the Temperature Sensor. 1: Enable the Temperature Sensor.
+0056            704   ;        sourcecode.c:126: (0x0 << 0) ; // TEMPE. 0: Disable the Temperature Sensor. 1: Enable the Temperature Sensor.
 0056 75E800     705            mov     _ADC0CN0,#0x00
-0059            706   ;        sourcecode.c:133: (0x1F << 0); // ADPWR. Power Up Delay Time. Tpwrtime = ((4 * (ADPWR + 1)) + 2) / (Fadcclk)
+0059            706   ;        sourcecode.c:131: (0x1F << 0); // ADPWR. Power Up Delay Time. Tpwrtime = ((4 * (ADPWR + 1)) + 2) / (Fadcclk)
 0059 75DF3F     707            mov     _ADC0CF2,#0x3F
-005C            708   ;        sourcecode.c:137: (0x0 << 0) ; // ADCM. 0x0: ADBUSY, 0x1: TIMER0, 0x2: TIMER2, 0x3: TIMER3, 0x4: CNVSTR, 0x5: CEX5, 0x6: TIMER4, 0x7: TIMER5, 0x8: CLU0, 0x9: CLU1, 0xA: CLU2, 0xB: CLU3
+005C            708   ;        sourcecode.c:135: (0x0 << 0) ; // ADCM. 0x0: ADBUSY, 0x1: TIMER0, 0x2: TIMER2, 0x3: TIMER3, 0x4: CNVSTR, 0x5: CEX5, 0x6: TIMER4, 0x7: TIMER5, 0x8: CLU0, 0x9: CLU1, 0xA: CLU2, 0xB: CLU3
 005C 75B300     709            mov     _ADC0CN2,#0x00
-005F            710   ;        sourcecode.c:139: ADEN=1; // Enable ADC
+005F            710   ;        sourcecode.c:137: ADEN=1; // Enable ADC
 005F D2EF       711            setb    _ADEN
 0061 22         712            ret
 0062            713   ;------------------------------------------------------------
@@ -716,40 +716,40 @@
 0062            716   ;us                        Allocated to registers r2 
 0062            717   ;i                         Allocated to registers r3 
 0062            718   ;------------------------------------------------------------
-0062            719   ;        sourcecode.c:143: void Timer3us(unsigned char us)
+0062            719   ;        sourcecode.c:141: void Timer3us(unsigned char us)
 0062            720   ;        -----------------------------------------
 0062            721   ;         function Timer3us
 0062            722   ;        -----------------------------------------
 0062            723   _Timer3us:
 0062 AA82       724            mov     r2,dpl
-0064            725   ;        sourcecode.c:148: CKCON0|=0b_0100_0000;
+0064            725   ;        sourcecode.c:146: CKCON0|=0b_0100_0000;
 0064 438E40     726            orl     _CKCON0,#0x40
-0067            727   ;        sourcecode.c:150: TMR3RL = (-(SYSCLK)/1000000L); // Set Timer3 to overflow in 1us.
+0067            727   ;        sourcecode.c:148: TMR3RL = (-(SYSCLK)/1000000L); // Set Timer3 to overflow in 1us.
 0067 7592B8     728            mov     _TMR3RL,#0xB8
 006A 7593FF     729            mov     (_TMR3RL >> 8),#0xFF
-006D            730   ;        sourcecode.c:151: TMR3 = TMR3RL;                 // Initialize Timer3 for first overflow
+006D            730   ;        sourcecode.c:149: TMR3 = TMR3RL;                 // Initialize Timer3 for first overflow
 006D 859294     731            mov     _TMR3,_TMR3RL
 0070 859395     732            mov     (_TMR3 >> 8),(_TMR3RL >> 8)
-0073            733   ;        sourcecode.c:153: TMR3CN0 = 0x04;                 // Sart Timer3 and clear overflow flag
+0073            733   ;        sourcecode.c:151: TMR3CN0 = 0x04;                 // Sart Timer3 and clear overflow flag
 0073 759104     734            mov     _TMR3CN0,#0x04
-0076            735   ;        sourcecode.c:154: for (i = 0; i < us; i++)       // Count <us> overflows
+0076            735   ;        sourcecode.c:152: for (i = 0; i < us; i++)       // Count <us> overflows
 0076 7B00       736            mov     r3,#0x00
 0078            737   L004004?:
 0078 C3         738            clr     c
 0079 EB         739            mov     a,r3
 007A 9A         740            subb    a,r2
 007B 5000       741            jnc     L004007?
-007D            742   ;        sourcecode.c:156: while (!(TMR3CN0 & 0x80));  // Wait for overflow
+007D            742   ;        sourcecode.c:154: while (!(TMR3CN0 & 0x80));  // Wait for overflow
 007D            743   L004001?:
 007D E591       744            mov     a,_TMR3CN0
 007F 30E780     745            jnb     acc.7,L004001?
-0082            746   ;        sourcecode.c:157: TMR3CN0 &= ~(0x80);         // Clear overflow indicator
+0082            746   ;        sourcecode.c:155: TMR3CN0 &= ~(0x80);         // Clear overflow indicator
 0082 53917F     747            anl     _TMR3CN0,#0x7F
-0085            748   ;        sourcecode.c:154: for (i = 0; i < us; i++)       // Count <us> overflows
+0085            748   ;        sourcecode.c:152: for (i = 0; i < us; i++)       // Count <us> overflows
 0085 0B         749            inc     r3
 0086 8000       750            sjmp    L004004?
 0088            751   L004007?:
-0088            752   ;        sourcecode.c:159: TMR3CN0 = 0 ;                   // Stop Timer3 and clear overflow flag
+0088            752   ;        sourcecode.c:157: TMR3CN0 = 0 ;                   // Stop Timer3 and clear overflow flag
 0088 759100     753            mov     _TMR3CN0,#0x00
 008B 22         754            ret
 008C            755   ;------------------------------------------------------------
@@ -759,14 +759,14 @@
 008C            759   ;j                         Allocated to registers r4 r5 
 008C            760   ;k                         Allocated to registers r6 
 008C            761   ;------------------------------------------------------------
-008C            762   ;        sourcecode.c:162: void waitms (unsigned int ms)
+008C            762   ;        sourcecode.c:160: void waitms (unsigned int ms)
 008C            763   ;        -----------------------------------------
 008C            764   ;         function waitms
 008C            765   ;        -----------------------------------------
 008C            766   _waitms:
 008C AA82       767            mov     r2,dpl
 008E AB83       768            mov     r3,dph
-0090            769   ;        sourcecode.c:166: for(j=0; j<ms; j++)
+0090            769   ;        sourcecode.c:164: for(j=0; j<ms; j++)
 0090 7C00       770            mov     r4,#0x00
 0092 7D00       771            mov     r5,#0x00
 0094            772   L005005?:
@@ -776,7 +776,7 @@
 0097 ED         776            mov     a,r5
 0098 9B         777            subb    a,r3
 0099 5000       778            jnc     L005009?
-009B            779   ;        sourcecode.c:167: for (k=0; k<4; k++) Timer3us(250);
+009B            779   ;        sourcecode.c:165: for (k=0; k<4; k++) Timer3us(250);
 009B 7E00       780            mov     r6,#0x00
 009D            781   L005001?:
 009D BE04C0     782            cjne    r6,#0x04,L005018?
@@ -797,7 +797,7 @@
 00BC 0E         797            inc     r6
 00BD 8000       798            sjmp    L005001?
 00BF            799   L005007?:
-00BF            800   ;        sourcecode.c:166: for(j=0; j<ms; j++)
+00BF            800   ;        sourcecode.c:164: for(j=0; j<ms; j++)
 00BF 0C         801            inc     r4
 00C0 BC0000     802            cjne    r4,#0x00,L005005?
 00C3 0D         803            inc     r5
@@ -811,13 +811,13 @@
 00C7            811   ;portno                    Allocated to registers r2 
 00C7            812   ;mask                      Allocated to registers r3 
 00C7            813   ;------------------------------------------------------------
-00C7            814   ;        sourcecode.c:172: void InitPinADC (unsigned char portno, unsigned char pinno)
+00C7            814   ;        sourcecode.c:170: void InitPinADC (unsigned char portno, unsigned char pinno)
 00C7            815   ;        -----------------------------------------
 00C7            816   ;         function InitPinADC
 00C7            817   ;        -----------------------------------------
 00C7            818   _InitPinADC:
 00C7 AA82       819            mov     r2,dpl
-00C9            820   ;        sourcecode.c:176: mask=1<<pinno;
+00C9            820   ;        sourcecode.c:174: mask=1<<pinno;
 00C9 85C8F0     821            mov     b,_InitPinADC_PARM_2
 00CC 05F0       822            inc     b
 00CE 7401       823            mov     a,#0x01
@@ -827,54 +827,54 @@
 00D4            827   L006013?:
 00D4 D5F0C0     828            djnz    b,L006011?
 00D7 FB         829            mov     r3,a
-00D8            830   ;        sourcecode.c:178: SFRPAGE = 0x20;
+00D8            830   ;        sourcecode.c:176: SFRPAGE = 0x20;
 00D8 75A720     831            mov     _SFRPAGE,#0x20
-00DB            832   ;        sourcecode.c:179: switch (portno)
+00DB            832   ;        sourcecode.c:177: switch (portno)
 00DB BA0000     833            cjne    r2,#0x00,L006014?
 00DE 8000       834            sjmp    L006001?
 00E0            835   L006014?:
 00E0 BA0180     836            cjne    r2,#0x01,L006015?
 00E3 8000       837            sjmp    L006002?
 00E5            838   L006015?:
-00E5            839   ;        sourcecode.c:181: case 0:
+00E5            839   ;        sourcecode.c:179: case 0:
 00E5 BA0200     840            cjne    r2,#0x02,L006005?
 00E8 8000       841            sjmp    L006003?
 00EA            842   L006001?:
-00EA            843   ;        sourcecode.c:182: P0MDIN &= (~mask); // Set pin as analog input
+00EA            843   ;        sourcecode.c:180: P0MDIN &= (~mask); // Set pin as analog input
 00EA EB         844            mov     a,r3
 00EB F4         845            cpl     a
 00EC FA         846            mov     r2,a
 00ED 52F1       847            anl     _P0MDIN,a
-00EF            848   ;        sourcecode.c:183: P0SKIP |= mask; // Skip Crossbar decoding for this pin
+00EF            848   ;        sourcecode.c:181: P0SKIP |= mask; // Skip Crossbar decoding for this pin
 00EF EB         849            mov     a,r3
 00F0 42D4       850            orl     _P0SKIP,a
-00F2            851   ;        sourcecode.c:184: break;
-00F2            852   ;        sourcecode.c:185: case 1:
+00F2            851   ;        sourcecode.c:182: break;
+00F2            852   ;        sourcecode.c:183: case 1:
 00F2 8000       853            sjmp    L006005?
 00F4            854   L006002?:
-00F4            855   ;        sourcecode.c:186: P1MDIN &= (~mask); // Set pin as analog input
+00F4            855   ;        sourcecode.c:184: P1MDIN &= (~mask); // Set pin as analog input
 00F4 EB         856            mov     a,r3
 00F5 F4         857            cpl     a
 00F6 FA         858            mov     r2,a
 00F7 52F2       859            anl     _P1MDIN,a
-00F9            860   ;        sourcecode.c:187: P1SKIP |= mask; // Skip Crossbar decoding for this pin
+00F9            860   ;        sourcecode.c:185: P1SKIP |= mask; // Skip Crossbar decoding for this pin
 00F9 EB         861            mov     a,r3
 00FA 42D5       862            orl     _P1SKIP,a
-00FC            863   ;        sourcecode.c:188: break;
-00FC            864   ;        sourcecode.c:189: case 2:
+00FC            863   ;        sourcecode.c:186: break;
+00FC            864   ;        sourcecode.c:187: case 2:
 00FC 8000       865            sjmp    L006005?
 00FE            866   L006003?:
-00FE            867   ;        sourcecode.c:190: P2MDIN &= (~mask); // Set pin as analog input
+00FE            867   ;        sourcecode.c:188: P2MDIN &= (~mask); // Set pin as analog input
 00FE EB         868            mov     a,r3
 00FF F4         869            cpl     a
 0100 FA         870            mov     r2,a
 0101 52F3       871            anl     _P2MDIN,a
-0103            872   ;        sourcecode.c:191: P2SKIP |= mask; // Skip Crossbar decoding for this pin
+0103            872   ;        sourcecode.c:189: P2SKIP |= mask; // Skip Crossbar decoding for this pin
 0103 EB         873            mov     a,r3
 0104 42CC       874            orl     _P2SKIP,a
-0106            875   ;        sourcecode.c:195: }
+0106            875   ;        sourcecode.c:193: }
 0106            876   L006005?:
-0106            877   ;        sourcecode.c:196: SFRPAGE = 0x00;
+0106            877   ;        sourcecode.c:194: SFRPAGE = 0x00;
 0106 75A700     878            mov     _SFRPAGE,#0x00
 0109 22         879            ret
 010A            880   ;------------------------------------------------------------
@@ -882,20 +882,20 @@
 010A            882   ;------------------------------------------------------------
 010A            883   ;pin                       Allocated to registers 
 010A            884   ;------------------------------------------------------------
-010A            885   ;        sourcecode.c:199: unsigned int ADC_at_Pin(unsigned char pin)
+010A            885   ;        sourcecode.c:197: unsigned int ADC_at_Pin(unsigned char pin)
 010A            886   ;        -----------------------------------------
 010A            887   ;         function ADC_at_Pin
 010A            888   ;        -----------------------------------------
 010A            889   _ADC_at_Pin:
 010A 8582BB     890            mov     _ADC0MX,dpl
-010D            891   ;        sourcecode.c:202: ADINT = 0;
+010D            891   ;        sourcecode.c:200: ADINT = 0;
 010D C2ED       892            clr     _ADINT
-010F            893   ;        sourcecode.c:203: ADBUSY = 1;     // Convert voltage at the pin
+010F            893   ;        sourcecode.c:201: ADBUSY = 1;     // Convert voltage at the pin
 010F D2EC       894            setb    _ADBUSY
-0111            895   ;        sourcecode.c:204: while (!ADINT); // Wait for conversion to complete
+0111            895   ;        sourcecode.c:202: while (!ADINT); // Wait for conversion to complete
 0111            896   L007001?:
 0111 30ED80     897            jnb     _ADINT,L007001?
-0114            898   ;        sourcecode.c:205: return (ADC0);
+0114            898   ;        sourcecode.c:203: return (ADC0);
 0114 85BD82     899            mov     dpl,_ADC0
 0117 85BE83     900            mov     dph,(_ADC0 >> 8)
 011A 22         901            ret
@@ -904,12 +904,12 @@
 011B            904   ;------------------------------------------------------------
 011B            905   ;pin                       Allocated to registers r2 
 011B            906   ;------------------------------------------------------------
-011B            907   ;        sourcecode.c:209: float Volts_at_Pin(unsigned char pin)
+011B            907   ;        sourcecode.c:207: float Volts_at_Pin(unsigned char pin)
 011B            908   ;        -----------------------------------------
 011B            909   ;         function Volts_at_Pin
 011B            910   ;        -----------------------------------------
 011B            911   _Volts_at_Pin:
-011B            912   ;        sourcecode.c:211: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
+011B            912   ;        sourcecode.c:209: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
 011B 120000     913            lcall   _ADC_at_Pin
 011E 120000     914            lcall   ___uint2fs
 0121 AA82       915            mov     r2,dpl
@@ -960,33 +960,33 @@
 0176            960   ;Allocation info for local variables in function 'TIMER0_Init'
 0176            961   ;------------------------------------------------------------
 0176            962   ;------------------------------------------------------------
-0176            963   ;        sourcecode.c:214: void TIMER0_Init(void)
+0176            963   ;        sourcecode.c:212: void TIMER0_Init(void)
 0176            964   ;        -----------------------------------------
 0176            965   ;         function TIMER0_Init
 0176            966   ;        -----------------------------------------
 0176            967   _TIMER0_Init:
-0176            968   ;        sourcecode.c:216: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
+0176            968   ;        sourcecode.c:214: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
 0176 5389F0     969            anl     _TMOD,#0xF0
-0179            970   ;        sourcecode.c:217: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
+0179            970   ;        sourcecode.c:215: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
 0179 438901     971            orl     _TMOD,#0x01
-017C            972   ;        sourcecode.c:218: TR0=0; // Stop Timer/Counter 0
+017C            972   ;        sourcecode.c:216: TR0=0; // Stop Timer/Counter 0
 017C C28C       973            clr     _TR0
 017E 22         974            ret
 017F            975   ;------------------------------------------------------------
 017F            976   ;Allocation info for local variables in function 'LCD_pulse'
 017F            977   ;------------------------------------------------------------
 017F            978   ;------------------------------------------------------------
-017F            979   ;        sourcecode.c:223: void LCD_pulse (void)
+017F            979   ;        sourcecode.c:220: void LCD_pulse (void)
 017F            980   ;        -----------------------------------------
 017F            981   ;         function LCD_pulse
 017F            982   ;        -----------------------------------------
 017F            983   _LCD_pulse:
-017F            984   ;        sourcecode.c:225: LCD_E=1;
+017F            984   ;        sourcecode.c:222: LCD_E=1;
 017F D2A0       985            setb    _P2_0
-0181            986   ;        sourcecode.c:226: Timer3us(40);
+0181            986   ;        sourcecode.c:223: Timer3us(40);
 0181 758228     987            mov     dpl,#0x28
 0184 120000     988            lcall   _Timer3us
-0187            989   ;        sourcecode.c:227: LCD_E=0;
+0187            989   ;        sourcecode.c:224: LCD_E=0;
 0187 C2A0       990            clr     _P2_0
 0189 22         991            ret
 018A            992   ;------------------------------------------------------------
@@ -994,66 +994,66 @@
 018A            994   ;------------------------------------------------------------
 018A            995   ;x                         Allocated to registers r2 
 018A            996   ;------------------------------------------------------------
-018A            997   ;        sourcecode.c:230: void LCD_byte (unsigned char x)
+018A            997   ;        sourcecode.c:227: void LCD_byte (unsigned char x)
 018A            998   ;        -----------------------------------------
 018A            999   ;         function LCD_byte
 018A           1000   ;        -----------------------------------------
 018A           1001   _LCD_byte:
 018A AA82      1002            mov     r2,dpl
-018C           1003   ;        sourcecode.c:233: ACC=x; //Send high nible
+018C           1003   ;        sourcecode.c:230: ACC=x; //Send high nible
 018C 8AE0      1004            mov     _ACC,r2
-018E           1005   ;        sourcecode.c:234: LCD_D7=ACC_7;
+018E           1005   ;        sourcecode.c:231: LCD_D7=ACC_7;
 018E A2E7      1006            mov     c,_ACC_7
 0190 9290      1007            mov     _P1_0,c
-0192           1008   ;        sourcecode.c:235: LCD_D6=ACC_6;
+0192           1008   ;        sourcecode.c:232: LCD_D6=ACC_6;
 0192 A2E6      1009            mov     c,_ACC_6
 0194 9291      1010            mov     _P1_1,c
-0196           1011   ;        sourcecode.c:236: LCD_D5=ACC_5;
+0196           1011   ;        sourcecode.c:233: LCD_D5=ACC_5;
 0196 A2E5      1012            mov     c,_ACC_5
 0198 9292      1013            mov     _P1_2,c
-019A           1014   ;        sourcecode.c:237: LCD_D4=ACC_4;
+019A           1014   ;        sourcecode.c:234: LCD_D4=ACC_4;
 019A A2E4      1015            mov     c,_ACC_4
 019C 9293      1016            mov     _P1_3,c
-019E           1017   ;        sourcecode.c:238: LCD_pulse();
+019E           1017   ;        sourcecode.c:235: LCD_pulse();
 019E C002      1018            push    ar2
 01A0 120000    1019            lcall   _LCD_pulse
-01A3           1020   ;        sourcecode.c:239: Timer3us(40);
+01A3           1020   ;        sourcecode.c:236: Timer3us(40);
 01A3 758228    1021            mov     dpl,#0x28
 01A6 120000    1022            lcall   _Timer3us
 01A9 D002      1023            pop     ar2
-01AB           1024   ;        sourcecode.c:240: ACC=x; //Send low nible
+01AB           1024   ;        sourcecode.c:237: ACC=x; //Send low nible
 01AB 8AE0      1025            mov     _ACC,r2
-01AD           1026   ;        sourcecode.c:241: LCD_D7=ACC_3;
+01AD           1026   ;        sourcecode.c:238: LCD_D7=ACC_3;
 01AD A2E3      1027            mov     c,_ACC_3
 01AF 9290      1028            mov     _P1_0,c
-01B1           1029   ;        sourcecode.c:242: LCD_D6=ACC_2;
+01B1           1029   ;        sourcecode.c:239: LCD_D6=ACC_2;
 01B1 A2E2      1030            mov     c,_ACC_2
 01B3 9291      1031            mov     _P1_1,c
-01B5           1032   ;        sourcecode.c:243: LCD_D5=ACC_1;
+01B5           1032   ;        sourcecode.c:240: LCD_D5=ACC_1;
 01B5 A2E1      1033            mov     c,_ACC_1
 01B7 9292      1034            mov     _P1_2,c
-01B9           1035   ;        sourcecode.c:244: LCD_D4=ACC_0;
+01B9           1035   ;        sourcecode.c:241: LCD_D4=ACC_0;
 01B9 A2E0      1036            mov     c,_ACC_0
 01BB 9293      1037            mov     _P1_3,c
-01BD           1038   ;        sourcecode.c:245: LCD_pulse();
+01BD           1038   ;        sourcecode.c:242: LCD_pulse();
 01BD 020000    1039            ljmp    _LCD_pulse
 01C0           1040   ;------------------------------------------------------------
 01C0           1041   ;Allocation info for local variables in function 'WriteData'
 01C0           1042   ;------------------------------------------------------------
 01C0           1043   ;x                         Allocated to registers r2 
 01C0           1044   ;------------------------------------------------------------
-01C0           1045   ;        sourcecode.c:248: void WriteData (unsigned char x)
+01C0           1045   ;        sourcecode.c:245: void WriteData (unsigned char x)
 01C0           1046   ;        -----------------------------------------
 01C0           1047   ;         function WriteData
 01C0           1048   ;        -----------------------------------------
 01C0           1049   _WriteData:
 01C0 AA82      1050            mov     r2,dpl
-01C2           1051   ;        sourcecode.c:250: LCD_RS=1;
+01C2           1051   ;        sourcecode.c:247: LCD_RS=1;
 01C2 D297      1052            setb    _P1_7
-01C4           1053   ;        sourcecode.c:251: LCD_byte(x);
+01C4           1053   ;        sourcecode.c:248: LCD_byte(x);
 01C4 8A82      1054            mov     dpl,r2
 01C6 120000    1055            lcall   _LCD_byte
-01C9           1056   ;        sourcecode.c:252: waitms(2);
+01C9           1056   ;        sourcecode.c:249: waitms(2);
 01C9 900002    1057            mov     dptr,#0x0002
 01CC 020000    1058            ljmp    _waitms
 01CF           1059   ;------------------------------------------------------------
@@ -1061,53 +1061,53 @@
 01CF           1061   ;------------------------------------------------------------
 01CF           1062   ;x                         Allocated to registers r2 
 01CF           1063   ;------------------------------------------------------------
-01CF           1064   ;        sourcecode.c:255: void WriteCommand (unsigned char x)
+01CF           1064   ;        sourcecode.c:252: void WriteCommand (unsigned char x)
 01CF           1065   ;        -----------------------------------------
 01CF           1066   ;         function WriteCommand
 01CF           1067   ;        -----------------------------------------
 01CF           1068   _WriteCommand:
 01CF AA82      1069            mov     r2,dpl
-01D1           1070   ;        sourcecode.c:257: LCD_RS=0;
+01D1           1070   ;        sourcecode.c:254: LCD_RS=0;
 01D1 C297      1071            clr     _P1_7
-01D3           1072   ;        sourcecode.c:258: LCD_byte(x);
+01D3           1072   ;        sourcecode.c:255: LCD_byte(x);
 01D3 8A82      1073            mov     dpl,r2
 01D5 120000    1074            lcall   _LCD_byte
-01D8           1075   ;        sourcecode.c:259: waitms(5);
+01D8           1075   ;        sourcecode.c:256: waitms(5);
 01D8 900005    1076            mov     dptr,#0x0005
 01DB 020000    1077            ljmp    _waitms
 01DE           1078   ;------------------------------------------------------------
 01DE           1079   ;Allocation info for local variables in function 'LCD_4BIT'
 01DE           1080   ;------------------------------------------------------------
 01DE           1081   ;------------------------------------------------------------
-01DE           1082   ;        sourcecode.c:262: void LCD_4BIT (void)
+01DE           1082   ;        sourcecode.c:259: void LCD_4BIT (void)
 01DE           1083   ;        -----------------------------------------
 01DE           1084   ;         function LCD_4BIT
 01DE           1085   ;        -----------------------------------------
 01DE           1086   _LCD_4BIT:
-01DE           1087   ;        sourcecode.c:264: LCD_E=0; // Resting state of LCD's enable is zero
+01DE           1087   ;        sourcecode.c:261: LCD_E=0; // Resting state of LCD's enable is zero
 01DE C2A0      1088            clr     _P2_0
-01E0           1089   ;        sourcecode.c:266: waitms(20);
+01E0           1089   ;        sourcecode.c:263: waitms(20);
 01E0 900014    1090            mov     dptr,#0x0014
 01E3 120000    1091            lcall   _waitms
-01E6           1092   ;        sourcecode.c:268: WriteCommand(0x33);
+01E6           1092   ;        sourcecode.c:265: WriteCommand(0x33);
 01E6 758233    1093            mov     dpl,#0x33
 01E9 120000    1094            lcall   _WriteCommand
-01EC           1095   ;        sourcecode.c:269: WriteCommand(0x33);
+01EC           1095   ;        sourcecode.c:266: WriteCommand(0x33);
 01EC 758233    1096            mov     dpl,#0x33
 01EF 120000    1097            lcall   _WriteCommand
-01F2           1098   ;        sourcecode.c:270: WriteCommand(0x32); // Change to 4-bit mode
+01F2           1098   ;        sourcecode.c:267: WriteCommand(0x32); // Change to 4-bit mode
 01F2 758232    1099            mov     dpl,#0x32
 01F5 120000    1100            lcall   _WriteCommand
-01F8           1101   ;        sourcecode.c:273: WriteCommand(0x28);
+01F8           1101   ;        sourcecode.c:270: WriteCommand(0x28);
 01F8 758228    1102            mov     dpl,#0x28
 01FB 120000    1103            lcall   _WriteCommand
-01FE           1104   ;        sourcecode.c:274: WriteCommand(0x0c);
+01FE           1104   ;        sourcecode.c:271: WriteCommand(0x0c);
 01FE 75820C    1105            mov     dpl,#0x0C
 0201 120000    1106            lcall   _WriteCommand
-0204           1107   ;        sourcecode.c:275: WriteCommand(0x01); // Clear screen command (takes some time)
+0204           1107   ;        sourcecode.c:272: WriteCommand(0x01); // Clear screen command (takes some time)
 0204 758201    1108            mov     dpl,#0x01
 0207 120000    1109            lcall   _WriteCommand
-020A           1110   ;        sourcecode.c:276: waitms(20); // Wait for clear screen command to finsih.
+020A           1110   ;        sourcecode.c:273: waitms(20); // Wait for clear screen command to finsih.
 020A 900014    1111            mov     dptr,#0x0014
 020D 020000    1112            ljmp    _waitms
 0210           1113   ;------------------------------------------------------------
@@ -1117,7 +1117,7 @@
 0210           1117   ;string                    Allocated to registers r2 r3 r4 
 0210           1118   ;j                         Allocated to registers r5 r6 
 0210           1119   ;------------------------------------------------------------
-0210           1120   ;        sourcecode.c:279: void LCDprint(char * string, unsigned char line, bit clear)
+0210           1120   ;        sourcecode.c:276: void LCDprint(char * string, unsigned char line, bit clear)
 0210           1121   ;        -----------------------------------------
 0210           1122   ;         function LCDprint
 0210           1123   ;        -----------------------------------------
@@ -1125,7 +1125,7 @@
 0210 AA82      1125            mov     r2,dpl
 0212 AB83      1126            mov     r3,dph
 0214 ACF0      1127            mov     r4,b
-0216           1128   ;        sourcecode.c:283: WriteCommand(line==2?0xc0:0x80);
+0216           1128   ;        sourcecode.c:280: WriteCommand(line==2?0xc0:0x80);
 0216 7402      1129            mov     a,#0x02
 0218 B518C0    1130            cjne    a,_LCDprint_PARM_2,L015013?
 021B 7DC0      1131            mov     r5,#0xC0
@@ -1138,13 +1138,13 @@
 0225 C003      1138            push    ar3
 0227 C004      1139            push    ar4
 0229 120000    1140            lcall   _WriteCommand
-022C           1141   ;        sourcecode.c:284: waitms(5);
+022C           1141   ;        sourcecode.c:281: waitms(5);
 022C 900005    1142            mov     dptr,#0x0005
 022F 120000    1143            lcall   _waitms
 0232 D004      1144            pop     ar4
 0234 D003      1145            pop     ar3
 0236 D002      1146            pop     ar2
-0238           1147   ;        sourcecode.c:285: for(j=0; string[j]!=0; j++)   WriteData(string[j]);// Write the message
+0238           1147   ;        sourcecode.c:282: for(j=0; string[j]!=0; j++)   WriteData(string[j]);// Write the message
 0238 7D00      1148            mov     r5,#0x00
 023A 7E00      1149            mov     r6,#0x00
 023C           1150   L015003?:
@@ -1178,7 +1178,7 @@
 026D 0E        1178            inc     r6
 026E 8000      1179            sjmp    L015003?
 0270           1180   L015006?:
-0270           1181   ;        sourcecode.c:286: if(clear) for(; j<CHARS_PER_LINE; j++) WriteData(' '); // Clear the rest of the line
+0270           1181   ;        sourcecode.c:283: if(clear) for(; j<CHARS_PER_LINE; j++) WriteData(' '); // Clear the rest of the line
 0270 302800    1182            jnb     _LCDprint_PARM_3,L015011?
 0273 8D02      1183            mov     ar2,r5
 0275 8E03      1184            mov     ar3,r6
@@ -1210,7 +1210,7 @@
 0298           1210   ;string                    Allocated to registers r2 r3 r4 
 0298           1211   ;j                         Allocated to registers r5 r6 
 0298           1212   ;------------------------------------------------------------
-0298           1213   ;        sourcecode.c:289: void LCDprint2(char * string, unsigned char line, unsigned char col)
+0298           1213   ;        sourcecode.c:286: void LCDprint2(char * string, unsigned char line, unsigned char col)
 0298           1214   ;        -----------------------------------------
 0298           1215   ;         function LCDprint2
 0298           1216   ;        -----------------------------------------
@@ -1218,7 +1218,7 @@
 0298 AA82      1218            mov     r2,dpl
 029A AB83      1219            mov     r3,dph
 029C ACF0      1220            mov     r4,b
-029E           1221   ;        sourcecode.c:293: WriteCommand(line==2?0xc0|col:0x80|col); // Move cursor to line and column
+029E           1221   ;        sourcecode.c:290: WriteCommand(line==2?0xc0|col:0x80|col); // Move cursor to line and column
 029E 7402      1222            mov     a,#0x02
 02A0 B5C880    1223            cjne    a,_LCDprint2_PARM_2,L016007?
 02A3 74C0      1224            mov     a,#0xC0
@@ -1238,7 +1238,7 @@
 02BA D004      1238            pop     ar4
 02BC D003      1239            pop     ar3
 02BE D002      1240            pop     ar2
-02C0           1241   ;        sourcecode.c:294: for(j=0; string[j]!=0; j++){ 
+02C0           1241   ;        sourcecode.c:291: for(j=0; string[j]!=0; j++){ 
 02C0 7D00      1242            mov     r5,#0x00
 02C2 7E00      1243            mov     r6,#0x00
 02C4           1244   L016001?:
@@ -1255,7 +1255,7 @@
 02D2 120000    1255            lcall   __gptrget
 02D5 FF        1256            mov     r7,a
 02D6 6000      1257            jz      L016005?
-02D8           1258   ;        sourcecode.c:295: WriteData(string[j]); // Write the message
+02D8           1258   ;        sourcecode.c:292: WriteData(string[j]); // Write the message
 02D8 8F82      1259            mov     dpl,r7
 02DA C002      1260            push    ar2
 02DC C003      1261            push    ar3
@@ -1268,7 +1268,7 @@
 02EB D004      1268            pop     ar4
 02ED D003      1269            pop     ar3
 02EF D002      1270            pop     ar2
-02F1           1271   ;        sourcecode.c:294: for(j=0; string[j]!=0; j++){ 
+02F1           1271   ;        sourcecode.c:291: for(j=0; string[j]!=0; j++){ 
 02F1 0D        1272            inc     r5
 02F2 BD0000    1273            cjne    r5,#0x00,L016001?
 02F5 0E        1274            inc     r6
@@ -1284,1236 +1284,1374 @@
 02F9           1284   ;frequency                 Allocated with name '_main_frequency_1_76'
 02F9           1285   ;angfrequency              Allocated with name '_main_angfrequency_1_76'
 02F9           1286   ;bonus_counter             Allocated with name '_main_bonus_counter_1_76'
-02F9           1287   ;str_frequency             Allocated with name '_main_str_frequency_1_76'
-02F9           1288   ;str_vref                  Allocated with name '_main_str_vref_1_76'
-02F9           1289   ;str_vtest                 Allocated with name '_main_str_vtest_1_76'
-02F9           1290   ;str_phase                 Allocated with name '_main_str_phase_1_76'
-02F9           1291   ;str_period                Allocated with name '_main_str_period_1_76'
-02F9           1292   ;str_angfrequency          Allocated with name '_main_str_angfrequency_1_76'
-02F9           1293   ;sloc0                     Allocated with name '_main_sloc0_1_0'
-02F9           1294   ;sloc1                     Allocated with name '_main_sloc1_1_0'
-02F9           1295   ;------------------------------------------------------------
-02F9           1296   ;        sourcecode.c:302: void main (void)
-02F9           1297   ;        -----------------------------------------
-02F9           1298   ;         function main
-02F9           1299   ;        -----------------------------------------
-02F9           1300   _main:
-02F9           1301   ;        sourcecode.c:309: unsigned int bonus_counter = 0; 
-02F9 E4        1302            clr     a
-02FA F520      1303            mov     _main_bonus_counter_1_76,a
-02FC F521      1304            mov     (_main_bonus_counter_1_76 + 1),a
-02FE           1305   ;        sourcecode.c:318: TIMER0_Init();
-02FE 120000    1306            lcall   _TIMER0_Init
-0301           1307   ;        sourcecode.c:321: LCD_4BIT();
-0301 120000    1308            lcall   _LCD_4BIT
-0304           1309   ;        sourcecode.c:323: waitms(500); // Give PuTTy a chance to start before sending
-0304 9001F4    1310            mov     dptr,#0x01F4
-0307 120000    1311            lcall   _waitms
-030A           1312   ;        sourcecode.c:324: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
-030A 7480      1313            mov     a,#__str_0
-030C C0E0      1314            push    acc
-030E 74DA      1315            mov     a,#(__str_0 >> 8)
-0310 C0E0      1316            push    acc
-0312 7480      1317            mov     a,#0x80
-0314 C0E0      1318            push    acc
-0316 120000    1319            lcall   _printf
-0319 1581      1320            dec     sp
-031B 1581      1321            dec     sp
-031D 1581      1322            dec     sp
-031F           1323   ;        sourcecode.c:329: __FILE__, __DATE__, __TIME__);
-031F           1324   ;        sourcecode.c:328: "Compiled: %s, %s\n\n",
-031F 7400      1325            mov     a,#__str_4
-0321 C0E0      1326            push    acc
-0323 74DB      1327            mov     a,#(__str_4 >> 8)
-0325 C0E0      1328            push    acc
-0327 7480      1329            mov     a,#0x80
-0329 C0E0      1330            push    acc
-032B 7440      1331            mov     a,#__str_3
-032D C0E0      1332            push    acc
-032F 74DB      1333            mov     a,#(__str_3 >> 8)
-0331 C0E0      1334            push    acc
-0333 7480      1335            mov     a,#0x80
-0335 C0E0      1336            push    acc
-0337 7480      1337            mov     a,#__str_2
-0339 C0E0      1338            push    acc
-033B 74DB      1339            mov     a,#(__str_2 >> 8)
-033D C0E0      1340            push    acc
-033F 7480      1341            mov     a,#0x80
-0341 C0E0      1342            push    acc
-0343 74C0      1343            mov     a,#__str_1
-0345 C0E0      1344            push    acc
-0347 74DB      1345            mov     a,#(__str_1 >> 8)
-0349 C0E0      1346            push    acc
-034B 7480      1347            mov     a,#0x80
-034D C0E0      1348            push    acc
-034F 120000    1349            lcall   _printf
-0352 E581      1350            mov     a,sp
-0354 24F4      1351            add     a,#0xf4
-0356 F581      1352            mov     sp,a
-0358           1353   ;        sourcecode.c:334: LCDprint2("F:XXHz   P:  .XXX", 1, 0); //string, row, column
-0358 75C801    1354            mov     _LCDprint2_PARM_2,#0x01
-035B 757800    1355            mov     _LCDprint2_PARM_3,#0x00
-035E 90DC00    1356            mov     dptr,#__str_5
-0361 75F080    1357            mov     b,#0x80
-0364 120000    1358            lcall   _LCDprint2
-0367           1359   ;        sourcecode.c:335: LCDprint2("VR:X.XX  VT:X.XX", 2, 0); //string, row, column
-0367 75C802    1360            mov     _LCDprint2_PARM_2,#0x02
-036A 757800    1361            mov     _LCDprint2_PARM_3,#0x00
-036D 90DC40    1362            mov     dptr,#__str_6
-0370 75F080    1363            mov     b,#0x80
-0373 120000    1364            lcall   _LCDprint2
-0376           1365   ;        sourcecode.c:337: InitPinADC(2, 1); // Configure P2.1 as analog input
-0376 75C801    1366            mov     _InitPinADC_PARM_2,#0x01
-0379 758202    1367            mov     dpl,#0x02
-037C 120000    1368            lcall   _InitPinADC
-037F           1369   ;        sourcecode.c:338: InitPinADC(2, 2); // Configure P2.2 as analog input
-037F 75C802    1370            mov     _InitPinADC_PARM_2,#0x02
-0382 758202    1371            mov     dpl,#0x02
-0385 120000    1372            lcall   _InitPinADC
-0388           1373   ;        sourcecode.c:340: InitADC();
-0388 120000    1374            lcall   _InitADC
-038B           1375   ;        sourcecode.c:342: while(1)
-038B           1376   L017062?:
-038B           1377   ;        sourcecode.c:345: TL0 = 0; 
-038B 758A00    1378            mov     _TL0,#0x00
-038E           1379   ;        sourcecode.c:346: TH0 = 0;
-038E 758C00    1380            mov     _TH0,#0x00
-0391           1381   ;        sourcecode.c:347: TF0 = 0;
-0391 C28D      1382            clr     _TF0
-0393           1383   ;        sourcecode.c:348: overflow_count = 0;
-0393 75E800    1384            mov     _overflow_count,#0x00
-0396           1385   ;        sourcecode.c:354: while(Volts_at_Pin(QFP32_MUX_P2_2) > 0); // Wait for the signal to be zero
-0396           1386   L017001?:
-0396 75820F    1387            mov     dpl,#0x0F
-0399 120000    1388            lcall   _Volts_at_Pin
-039C AC82      1389            mov     r4,dpl
-039E AD83      1390            mov     r5,dph
-03A0 AEF0      1391            mov     r6,b
-03A2 FF        1392            mov     r7,a
-03A3 E4        1393            clr     a
-03A4 C0E0      1394            push    acc
-03A6 C0E0      1395            push    acc
-03A8 C0E0      1396            push    acc
-03AA C0E0      1397            push    acc
-03AC 8C82      1398            mov     dpl,r4
-03AE 8D83      1399            mov     dph,r5
-03B0 8EF0      1400            mov     b,r6
-03B2 EF        1401            mov     a,r7
-03B3 120000    1402            lcall   ___fsgt
-03B6 AC82      1403            mov     r4,dpl
-03B8 E581      1404            mov     a,sp
-03BA 24FC      1405            add     a,#0xfc
-03BC F581      1406            mov     sp,a
-03BE EC        1407            mov     a,r4
-03BF 7000      1408            jnz     L017001?
-03C1           1409   ;        sourcecode.c:355: while(Volts_at_Pin(QFP32_MUX_P2_2) == 0); // Wait for the signal to be one
-03C1           1410   L017004?:
-03C1 75820F    1411            mov     dpl,#0x0F
-03C4 120000    1412            lcall   _Volts_at_Pin
-03C7 AC82      1413            mov     r4,dpl
-03C9 AD83      1414            mov     r5,dph
-03CB AEF0      1415            mov     r6,b
-03CD FF        1416            mov     r7,a
-03CE EC        1417            mov     a,r4
-03CF 4D        1418            orl     a,r5
-03D0 4E        1419            orl     a,r6
-03D1 8FF0      1420            mov     b,r7
-03D3 C2F7      1421            clr     b.7 ; Clear the sign bit
-03D5 45F0      1422            orl     a,b
-03D7 6000      1423            jz      L017004?
-03D9           1424   ;        sourcecode.c:356: TR0 = 1; // Start the timer
-03D9 D28C      1425            setb    _TR0
-03DB           1426   ;        sourcecode.c:357: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be zero
-03DB           1427   L017009?:
-03DB 75820F    1428            mov     dpl,#0x0F
-03DE 120000    1429            lcall   _Volts_at_Pin
-03E1 AC82      1430            mov     r4,dpl
-03E3 AD83      1431            mov     r5,dph
-03E5 AEF0      1432            mov     r6,b
-03E7 FF        1433            mov     r7,a
-03E8 E4        1434            clr     a
-03E9 C0E0      1435            push    acc
-03EB C0E0      1436            push    acc
-03ED C0E0      1437            push    acc
-03EF C0E0      1438            push    acc
-03F1 8C82      1439            mov     dpl,r4
-03F3 8D83      1440            mov     dph,r5
-03F5 8EF0      1441            mov     b,r6
-03F7 EF        1442            mov     a,r7
-03F8 120000    1443            lcall   ___fsgt
-03FB AC82      1444            mov     r4,dpl
-03FD E581      1445            mov     a,sp
-03FF 24FC      1446            add     a,#0xfc
-0401 F581      1447            mov     sp,a
-0403 EC        1448            mov     a,r4
-0404 6000      1449            jz      L017014?
-0406           1450   ;        sourcecode.c:358: if (TF0 == 1) { // Did the 16-bit timer overflow?
-0406           1451   ;        sourcecode.c:359: TF0 = 0;
-0406 108D00    1452            jbc     _TF0,L017100?
-0409 8000      1453            sjmp    L017009?
-040B           1454   L017100?:
-040B           1455   ;        sourcecode.c:360: overflow_count++;
-040B 05E8      1456            inc     _overflow_count
-040D           1457   ;        sourcecode.c:363: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be one
-040D 8000      1458            sjmp    L017009?
-040F           1459   L017014?:
-040F 75820F    1460            mov     dpl,#0x0F
-0412 120000    1461            lcall   _Volts_at_Pin
-0415 AC82      1462            mov     r4,dpl
-0417 AD83      1463            mov     r5,dph
-0419 AEF0      1464            mov     r6,b
-041B FF        1465            mov     r7,a
-041C E4        1466            clr     a
-041D C0E0      1467            push    acc
-041F C0E0      1468            push    acc
-0421 C0E0      1469            push    acc
-0423 C0E0      1470            push    acc
-0425 8C82      1471            mov     dpl,r4
-0427 8D83      1472            mov     dph,r5
-0429 8EF0      1473            mov     b,r6
-042B EF        1474            mov     a,r7
-042C 120000    1475            lcall   ___fsgt
-042F AC82      1476            mov     r4,dpl
-0431 E581      1477            mov     a,sp
-0433 24FC      1478            add     a,#0xfc
-0435 F581      1479            mov     sp,a
-0437 EC        1480            mov     a,r4
-0438 6000      1481            jz      L017016?
-043A           1482   ;        sourcecode.c:364: if (TF0 == 1) { // Did the 16-bit timer overflow?
-043A           1483   ;        sourcecode.c:365: TF0 = 0;
-043A 108D80    1484            jbc     _TF0,L017102?
-043D 8000      1485            sjmp    L017014?
-043F           1486   L017102?:
-043F           1487   ;        sourcecode.c:366: overflow_count++;
-043F 05E8      1488            inc     _overflow_count
-0441 8000      1489            sjmp    L017014?
-0443           1490   L017016?:
-0443           1491   ;        sourcecode.c:369: TR0 = 0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
-0443 C28C      1492            clr     _TR0
-0445           1493   ;        sourcecode.c:370: period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK)*(2);
-0445 85E882    1494            mov     dpl,_overflow_count
-0448 120000    1495            lcall   ___uchar2fs
-044B AC82      1496            mov     r4,dpl
-044D AD83      1497            mov     r5,dph
-044F AEF0      1498            mov     r6,b
-0451 FF        1499            mov     r7,a
-0452 C004      1500            push    ar4
-0454 C005      1501            push    ar5
-0456 C006      1502            push    ar6
-0458 C007      1503            push    ar7
-045A 900000    1504            mov     dptr,#0x0000
-045D 75F080    1505            mov     b,#0x80
-0460 7447      1506            mov     a,#0x47
-0462 120000    1507            lcall   ___fsmul
-0465 AC82      1508            mov     r4,dpl
-0467 AD83      1509            mov     r5,dph
-0469 AEF0      1510            mov     r6,b
-046B FF        1511            mov     r7,a
-046C E581      1512            mov     a,sp
-046E 24FC      1513            add     a,#0xfc
-0470 F581      1514            mov     sp,a
-0472 858C82    1515            mov     dpl,_TH0
-0475 C004      1516            push    ar4
-0477 C005      1517            push    ar5
-0479 C006      1518            push    ar6
-047B C007      1519            push    ar7
-047D 120000    1520            lcall   ___uchar2fs
-0480 A882      1521            mov     r0,dpl
-0482 A983      1522            mov     r1,dph
-0484 AAF0      1523            mov     r2,b
-0486 FB        1524            mov     r3,a
-0487 C000      1525            push    ar0
-0489 C001      1526            push    ar1
-048B C002      1527            push    ar2
-048D C003      1528            push    ar3
-048F 900000    1529            mov     dptr,#0x0000
-0492 75F080    1530            mov     b,#0x80
-0495 7443      1531            mov     a,#0x43
-0497 120000    1532            lcall   ___fsmul
-049A AA82      1533            mov     r2,dpl
-049C AB83      1534            mov     r3,dph
-049E A8F0      1535            mov     r0,b
-04A0 F9        1536            mov     r1,a
-04A1 E581      1537            mov     a,sp
-04A3 24FC      1538            add     a,#0xfc
-04A5 F581      1539            mov     sp,a
-04A7 D007      1540            pop     ar7
-04A9 D006      1541            pop     ar6
-04AB D005      1542            pop     ar5
-04AD D004      1543            pop     ar4
-04AF C002      1544            push    ar2
-04B1 C003      1545            push    ar3
-04B3 C000      1546            push    ar0
-04B5 C001      1547            push    ar1
-04B7 8C82      1548            mov     dpl,r4
-04B9 8D83      1549            mov     dph,r5
-04BB 8EF0      1550            mov     b,r6
-04BD EF        1551            mov     a,r7
-04BE 120000    1552            lcall   ___fsadd
-04C1 AA82      1553            mov     r2,dpl
-04C3 AB83      1554            mov     r3,dph
-04C5 ACF0      1555            mov     r4,b
-04C7 FD        1556            mov     r5,a
-04C8 E581      1557            mov     a,sp
-04CA 24FC      1558            add     a,#0xfc
-04CC F581      1559            mov     sp,a
-04CE AE8A      1560            mov     r6,_TL0
-04D0 7F00      1561            mov     r7,#0x00
-04D2 8E82      1562            mov     dpl,r6
-04D4 8F83      1563            mov     dph,r7
-04D6 C002      1564            push    ar2
-04D8 C003      1565            push    ar3
-04DA C004      1566            push    ar4
-04DC C005      1567            push    ar5
-04DE 120000    1568            lcall   ___sint2fs
-04E1 AE82      1569            mov     r6,dpl
-04E3 AF83      1570            mov     r7,dph
-04E5 A8F0      1571            mov     r0,b
-04E7 F9        1572            mov     r1,a
-04E8 D005      1573            pop     ar5
-04EA D004      1574            pop     ar4
-04EC D003      1575            pop     ar3
-04EE D002      1576            pop     ar2
-04F0 C006      1577            push    ar6
-04F2 C007      1578            push    ar7
-04F4 C000      1579            push    ar0
-04F6 C001      1580            push    ar1
-04F8 8A82      1581            mov     dpl,r2
-04FA 8B83      1582            mov     dph,r3
-04FC 8CF0      1583            mov     b,r4
-04FE ED        1584            mov     a,r5
-04FF 120000    1585            lcall   ___fsadd
-0502 AA82      1586            mov     r2,dpl
-0504 AB83      1587            mov     r3,dph
-0506 ACF0      1588            mov     r4,b
-0508 FD        1589            mov     r5,a
-0509 E581      1590            mov     a,sp
-050B 24FC      1591            add     a,#0xfc
-050D F581      1592            mov     sp,a
-050F C002      1593            push    ar2
-0511 C003      1594            push    ar3
-0513 C004      1595            push    ar4
-0515 C005      1596            push    ar5
-0517 90F4FC    1597            mov     dptr,#0xF4FC
-051A 75F0B2    1598            mov     b,#0xB2
-051D 7434      1599            mov     a,#0x34
-051F 120000    1600            lcall   ___fsmul
-0522 8582E0    1601            mov     _main_period_1_76,dpl
-0525 8583E1    1602            mov     (_main_period_1_76 + 1),dph
-0528 85F0E2    1603            mov     (_main_period_1_76 + 2),b
-052B F5E3      1604            mov     (_main_period_1_76 + 3),a
-052D E581      1605            mov     a,sp
-052F 24FC      1606            add     a,#0xfc
-0531 F581      1607            mov     sp,a
-0533           1608   ;        sourcecode.c:372: frequency = 1.0/period;
-0533 C0E0      1609            push    _main_period_1_76
-0535 C0E1      1610            push    (_main_period_1_76 + 1)
-0537 C0E2      1611            push    (_main_period_1_76 + 2)
-0539 C0E3      1612            push    (_main_period_1_76 + 3)
-053B 900000    1613            mov     dptr,#0x0000
-053E 75F080    1614            mov     b,#0x80
-0541 743F      1615            mov     a,#0x3F
-0543 120000    1616            lcall   ___fsdiv
-0546 858280    1617            mov     _main_frequency_1_76,dpl
-0549 858381    1618            mov     (_main_frequency_1_76 + 1),dph
-054C 85F082    1619            mov     (_main_frequency_1_76 + 2),b
-054F F583      1620            mov     (_main_frequency_1_76 + 3),a
-0551 E581      1621            mov     a,sp
-0553 24FC      1622            add     a,#0xfc
-0555 F581      1623            mov     sp,a
-0557           1624   ;        sourcecode.c:373: angfrequency = frequency * 2 * 3.1415926535; 
-0557 C080      1625            push    _main_frequency_1_76
-0559 C081      1626            push    (_main_frequency_1_76 + 1)
-055B C082      1627            push    (_main_frequency_1_76 + 2)
-055D C083      1628            push    (_main_frequency_1_76 + 3)
-055F 900FDB    1629            mov     dptr,#0x0FDB
-0562 75F0C9    1630            mov     b,#0xC9
-0565 7440      1631            mov     a,#0x40
-0567 120000    1632            lcall   ___fsmul
-056A 8582D0    1633            mov     _main_angfrequency_1_76,dpl
-056D 8583D1    1634            mov     (_main_angfrequency_1_76 + 1),dph
-0570 85F0D2    1635            mov     (_main_angfrequency_1_76 + 2),b
-0573 F5D3      1636            mov     (_main_angfrequency_1_76 + 3),a
-0575 E581      1637            mov     a,sp
-0577 24FC      1638            add     a,#0xfc
-0579 F581      1639            mov     sp,a
-057B           1640   ;        sourcecode.c:375: while(Volts_at_Pin(QFP32_MUX_P2_2) > 0);
-057B           1641   L017017?:
-057B 75820F    1642            mov     dpl,#0x0F
-057E 120000    1643            lcall   _Volts_at_Pin
-0581 AE82      1644            mov     r6,dpl
-0583 AF83      1645            mov     r7,dph
-0585 A8F0      1646            mov     r0,b
-0587 F9        1647            mov     r1,a
-0588 E4        1648            clr     a
-0589 C0E0      1649            push    acc
-058B C0E0      1650            push    acc
-058D C0E0      1651            push    acc
-058F C0E0      1652            push    acc
-0591 8E82      1653            mov     dpl,r6
-0593 8F83      1654            mov     dph,r7
-0595 88F0      1655            mov     b,r0
-0597 E9        1656            mov     a,r1
-0598 120000    1657            lcall   ___fsgt
-059B AE82      1658            mov     r6,dpl
-059D E581      1659            mov     a,sp
-059F 24FC      1660            add     a,#0xfc
-05A1 F581      1661            mov     sp,a
-05A3 EE        1662            mov     a,r6
-05A4 7000      1663            jnz     L017017?
-05A6           1664   ;        sourcecode.c:376: while(Volts_at_Pin(QFP32_MUX_P2_2) == 0);
-05A6           1665   L017020?:
-05A6 75820F    1666            mov     dpl,#0x0F
-05A9 120000    1667            lcall   _Volts_at_Pin
-05AC AE82      1668            mov     r6,dpl
-05AE AF83      1669            mov     r7,dph
-05B0 A8F0      1670            mov     r0,b
-05B2 F9        1671            mov     r1,a
-05B3 EE        1672            mov     a,r6
-05B4 4F        1673            orl     a,r7
-05B5 48        1674            orl     a,r0
-05B6 89F0      1675            mov     b,r1
-05B8 C2F7      1676            clr     b.7 ; Clear the sign bit
-05BA 45F0      1677            orl     a,b
-05BC 6000      1678            jz      L017020?
-05BE           1679   ;        sourcecode.c:377: waitms(period*1000/4);
-05BE C0E0      1680            push    _main_period_1_76
-05C0 C0E1      1681            push    (_main_period_1_76 + 1)
-05C2 C0E2      1682            push    (_main_period_1_76 + 2)
-05C4 C0E3      1683            push    (_main_period_1_76 + 3)
-05C6 900000    1684            mov     dptr,#0x0000
-05C9 75F07A    1685            mov     b,#0x7A
-05CC 7444      1686            mov     a,#0x44
-05CE 120000    1687            lcall   ___fsmul
-05D1 AE82      1688            mov     r6,dpl
-05D3 AF83      1689            mov     r7,dph
-05D5 A8F0      1690            mov     r0,b
-05D7 F9        1691            mov     r1,a
-05D8 E581      1692            mov     a,sp
-05DA 24FC      1693            add     a,#0xfc
-05DC F581      1694            mov     sp,a
-05DE C006      1695            push    ar6
-05E0 C007      1696            push    ar7
-05E2 C000      1697            push    ar0
-05E4 C001      1698            push    ar1
-05E6 E4        1699            clr     a
-05E7 C0E0      1700            push    acc
-05E9 C0E0      1701            push    acc
-05EB 7480      1702            mov     a,#0x80
-05ED C0E0      1703            push    acc
-05EF 7440      1704            mov     a,#0x40
-05F1 C0E0      1705            push    acc
-05F3 8E82      1706            mov     dpl,r6
-05F5 8F83      1707            mov     dph,r7
-05F7 88F0      1708            mov     b,r0
-05F9 E9        1709            mov     a,r1
-05FA 120000    1710            lcall   ___fsdiv
-05FD AA82      1711            mov     r2,dpl
-05FF AB83      1712            mov     r3,dph
-0601 ACF0      1713            mov     r4,b
-0603 FD        1714            mov     r5,a
-0604 E581      1715            mov     a,sp
-0606 24FC      1716            add     a,#0xfc
-0608 F581      1717            mov     sp,a
-060A 8A82      1718            mov     dpl,r2
-060C 8B83      1719            mov     dph,r3
-060E 8CF0      1720            mov     b,r4
-0610 ED        1721            mov     a,r5
-0611 120000    1722            lcall   ___fs2uint
-0614 858240    1723            mov     _main_sloc0_1_0,dpl
-0617 858341    1724            mov  (_main_sloc0_1_0 + 1),dph
-061A 120000    1725            lcall   _waitms
-061D           1726   ;        sourcecode.c:378: v1_rms = Volts_at_Pin(QFP32_MUX_P2_2) / 1.41321356237;
-061D 75820F    1727            mov     dpl,#0x0F
-0620 120000    1728            lcall   _Volts_at_Pin
-0623 AC82      1729            mov     r4,dpl
-0625 AD83      1730            mov     r5,dph
-0627 AAF0      1731            mov     r2,b
-0629 FB        1732            mov     r3,a
-062A 742F      1733            mov     a,#0x2F
-062C C0E0      1734            push    acc
-062E 74E4      1735            mov     a,#0xE4
-0630 C0E0      1736            push    acc
-0632 74B4      1737            mov     a,#0xB4
-0634 C0E0      1738            push    acc
-0636 743F      1739            mov     a,#0x3F
-0638 C0E0      1740            push    acc
-063A 8C82      1741            mov     dpl,r4
-063C 8D83      1742            mov     dph,r5
-063E 8AF0      1743            mov     b,r2
-0640 EB        1744            mov     a,r3
-0641 120000    1745            lcall   ___fsdiv
-0644 858218    1746            mov     _v1_rms,dpl
-0647 858319    1747            mov     (_v1_rms + 1),dph
-064A 85F01A    1748            mov     (_v1_rms + 2),b
-064D F51B      1749            mov     (_v1_rms + 3),a
-064F E581      1750            mov     a,sp
-0651 24FC      1751            add     a,#0xfc
-0653 F581      1752            mov     sp,a
-0655 D001      1753            pop     ar1
-0657 D000      1754            pop     ar0
-0659 D007      1755            pop     ar7
-065B D006      1756            pop     ar6
-065D           1757   ;        sourcecode.c:380: while(Volts_at_Pin(QFP32_MUX_P2_1) > 0); //wait for zero cross of other signal
-065D           1758   L017023?:
-065D 75820E    1759            mov     dpl,#0x0E
-0660 C006      1760            push    ar6
-0662 C007      1761            push    ar7
-0664 C000      1762            push    ar0
-0666 C001      1763            push    ar1
-0668 120000    1764            lcall   _Volts_at_Pin
-066B AA82      1765            mov     r2,dpl
-066D AB83      1766            mov     r3,dph
-066F ACF0      1767            mov     r4,b
-0671 FD        1768            mov     r5,a
-0672 E4        1769            clr     a
-0673 C0E0      1770            push    acc
-0675 C0E0      1771            push    acc
-0677 C0E0      1772            push    acc
-0679 C0E0      1773            push    acc
-067B 8A82      1774            mov     dpl,r2
-067D 8B83      1775            mov     dph,r3
-067F 8CF0      1776            mov     b,r4
-0681 ED        1777            mov     a,r5
-0682 120000    1778            lcall   ___fsgt
-0685 AA82      1779            mov     r2,dpl
-0687 E581      1780            mov     a,sp
-0689 24FC      1781            add     a,#0xfc
-068B F581      1782            mov     sp,a
-068D D001      1783            pop     ar1
-068F D000      1784            pop     ar0
-0691 D007      1785            pop     ar7
-0693 D006      1786            pop     ar6
-0695 EA        1787            mov     a,r2
-0696 7000      1788            jnz     L017023?
-0698           1789   ;        sourcecode.c:381: while(Volts_at_Pin(QFP32_MUX_P2_1) == 0);
-0698           1790   L017026?:
-0698 75820E    1791            mov     dpl,#0x0E
-069B C006      1792            push    ar6
-069D C007      1793            push    ar7
-069F C000      1794            push    ar0
-06A1 C001      1795            push    ar1
-06A3 120000    1796            lcall   _Volts_at_Pin
-06A6 AA82      1797            mov     r2,dpl
-06A8 AB83      1798            mov     r3,dph
-06AA ACF0      1799            mov     r4,b
-06AC FD        1800            mov     r5,a
-06AD D001      1801            pop     ar1
-06AF D000      1802            pop     ar0
-06B1 D007      1803            pop     ar7
-06B3 D006      1804            pop     ar6
-06B5 EA        1805            mov     a,r2
-06B6 4B        1806            orl     a,r3
-06B7 4C        1807            orl     a,r4
-06B8 8DF0      1808            mov     b,r5
-06BA C2F7      1809            clr     b.7 ; Clear the sign bit
-06BC 45F0      1810            orl     a,b
-06BE 6000      1811            jz      L017026?
-06C0           1812   ;        sourcecode.c:382: waitms(period*1000/4);
-06C0 854082    1813            mov     dpl,_main_sloc0_1_0
-06C3 854183    1814            mov     dph,(_main_sloc0_1_0 + 1)
-06C6 C006      1815            push    ar6
-06C8 C007      1816            push    ar7
-06CA C000      1817            push    ar0
-06CC C001      1818            push    ar1
-06CE 120000    1819            lcall   _waitms
-06D1           1820   ;        sourcecode.c:383: v2_rms = Volts_at_Pin(QFP32_MUX_P2_1) / 1.41321356237;
-06D1 75820E    1821            mov     dpl,#0x0E
-06D4 120000    1822            lcall   _Volts_at_Pin
-06D7 AA82      1823            mov     r2,dpl
-06D9 AB83      1824            mov     r3,dph
-06DB ACF0      1825            mov     r4,b
-06DD FD        1826            mov     r5,a
-06DE 742F      1827            mov     a,#0x2F
-06E0 C0E0      1828            push    acc
-06E2 74E4      1829            mov     a,#0xE4
-06E4 C0E0      1830            push    acc
-06E6 74B4      1831            mov     a,#0xB4
-06E8 C0E0      1832            push    acc
-06EA 743F      1833            mov     a,#0x3F
-06EC C0E0      1834            push    acc
-06EE 8A82      1835            mov     dpl,r2
-06F0 8B83      1836            mov     dph,r3
-06F2 8CF0      1837            mov     b,r4
-06F4 ED        1838            mov     a,r5
-06F5 120000    1839            lcall   ___fsdiv
-06F8 8582D8    1840            mov     _v2_rms,dpl
-06FB 8583D9    1841            mov     (_v2_rms + 1),dph
-06FE 85F0DA    1842            mov     (_v2_rms + 2),b
-0701 F5DB      1843            mov     (_v2_rms + 3),a
-0703 E581      1844            mov     a,sp
-0705 24FC      1845            add     a,#0xfc
-0707 F581      1846            mov     sp,a
-0709 D001      1847            pop     ar1
-070B D000      1848            pop     ar0
-070D D007      1849            pop     ar7
-070F D006      1850            pop     ar6
-0711           1851   ;        sourcecode.c:387: TR0=0; // Stop timer 0
-0711 C28C      1852            clr     _TR0
-0713           1853   ;        sourcecode.c:388: overflow_count = 0;
-0713 75E800    1854            mov     _overflow_count,#0x00
-0716           1855   ;        sourcecode.c:389: TH0=0; TL0=0; TF0 = 0;                // Reset the timer
-0716 758C00    1856            mov     _TH0,#0x00
-0719 758A00    1857            mov     _TL0,#0x00
-071C C28D      1858            clr     _TF0
-071E           1859   ;        sourcecode.c:391: while (Volts_at_Pin(QFP32_MUX_P2_2) != 0);    
-071E           1860   L017029?:
-071E 75820F    1861            mov     dpl,#0x0F
-0721 C006      1862            push    ar6
-0723 C007      1863            push    ar7
-0725 C000      1864            push    ar0
-0727 C001      1865            push    ar1
-0729 120000    1866            lcall   _Volts_at_Pin
-072C AA82      1867            mov     r2,dpl
-072E AB83      1868            mov     r3,dph
-0730 ACF0      1869            mov     r4,b
-0732 FD        1870            mov     r5,a
-0733 D001      1871            pop     ar1
-0735 D000      1872            pop     ar0
-0737 D007      1873            pop     ar7
-0739 D006      1874            pop     ar6
-073B EA        1875            mov     a,r2
-073C 4B        1876            orl     a,r3
-073D 4C        1877            orl     a,r4
-073E 8DF0      1878            mov     b,r5
-0740 C2F7      1879            clr     b.7 ; Clear the sign bit
-0742 45F0      1880            orl     a,b
-0744 7000      1881            jnz     L017029?
-0746           1882   ;        sourcecode.c:392: while (Volts_at_Pin(QFP32_MUX_P2_2) == 0);                    // Wait for reference signal to be zero
-0746           1883   L017032?:
-0746 75820F    1884            mov     dpl,#0x0F
-0749 C006      1885            push    ar6
-074B C007      1886            push    ar7
-074D C000      1887            push    ar0
-074F C001      1888            push    ar1
-0751 120000    1889            lcall   _Volts_at_Pin
-0754 AA82      1890            mov     r2,dpl
-0756 AB83      1891            mov     r3,dph
-0758 ACF0      1892            mov     r4,b
-075A FD        1893            mov     r5,a
-075B D001      1894            pop     ar1
-075D D000      1895            pop     ar0
-075F D007      1896            pop     ar7
-0761 D006      1897            pop     ar6
-0763 EA        1898            mov     a,r2
-0764 4B        1899            orl     a,r3
-0765 4C        1900            orl     a,r4
-0766 8DF0      1901            mov     b,r5
-0768 C2F7      1902            clr     b.7 ; Clear the sign bit
-076A 45F0      1903            orl     a,b
-076C 6000      1904            jz      L017032?
-076E           1905   ;        sourcecode.c:393: TR0=1; // start timer
-076E D28C      1906            setb    _TR0
-0770           1907   ;        sourcecode.c:394: while (Volts_at_Pin(QFP32_MUX_P2_1) != 0) {
-0770           1908   L017037?:
-0770 75820E    1909            mov     dpl,#0x0E
-0773 C006      1910            push    ar6
-0775 C007      1911            push    ar7
-0777 C000      1912            push    ar0
-0779 C001      1913            push    ar1
-077B 120000    1914            lcall   _Volts_at_Pin
-077E AA82      1915            mov     r2,dpl
-0780 AB83      1916            mov     r3,dph
-0782 ACF0      1917            mov     r4,b
-0784 FD        1918            mov     r5,a
-0785 D001      1919            pop     ar1
-0787 D000      1920            pop     ar0
-0789 D007      1921            pop     ar7
-078B D006      1922            pop     ar6
-078D EA        1923            mov     a,r2
-078E 4B        1924            orl     a,r3
-078F 4C        1925            orl     a,r4
-0790 8DF0      1926            mov     b,r5
-0792 C2F7      1927            clr     b.7 ; Clear the sign bit
-0794 45F0      1928            orl     a,b
-0796 6000      1929            jz      L017042?
-0798           1930   ;        sourcecode.c:395: if (TF0 == 1) { // Did the 16-bit timer overflow?
-0798           1931   ;        sourcecode.c:396: TF0 = 0;
-0798 108DC0    1932            jbc     _TF0,L017110?
-079B 8000      1933            sjmp    L017037?
-079D           1934   L017110?:
-079D           1935   ;        sourcecode.c:397: overflow_count++;
-079D 05E8      1936            inc     _overflow_count
-079F           1937   ;        sourcecode.c:400: while (Volts_at_Pin(QFP32_MUX_P2_1) == 0) { // Wait for test signal to hit zero
-079F 8000      1938            sjmp    L017037?
-07A1           1939   L017042?:
-07A1 75820E    1940            mov     dpl,#0x0E
-07A4 C006      1941            push    ar6
-07A6 C007      1942            push    ar7
-07A8 C000      1943            push    ar0
-07AA C001      1944            push    ar1
-07AC 120000    1945            lcall   _Volts_at_Pin
-07AF AA82      1946            mov     r2,dpl
-07B1 AB83      1947            mov     r3,dph
-07B3 ACF0      1948            mov     r4,b
-07B5 FD        1949            mov     r5,a
-07B6 D001      1950            pop     ar1
-07B8 D000      1951            pop     ar0
-07BA D007      1952            pop     ar7
-07BC D006      1953            pop     ar6
-07BE EA        1954            mov     a,r2
-07BF 4B        1955            orl     a,r3
-07C0 4C        1956            orl     a,r4
-07C1 8DF0      1957            mov     b,r5
-07C3 C2F7      1958            clr     b.7 ; Clear the sign bit
-07C5 45F0      1959            orl     a,b
-07C7 7000      1960            jnz     L017044?
-07C9           1961   ;        sourcecode.c:401: if (TF0 == 1) { // Did the 16-bit timer overflow?
-07C9           1962   ;        sourcecode.c:402: TF0 = 0;
-07C9 108D40    1963            jbc     _TF0,L017112?
-07CC 8000      1964            sjmp    L017042?
-07CE           1965   L017112?:
-07CE           1966   ;        sourcecode.c:403: overflow_count++;
-07CE 05E8      1967            inc     _overflow_count
-07D0 8000      1968            sjmp    L017042?
-07D2           1969   L017044?:
-07D2           1970   ;        sourcecode.c:406: TR0=0; // stop timer
-07D2 C28C      1971            clr     _TR0
-07D4           1972   ;        sourcecode.c:410: time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
-07D4 85E882    1973            mov     dpl,_overflow_count
-07D7 C006      1974            push    ar6
-07D9 C007      1975            push    ar7
-07DB C000      1976            push    ar0
-07DD C001      1977            push    ar1
-07DF 120000    1978            lcall   ___uchar2fs
-07E2 AA82      1979            mov     r2,dpl
-07E4 AB83      1980            mov     r3,dph
-07E6 ACF0      1981            mov     r4,b
-07E8 FD        1982            mov     r5,a
-07E9 C002      1983            push    ar2
-07EB C003      1984            push    ar3
-07ED C004      1985            push    ar4
-07EF C005      1986            push    ar5
-07F1 900000    1987            mov     dptr,#0x0000
-07F4 75F080    1988            mov     b,#0x80
-07F7 7447      1989            mov     a,#0x47
-07F9 120000    1990            lcall   ___fsmul
-07FC 858280    1991            mov     _main_sloc1_1_0,dpl
-07FF 858381    1992            mov     (_main_sloc1_1_0 + 1),dph
-0802 85F082    1993            mov     (_main_sloc1_1_0 + 2),b
-0805 F583      1994            mov     (_main_sloc1_1_0 + 3),a
-0807 E581      1995            mov     a,sp
-0809 24FC      1996            add     a,#0xfc
-080B F581      1997            mov     sp,a
-080D 858C82    1998            mov     dpl,_TH0
-0810 120000    1999            lcall   ___uchar2fs
-0813 AA82      2000            mov     r2,dpl
-0815 AB83      2001            mov     r3,dph
-0817 ACF0      2002            mov     r4,b
-0819 FD        2003            mov     r5,a
-081A C002      2004            push    ar2
-081C C003      2005            push    ar3
-081E C004      2006            push    ar4
-0820 C005      2007            push    ar5
-0822 900000    2008            mov     dptr,#0x0000
-0825 75F080    2009            mov     b,#0x80
-0828 7443      2010            mov     a,#0x43
-082A 120000    2011            lcall   ___fsmul
-082D AA82      2012            mov     r2,dpl
-082F AB83      2013            mov     r3,dph
-0831 ACF0      2014            mov     r4,b
-0833 FD        2015            mov     r5,a
-0834 E581      2016            mov     a,sp
-0836 24FC      2017            add     a,#0xfc
-0838 F581      2018            mov     sp,a
-083A C002      2019            push    ar2
-083C C003      2020            push    ar3
-083E C004      2021            push    ar4
-0840 C005      2022            push    ar5
-0842 858082    2023            mov     dpl,_main_sloc1_1_0
-0845 858183    2024            mov     dph,(_main_sloc1_1_0 + 1)
-0848 8582F0    2025            mov     b,(_main_sloc1_1_0 + 2)
-084B E583      2026            mov     a,(_main_sloc1_1_0 + 3)
-084D 120000    2027            lcall   ___fsadd
-0850 858280    2028            mov     _main_sloc1_1_0,dpl
-0853 858381    2029            mov     (_main_sloc1_1_0 + 1),dph
-0856 85F082    2030            mov     (_main_sloc1_1_0 + 2),b
-0859 F583      2031            mov     (_main_sloc1_1_0 + 3),a
-085B E581      2032            mov     a,sp
-085D 24FC      2033            add     a,#0xfc
-085F F581      2034            mov     sp,a
-0861 AA8A      2035            mov     r2,_TL0
-0863 7B00      2036            mov     r3,#0x00
-0865 8A82      2037            mov     dpl,r2
-0867 8B83      2038            mov     dph,r3
-0869 120000    2039            lcall   ___sint2fs
-086C AA82      2040            mov     r2,dpl
-086E AB83      2041            mov     r3,dph
-0870 ACF0      2042            mov     r4,b
-0872 FD        2043            mov     r5,a
-0873 C002      2044            push    ar2
-0875 C003      2045            push    ar3
-0877 C004      2046            push    ar4
-0879 C005      2047            push    ar5
-087B 858082    2048            mov     dpl,_main_sloc1_1_0
-087E 858183    2049            mov     dph,(_main_sloc1_1_0 + 1)
-0881 8582F0    2050            mov     b,(_main_sloc1_1_0 + 2)
-0884 E583      2051            mov     a,(_main_sloc1_1_0 + 3)
-0886 120000    2052            lcall   ___fsadd
-0889 AA82      2053            mov     r2,dpl
-088B AB83      2054            mov     r3,dph
-088D ACF0      2055            mov     r4,b
-088F FD        2056            mov     r5,a
-0890 E581      2057            mov     a,sp
-0892 24FC      2058            add     a,#0xfc
-0894 F581      2059            mov     sp,a
-0896 C002      2060            push    ar2
-0898 C003      2061            push    ar3
-089A C004      2062            push    ar4
-089C C005      2063            push    ar5
-089E 90F4FC    2064            mov     dptr,#0xF4FC
-08A1 75F032    2065            mov     b,#0x32
-08A4 7434      2066            mov     a,#0x34
-08A6 120000    2067            lcall   ___fsmul
-08A9 AA82      2068            mov     r2,dpl
-08AB AB83      2069            mov     r3,dph
-08AD ACF0      2070            mov     r4,b
-08AF FD        2071            mov     r5,a
-08B0 E581      2072            mov     a,sp
-08B2 24FC      2073            add     a,#0xfc
-08B4 F581      2074            mov     sp,a
-08B6           2075   ;        sourcecode.c:411: Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
-08B6 C002      2076            push    ar2
-08B8 C003      2077            push    ar3
-08BA C004      2078            push    ar4
-08BC C005      2079            push    ar5
-08BE 900000    2080            mov     dptr,#0x0000
-08C1 75F0B4    2081            mov     b,#0xB4
-08C4 7443      2082            mov     a,#0x43
-08C6 120000    2083            lcall   ___fsmul
-08C9 AA82      2084            mov     r2,dpl
-08CB AB83      2085            mov     r3,dph
-08CD ACF0      2086            mov     r4,b
-08CF FD        2087            mov     r5,a
-08D0 E581      2088            mov     a,sp
-08D2 24FC      2089            add     a,#0xfc
-08D4 F581      2090            mov     sp,a
-08D6 C0E0      2091            push    _main_period_1_76
-08D8 C0E1      2092            push    (_main_period_1_76 + 1)
-08DA C0E2      2093            push    (_main_period_1_76 + 2)
-08DC C0E3      2094            push    (_main_period_1_76 + 3)
-08DE 8A82      2095            mov     dpl,r2
-08E0 8B83      2096            mov     dph,r3
-08E2 8CF0      2097            mov     b,r4
-08E4 ED        2098            mov     a,r5
-08E5 120000    2099            lcall   ___fsdiv
-08E8 858230    2100            mov     _main_Phase_Shift_1_76,dpl
-08EB 858331    2101            mov     (_main_Phase_Shift_1_76 + 1),dph
-08EE 85F032    2102            mov     (_main_Phase_Shift_1_76 + 2),b
-08F1 F533      2103            mov     (_main_Phase_Shift_1_76 + 3),a
-08F3 E581      2104            mov     a,sp
-08F5 24FC      2105            add     a,#0xfc
-08F7 F581      2106            mov     sp,a
-08F9 D001      2107            pop     ar1
-08FB D000      2108            pop     ar0
-08FD D007      2109            pop     ar7
-08FF D006      2110            pop     ar6
-0901           2111   ;        sourcecode.c:413: printf("T=%fms, Phase: %f, v1_Rms:%f, v2_Rms:%f\r", 
-0901 C006      2112            push    ar6
-0903 C007      2113            push    ar7
-0905 C000      2114            push    ar0
-0907 C001      2115            push    ar1
-0909 C0D8      2116            push    _v2_rms
-090B C0D9      2117            push    (_v2_rms + 1)
-090D C0DA      2118            push    (_v2_rms + 2)
-090F C0DB      2119            push    (_v2_rms + 3)
-0911 C018      2120            push    _v1_rms
-0913 C019      2121            push    (_v1_rms + 1)
-0915 C01A      2122            push    (_v1_rms + 2)
-0917 C01B      2123            push    (_v1_rms + 3)
-0919 C030      2124            push    _main_Phase_Shift_1_76
-091B C031      2125            push    (_main_Phase_Shift_1_76 + 1)
-091D C032      2126            push    (_main_Phase_Shift_1_76 + 2)
-091F C033      2127            push    (_main_Phase_Shift_1_76 + 3)
-0921 C006      2128            push    ar6
-0923 C007      2129            push    ar7
-0925 C000      2130            push    ar0
-0927 C001      2131            push    ar1
-0929 7480      2132            mov     a,#__str_7
-092B C0E0      2133            push    acc
-092D 74E2      2134            mov     a,#(__str_7 >> 8)
-092F C0E0      2135            push    acc
-0931 7480      2136            mov     a,#0x80
-0933 C0E0      2137            push    acc
-0935 120000    2138            lcall   _printf
-0938 E581      2139            mov     a,sp
-093A 24ED      2140            add     a,#0xed
-093C F581      2141            mov     sp,a
-093E           2142   ;        sourcecode.c:416: if (Phase_Shift > 180) {
-093E E4        2143            clr     a
-093F C0E0      2144            push    acc
-0941 C0E0      2145            push    acc
-0943 7434      2146            mov     a,#0x34
-0945 C0E0      2147            push    acc
-0947 7443      2148            mov     a,#0x43
-0949 C0E0      2149            push    acc
-094B 853082    2150            mov     dpl,_main_Phase_Shift_1_76
-094E 853183    2151            mov     dph,(_main_Phase_Shift_1_76 + 1)
-0951 8532F0    2152            mov     b,(_main_Phase_Shift_1_76 + 2)
-0954 E533      2153            mov     a,(_main_Phase_Shift_1_76 + 3)
-0956 120000    2154            lcall   ___fsgt
-0959 AA82      2155            mov     r2,dpl
-095B E581      2156            mov     a,sp
-095D 24FC      2157            add     a,#0xfc
-095F F581      2158            mov     sp,a
-0961 D001      2159            pop     ar1
-0963 D000      2160            pop     ar0
-0965 D007      2161            pop     ar7
-0967 D006      2162            pop     ar6
-0969 EA        2163            mov     a,r2
-096A 6000      2164            jz      L017046?
-096C           2165   ;        sourcecode.c:417: Phase_Shift = 360 - Phase_Shift;
-096C C006      2166            push    ar6
-096E C007      2167            push    ar7
-0970 C000      2168            push    ar0
-0972 C001      2169            push    ar1
-0974 C030      2170            push    _main_Phase_Shift_1_76
-0976 C031      2171            push    (_main_Phase_Shift_1_76 + 1)
-0978 C032      2172            push    (_main_Phase_Shift_1_76 + 2)
-097A C033      2173            push    (_main_Phase_Shift_1_76 + 3)
-097C 900000    2174            mov     dptr,#0x0000
-097F 75F0B4    2175            mov     b,#0xB4
-0982 7443      2176            mov     a,#0x43
-0984 120000    2177            lcall   ___fssub
-0987 858230    2178            mov     _main_Phase_Shift_1_76,dpl
-098A 858331    2179            mov     (_main_Phase_Shift_1_76 + 1),dph
-098D 85F032    2180            mov     (_main_Phase_Shift_1_76 + 2),b
-0990 F533      2181            mov     (_main_Phase_Shift_1_76 + 3),a
-0992 E581      2182            mov     a,sp
-0994 24FC      2183            add     a,#0xfc
-0996 F581      2184            mov     sp,a
-0998           2185   ;        sourcecode.c:418: LCDprint2("-", 1, 11);
-0998 75C801    2186            mov     _LCDprint2_PARM_2,#0x01
-099B 75780B    2187            mov     _LCDprint2_PARM_3,#0x0B
-099E 90E340    2188            mov     dptr,#__str_8
-09A1 75F080    2189            mov     b,#0x80
-09A4 120000    2190            lcall   _LCDprint2
-09A7 D001      2191            pop     ar1
-09A9 D000      2192            pop     ar0
-09AB D007      2193            pop     ar7
-09AD D006      2194            pop     ar6
-09AF 8000      2195            sjmp    L017047?
-09B1           2196   L017046?:
-09B1           2197   ;        sourcecode.c:421: LCDprint2(" ", 1, 11);
-09B1 75C801    2198            mov     _LCDprint2_PARM_2,#0x01
-09B4 75780B    2199            mov     _LCDprint2_PARM_3,#0x0B
-09B7 90E3C0    2200            mov     dptr,#__str_9
-09BA 75F080    2201            mov     b,#0x80
-09BD C006      2202            push    ar6
-09BF C007      2203            push    ar7
-09C1 C000      2204            push    ar0
-09C3 C001      2205            push    ar1
-09C5 120000    2206            lcall   _LCDprint2
-09C8 D001      2207            pop     ar1
-09CA D000      2208            pop     ar0
-09CC D007      2209            pop     ar7
-09CE D006      2210            pop     ar6
-09D0           2211   L017047?:
-09D0           2212   ;        sourcecode.c:426: if (SWAP_BUTTON == 0) {  // Check if the BOOT button between P3.7 and ground is pressed
-09D0 20A500    2213            jb      _P2_5,L017054?
-09D3           2214   ;        sourcecode.c:427: waitms(50); // De-bounce
-09D3 900032    2215            mov     dptr,#0x0032
-09D6 C006      2216            push    ar6
-09D8 C007      2217            push    ar7
-09DA C000      2218            push    ar0
-09DC C001      2219            push    ar1
-09DE 120000    2220            lcall   _waitms
-09E1 D001      2221            pop     ar1
-09E3 D000      2222            pop     ar0
-09E5 D007      2223            pop     ar7
-09E7 D006      2224            pop     ar6
-09E9           2225   ;        sourcecode.c:428: if (SWAP_BUTTON == 0) {
-09E9 20A500    2226            jb      _P2_5,L017054?
-09EC           2227   ;        sourcecode.c:429: while(SWAP_BUTTON == 0); // Wait for push-button release
-09EC           2228   L017048?:
-09EC 30A540    2229            jnb     _P2_5,L017048?
-09EF           2230   ;        sourcecode.c:430: bonus_counter++;
-09EF 0520      2231            inc     _main_bonus_counter_1_76
-09F1 E4        2232            clr     a
-09F2 B52080    2233            cjne    a,_main_bonus_counter_1_76,L017117?
-09F5 0521      2234            inc     (_main_bonus_counter_1_76 + 1)
-09F7           2235   L017117?:
-09F7           2236   L017054?:
-09F7           2237   ;        sourcecode.c:434: if (bonus_counter == 1) {
-09F7 7401      2238            mov     a,#0x01
-09F9 B520C0    2239            cjne    a,_main_bonus_counter_1_76,L017118?
-09FC E4        2240            clr     a
-09FD B521C0    2241            cjne    a,(_main_bonus_counter_1_76 + 1),L017118?
-0A00 8000      2242            sjmp    L017119?
-0A02           2243   L017118?:
-0A02 8000      2244            sjmp    L017059?
-0A04           2245   L017119?:
-0A04           2246   ;        sourcecode.c:435: sprintf(str_period, "%3.1f", period*1000);
-0A04 C006      2247            push    ar6
-0A06 C007      2248            push    ar7
-0A08 C000      2249            push    ar0
-0A0A C001      2250            push    ar1
-0A0C 7480      2251            mov     a,#__str_10
-0A0E C0E0      2252            push    acc
-0A10 74E5      2253            mov     a,#(__str_10 >> 8)
-0A12 C0E0      2254            push    acc
-0A14 7480      2255            mov     a,#0x80
-0A16 C0E0      2256            push    acc
-0A18 74B0      2257            mov     a,#_main_str_period_1_76
-0A1A C0E0      2258            push    acc
-0A1C 74CF      2259            mov     a,#(_main_str_period_1_76 >> 8)
-0A1E C0E0      2260            push    acc
-0A20 7440      2261            mov     a,#0x40
-0A22 C0E0      2262            push    acc
-0A24 120000    2263            lcall   _sprintf
-0A27 E581      2264            mov     a,sp
-0A29 24F6      2265            add     a,#0xf6
-0A2B F581      2266            mov     sp,a
-0A2D           2267   ;        sourcecode.c:436: LCDprint2(str_period, 1, 2); //string, row, column
-0A2D 75C801    2268            mov     _LCDprint2_PARM_2,#0x01
-0A30 757802    2269            mov     _LCDprint2_PARM_3,#0x02
-0A33 90CFB0    2270            mov     dptr,#_main_str_period_1_76
-0A36 75F040    2271            mov     b,#0x40
-0A39 120000    2272            lcall   _LCDprint2
-0A3C           2273   ;        sourcecode.c:437: LCDprint2("T:", 1, 0);
-0A3C 75C801    2274            mov     _LCDprint2_PARM_2,#0x01
-0A3F 757800    2275            mov     _LCDprint2_PARM_3,#0x00
-0A42 90E600    2276            mov     dptr,#__str_11
-0A45 75F080    2277            mov     b,#0x80
-0A48 120000    2278            lcall   _LCDprint2
-0A4B           2279   ;        sourcecode.c:438: LCDprint2("ms", 1, 7);
-0A4B 75C801    2280            mov     _LCDprint2_PARM_2,#0x01
-0A4E 757807    2281            mov     _LCDprint2_PARM_3,#0x07
-0A51 90E640    2282            mov     dptr,#__str_12
-0A54 75F080    2283            mov     b,#0x80
-0A57 120000    2284            lcall   _LCDprint2
-0A5A 020000    2285            ljmp    L017060?
-0A5D           2286   L017059?:
-0A5D           2287   ;        sourcecode.c:440: else if (bonus_counter == 2) {
-0A5D 7402      2288            mov     a,#0x02
-0A5F B520C0    2289            cjne    a,_main_bonus_counter_1_76,L017120?
-0A62 E4        2290            clr     a
-0A63 B521C0    2291            cjne    a,(_main_bonus_counter_1_76 + 1),L017120?
-0A66 8000      2292            sjmp    L017121?
-0A68           2293   L017120?:
-0A68 8000      2294            sjmp    L017056?
-0A6A           2295   L017121?:
-0A6A           2296   ;        sourcecode.c:441: sprintf(str_angfrequency, "%3.0f", angfrequency);
-0A6A C0D0      2297            push    _main_angfrequency_1_76
-0A6C C0D1      2298            push    (_main_angfrequency_1_76 + 1)
-0A6E C0D2      2299            push    (_main_angfrequency_1_76 + 2)
-0A70 C0D3      2300            push    (_main_angfrequency_1_76 + 3)
-0A72 7480      2301            mov     a,#__str_13
-0A74 C0E0      2302            push    acc
-0A76 74E7      2303            mov     a,#(__str_13 >> 8)
-0A78 C0E0      2304            push    acc
-0A7A 7480      2305            mov     a,#0x80
-0A7C C0E0      2306            push    acc
-0A7E 7400      2307            mov     a,#_main_str_angfrequency_1_76
-0A80 C0E0      2308            push    acc
-0A82 74D0      2309            mov     a,#(_main_str_angfrequency_1_76 >> 8)
-0A84 C0E0      2310            push    acc
-0A86 7440      2311            mov     a,#0x40
-0A88 C0E0      2312            push    acc
-0A8A 120000    2313            lcall   _sprintf
-0A8D E581      2314            mov     a,sp
-0A8F 24F6      2315            add     a,#0xf6
-0A91 F581      2316            mov     sp,a
-0A93           2317   ;        sourcecode.c:442: LCDprint2(str_angfrequency, 1, 2); //string, row, column
-0A93 75C801    2318            mov     _LCDprint2_PARM_2,#0x01
-0A96 757802    2319            mov     _LCDprint2_PARM_3,#0x02
-0A99 90D000    2320            mov     dptr,#_main_str_angfrequency_1_76
-0A9C 75F040    2321            mov     b,#0x40
-0A9F 120000    2322            lcall   _LCDprint2
-0AA2           2323   ;        sourcecode.c:443: LCDprint2("w:", 1, 0);
-0AA2 75C801    2324            mov     _LCDprint2_PARM_2,#0x01
-0AA5 757800    2325            mov     _LCDprint2_PARM_3,#0x00
-0AA8 90E7C0    2326            mov     dptr,#__str_14
-0AAB 75F080    2327            mov     b,#0x80
-0AAE 120000    2328            lcall   _LCDprint2
-0AB1           2329   ;        sourcecode.c:444: LCDprint2("rad ", 1, 5);
-0AB1 75C801    2330            mov     _LCDprint2_PARM_2,#0x01
-0AB4 757805    2331            mov     _LCDprint2_PARM_3,#0x05
-0AB7 90E800    2332            mov     dptr,#__str_15
-0ABA 75F080    2333            mov     b,#0x80
-0ABD 120000    2334            lcall   _LCDprint2
-0AC0 8000      2335            sjmp    L017060?
-0AC2           2336   L017056?:
-0AC2           2337   ;        sourcecode.c:447: bonus_counter = 0;
-0AC2 E4        2338            clr     a
-0AC3 F520      2339            mov     _main_bonus_counter_1_76,a
-0AC5 F521      2340            mov     (_main_bonus_counter_1_76 + 1),a
-0AC7           2341   ;        sourcecode.c:448: sprintf(str_frequency, "%2.0f", frequency);
-0AC7 C080      2342            push    _main_frequency_1_76
-0AC9 C081      2343            push    (_main_frequency_1_76 + 1)
-0ACB C082      2344            push    (_main_frequency_1_76 + 2)
-0ACD C083      2345            push    (_main_frequency_1_76 + 3)
-0ACF 7440      2346            mov     a,#__str_16
-0AD1 C0E0      2347            push    acc
-0AD3 74E8      2348            mov     a,#(__str_16 >> 8)
-0AD5 C0E0      2349            push    acc
-0AD7 7480      2350            mov     a,#0x80
-0AD9 C0E0      2351            push    acc
-0ADB 7470      2352            mov     a,#_main_str_frequency_1_76
-0ADD C0E0      2353            push    acc
-0ADF 74CE      2354            mov     a,#(_main_str_frequency_1_76 >> 8)
-0AE1 C0E0      2355            push    acc
-0AE3 7440      2356            mov     a,#0x40
-0AE5 C0E0      2357            push    acc
-0AE7 120000    2358            lcall   _sprintf
-0AEA E581      2359            mov     a,sp
-0AEC 24F6      2360            add     a,#0xf6
-0AEE F581      2361            mov     sp,a
-0AF0           2362   ;        sourcecode.c:449: LCDprint2(str_frequency, 1, 2); //string, row, column
-0AF0 75C801    2363            mov     _LCDprint2_PARM_2,#0x01
-0AF3 757802    2364            mov     _LCDprint2_PARM_3,#0x02
-0AF6 90CE70    2365            mov     dptr,#_main_str_frequency_1_76
-0AF9 75F040    2366            mov     b,#0x40
-0AFC 120000    2367            lcall   _LCDprint2
-0AFF           2368   ;        sourcecode.c:450: LCDprint2("Hz  ", 1, 4);
-0AFF 75C801    2369            mov     _LCDprint2_PARM_2,#0x01
-0B02 757804    2370            mov     _LCDprint2_PARM_3,#0x04
-0B05 90E880    2371            mov     dptr,#__str_17
-0B08 75F080    2372            mov     b,#0x80
-0B0B 120000    2373            lcall   _LCDprint2
-0B0E           2374   ;        sourcecode.c:451: LCDprint2("F:", 1, 0);
-0B0E 75C801    2375            mov     _LCDprint2_PARM_2,#0x01
-0B11 757800    2376            mov     _LCDprint2_PARM_3,#0x00
-0B14 90E8C0    2377            mov     dptr,#__str_18
-0B17 75F080    2378            mov     b,#0x80
-0B1A 120000    2379            lcall   _LCDprint2
-0B1D           2380   L017060?:
-0B1D           2381   ;        sourcecode.c:461: sprintf(str_vref, "%1.2f", v1_rms);   
-0B1D C018      2382            push    _v1_rms
-0B1F C019      2383            push    (_v1_rms + 1)
-0B21 C01A      2384            push    (_v1_rms + 2)
-0B23 C01B      2385            push    (_v1_rms + 3)
-0B25 7400      2386            mov     a,#__str_19
-0B27 C0E0      2387            push    acc
-0B29 74E9      2388            mov     a,#(__str_19 >> 8)
-0B2B C0E0      2389            push    acc
-0B2D 7480      2390            mov     a,#0x80
-0B2F C0E0      2391            push    acc
-0B31 74C0      2392            mov     a,#_main_str_vref_1_76
-0B33 C0E0      2393            push    acc
-0B35 74CE      2394            mov     a,#(_main_str_vref_1_76 >> 8)
-0B37 C0E0      2395            push    acc
-0B39 7440      2396            mov     a,#0x40
-0B3B C0E0      2397            push    acc
-0B3D 120000    2398            lcall   _sprintf
-0B40 E581      2399            mov     a,sp
-0B42 24F6      2400            add     a,#0xf6
-0B44 F581      2401            mov     sp,a
-0B46           2402   ;        sourcecode.c:462: sprintf(str_vtest, "%1.2f", v2_rms); 
-0B46 C0D8      2403            push    _v2_rms
-0B48 C0D9      2404            push    (_v2_rms + 1)
-0B4A C0DA      2405            push    (_v2_rms + 2)
-0B4C C0DB      2406            push    (_v2_rms + 3)
-0B4E 7400      2407            mov     a,#__str_19
-0B50 C0E0      2408            push    acc
-0B52 74E9      2409            mov     a,#(__str_19 >> 8)
-0B54 C0E0      2410            push    acc
-0B56 7480      2411            mov     a,#0x80
-0B58 C0E0      2412            push    acc
-0B5A 7410      2413            mov     a,#_main_str_vtest_1_76
-0B5C C0E0      2414            push    acc
-0B5E 74CF      2415            mov     a,#(_main_str_vtest_1_76 >> 8)
-0B60 C0E0      2416            push    acc
-0B62 7440      2417            mov     a,#0x40
-0B64 C0E0      2418            push    acc
-0B66 120000    2419            lcall   _sprintf
-0B69 E581      2420            mov     a,sp
-0B6B 24F6      2421            add     a,#0xf6
-0B6D F581      2422            mov     sp,a
-0B6F           2423   ;        sourcecode.c:463: sprintf(str_phase, "%3f", Phase_Shift);
-0B6F C030      2424            push    _main_Phase_Shift_1_76
-0B71 C031      2425            push    (_main_Phase_Shift_1_76 + 1)
-0B73 C032      2426            push    (_main_Phase_Shift_1_76 + 2)
-0B75 C033      2427            push    (_main_Phase_Shift_1_76 + 3)
-0B77 7440      2428            mov     a,#__str_20
-0B79 C0E0      2429            push    acc
-0B7B 74E9      2430            mov     a,#(__str_20 >> 8)
-0B7D C0E0      2431            push    acc
-0B7F 7480      2432            mov     a,#0x80
-0B81 C0E0      2433            push    acc
-0B83 7460      2434            mov     a,#_main_str_phase_1_76
-0B85 C0E0      2435            push    acc
-0B87 74CF      2436            mov     a,#(_main_str_phase_1_76 >> 8)
-0B89 C0E0      2437            push    acc
-0B8B 7440      2438            mov     a,#0x40
-0B8D C0E0      2439            push    acc
-0B8F 120000    2440            lcall   _sprintf
-0B92 E581      2441            mov     a,sp
-0B94 24F6      2442            add     a,#0xf6
-0B96 F581      2443            mov     sp,a
-0B98           2444   ;        sourcecode.c:467: LCDprint2(str_phase, 1, 12); //string, row, column
-0B98 75C801    2445            mov     _LCDprint2_PARM_2,#0x01
-0B9B 75780C    2446            mov     _LCDprint2_PARM_3,#0x0C
-0B9E 90CF60    2447            mov     dptr,#_main_str_phase_1_76
-0BA1 75F040    2448            mov     b,#0x40
-0BA4 120000    2449            lcall   _LCDprint2
-0BA7           2450   ;        sourcecode.c:468: LCDprint2(str_vref, 2, 3); //string, row, column
-0BA7 75C802    2451            mov     _LCDprint2_PARM_2,#0x02
-0BAA 757803    2452            mov     _LCDprint2_PARM_3,#0x03
-0BAD 90CEC0    2453            mov     dptr,#_main_str_vref_1_76
-0BB0 75F040    2454            mov     b,#0x40
-0BB3 120000    2455            lcall   _LCDprint2
-0BB6           2456   ;        sourcecode.c:469: LCDprint2(str_vtest, 2, 12); //string, row, column
-0BB6 75C802    2457            mov     _LCDprint2_PARM_2,#0x02
-0BB9 75780C    2458            mov     _LCDprint2_PARM_3,#0x0C
-0BBC 90CF10    2459            mov     dptr,#_main_str_vtest_1_76
-0BBF 75F040    2460            mov     b,#0x40
-0BC2 120000    2461            lcall   _LCDprint2
-0BC5 020000    2462            ljmp    L017062?
-0BC8           2463            rseg R_CSEG
-0BC8           2464   
-0000           2465            rseg R_XINIT
-0000           2466   
-0000           2467            rseg R_CONST
-0000           2468   __str_0:
-0000 1B        2469            db 0x1B
-0001 5B324A    2470            db '[2J'
-0004 00        2471            db 0x00
-0005           2472   __str_1:
-0005 41444320  2473            db 'ADC test program'
+02F9           1287   ;count                     Allocated to registers r4 r5 
+02F9           1288   ;str_frequency             Allocated with name '_main_str_frequency_1_76'
+02F9           1289   ;str_vref                  Allocated with name '_main_str_vref_1_76'
+02F9           1290   ;str_vtest                 Allocated with name '_main_str_vtest_1_76'
+02F9           1291   ;str_phase                 Allocated with name '_main_str_phase_1_76'
+02F9           1292   ;str_period                Allocated with name '_main_str_period_1_76'
+02F9           1293   ;str_angfrequency          Allocated with name '_main_str_angfrequency_1_76'
+02F9           1294   ;sloc0                     Allocated with name '_main_sloc0_1_0'
+02F9           1295   ;sloc1                     Allocated with name '_main_sloc1_1_0'
+02F9           1296   ;------------------------------------------------------------
+02F9           1297   ;        sourcecode.c:300: void main (void)
+02F9           1298   ;        -----------------------------------------
+02F9           1299   ;         function main
+02F9           1300   ;        -----------------------------------------
+02F9           1301   _main:
+02F9           1302   ;        sourcecode.c:307: unsigned int bonus_counter = 0;
+02F9           1303   ;        sourcecode.c:308: unsigned int count = 0; 
+02F9 E4        1304            clr     a
+02FA F520      1305            mov     _main_bonus_counter_1_76,a
+02FC F521      1306            mov     (_main_bonus_counter_1_76 + 1),a
+02FE FC        1307            mov     r4,a
+02FF FD        1308            mov     r5,a
+0300           1309   ;        sourcecode.c:317: TIMER0_Init();
+0300 C004      1310            push    ar4
+0302 C005      1311            push    ar5
+0304 120000    1312            lcall   _TIMER0_Init
+0307           1313   ;        sourcecode.c:320: LCD_4BIT();
+0307 120000    1314            lcall   _LCD_4BIT
+030A           1315   ;        sourcecode.c:322: waitms(500); // Give PuTTy a chance to start before sending
+030A 9001F4    1316            mov     dptr,#0x01F4
+030D 120000    1317            lcall   _waitms
+0310           1318   ;        sourcecode.c:323: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
+0310 7480      1319            mov     a,#__str_0
+0312 C0E0      1320            push    acc
+0314 74DA      1321            mov     a,#(__str_0 >> 8)
+0316 C0E0      1322            push    acc
+0318 7480      1323            mov     a,#0x80
+031A C0E0      1324            push    acc
+031C 120000    1325            lcall   _printf
+031F 1581      1326            dec     sp
+0321 1581      1327            dec     sp
+0323 1581      1328            dec     sp
+0325           1329   ;        sourcecode.c:328: __FILE__, __DATE__, __TIME__);
+0325           1330   ;        sourcecode.c:327: "Compiled: %s, %s\n\n",
+0325 7400      1331            mov     a,#__str_4
+0327 C0E0      1332            push    acc
+0329 74DB      1333            mov     a,#(__str_4 >> 8)
+032B C0E0      1334            push    acc
+032D 7480      1335            mov     a,#0x80
+032F C0E0      1336            push    acc
+0331 7440      1337            mov     a,#__str_3
+0333 C0E0      1338            push    acc
+0335 74DB      1339            mov     a,#(__str_3 >> 8)
+0337 C0E0      1340            push    acc
+0339 7480      1341            mov     a,#0x80
+033B C0E0      1342            push    acc
+033D 7480      1343            mov     a,#__str_2
+033F C0E0      1344            push    acc
+0341 74DB      1345            mov     a,#(__str_2 >> 8)
+0343 C0E0      1346            push    acc
+0345 7480      1347            mov     a,#0x80
+0347 C0E0      1348            push    acc
+0349 74C0      1349            mov     a,#__str_1
+034B C0E0      1350            push    acc
+034D 74DB      1351            mov     a,#(__str_1 >> 8)
+034F C0E0      1352            push    acc
+0351 7480      1353            mov     a,#0x80
+0353 C0E0      1354            push    acc
+0355 120000    1355            lcall   _printf
+0358 E581      1356            mov     a,sp
+035A 24F4      1357            add     a,#0xf4
+035C F581      1358            mov     sp,a
+035E           1359   ;        sourcecode.c:332: InitPinADC(2, 1); // Configure P2.1 as analog input
+035E 75C801    1360            mov     _InitPinADC_PARM_2,#0x01
+0361 758202    1361            mov     dpl,#0x02
+0364 120000    1362            lcall   _InitPinADC
+0367           1363   ;        sourcecode.c:333: InitPinADC(2, 2); // Configure P2.2 as analog input
+0367 75C802    1364            mov     _InitPinADC_PARM_2,#0x02
+036A 758202    1365            mov     dpl,#0x02
+036D 120000    1366            lcall   _InitPinADC
+0370           1367   ;        sourcecode.c:335: InitADC();
+0370 120000    1368            lcall   _InitADC
+0373 D005      1369            pop     ar5
+0375 D004      1370            pop     ar4
+0377           1371   ;        sourcecode.c:339: while (1){
+0377           1372   L017007?:
+0377           1373   ;        sourcecode.c:340: if ((Volts_at_Pin(QFP32_MUX_P2_2) < 3.3) && (Volts_at_Pin(QFP32_MUX_P2_1) < 3.3)){
+0377 75820F    1374            mov     dpl,#0x0F
+037A C004      1375            push    ar4
+037C C005      1376            push    ar5
+037E 120000    1377            lcall   _Volts_at_Pin
+0381 AE82      1378            mov     r6,dpl
+0383 AF83      1379            mov     r7,dph
+0385 A8F0      1380            mov     r0,b
+0387 F9        1381            mov     r1,a
+0388 7433      1382            mov     a,#0x33
+038A C0E0      1383            push    acc
+038C C0E0      1384            push    acc
+038E 7453      1385            mov     a,#0x53
+0390 C0E0      1386            push    acc
+0392 7440      1387            mov     a,#0x40
+0394 C0E0      1388            push    acc
+0396 8E82      1389            mov     dpl,r6
+0398 8F83      1390            mov     dph,r7
+039A 88F0      1391            mov     b,r0
+039C E9        1392            mov     a,r1
+039D 120000    1393            lcall   ___fslt
+03A0 AE82      1394            mov     r6,dpl
+03A2 E581      1395            mov     a,sp
+03A4 24FC      1396            add     a,#0xfc
+03A6 F581      1397            mov     sp,a
+03A8 D005      1398            pop     ar5
+03AA D004      1399            pop     ar4
+03AC EE        1400            mov     a,r6
+03AD 6000      1401            jz      L017002?
+03AF 75820E    1402            mov     dpl,#0x0E
+03B2 C004      1403            push    ar4
+03B4 C005      1404            push    ar5
+03B6 120000    1405            lcall   _Volts_at_Pin
+03B9 AE82      1406            mov     r6,dpl
+03BB AF83      1407            mov     r7,dph
+03BD A8F0      1408            mov     r0,b
+03BF F9        1409            mov     r1,a
+03C0 7433      1410            mov     a,#0x33
+03C2 C0E0      1411            push    acc
+03C4 C0E0      1412            push    acc
+03C6 7453      1413            mov     a,#0x53
+03C8 C0E0      1414            push    acc
+03CA 7440      1415            mov     a,#0x40
+03CC C0E0      1416            push    acc
+03CE 8E82      1417            mov     dpl,r6
+03D0 8F83      1418            mov     dph,r7
+03D2 88F0      1419            mov     b,r0
+03D4 E9        1420            mov     a,r1
+03D5 120000    1421            lcall   ___fslt
+03D8 AE82      1422            mov     r6,dpl
+03DA E581      1423            mov     a,sp
+03DC 24FC      1424            add     a,#0xfc
+03DE F581      1425            mov     sp,a
+03E0 D005      1426            pop     ar5
+03E2 D004      1427            pop     ar4
+03E4 EE        1428            mov     a,r6
+03E5 6000      1429            jz      L017002?
+03E7           1430   ;        sourcecode.c:341: LCDprint2("                   ", 1, 0); // clear the screen
+03E7 75C801    1431            mov     _LCDprint2_PARM_2,#0x01
+03EA 757800    1432            mov     _LCDprint2_PARM_3,#0x00
+03ED 90DCC0    1433            mov     dptr,#__str_5
+03F0 75F080    1434            mov     b,#0x80
+03F3 120000    1435            lcall   _LCDprint2
+03F6           1436   ;        sourcecode.c:342: LCDprint2("                   ", 2, 0);
+03F6 75C802    1437            mov     _LCDprint2_PARM_2,#0x02
+03F9 757800    1438            mov     _LCDprint2_PARM_3,#0x00
+03FC 90DCC0    1439            mov     dptr,#__str_5
+03FF 75F080    1440            mov     b,#0x80
+0402 120000    1441            lcall   _LCDprint2
+0405           1442   ;        sourcecode.c:343: break;
+0405 8000      1443            sjmp    L017008?
+0407           1444   L017002?:
+0407           1445   ;        sourcecode.c:345: count++;
+0407 0C        1446            inc     r4
+0408 BC0040    1447            cjne    r4,#0x00,L017111?
+040B 0D        1448            inc     r5
+040C           1449   L017111?:
+040C           1450   ;        sourcecode.c:346: if (count > 100){
+040C C3        1451            clr     c
+040D 7464      1452            mov     a,#0x64
+040F 9C        1453            subb    a,r4
+0410 E4        1454            clr     a
+0411 9D        1455            subb    a,r5
+0412 4000      1456            jc      L017112?
+0414 020000    1457            ljmp    L017007?
+0417           1458   L017112?:
+0417           1459   ;        sourcecode.c:347: LCDprint2("Connect ref and    ", 1, 0); //string, row, column
+0417 75C801    1460            mov     _LCDprint2_PARM_2,#0x01
+041A 757800    1461            mov     _LCDprint2_PARM_3,#0x00
+041D 90DDC0    1462            mov     dptr,#__str_6
+0420 75F080    1463            mov     b,#0x80
+0423 120000    1464            lcall   _LCDprint2
+0426           1465   ;        sourcecode.c:348: LCDprint2("  test signals     ", 2, 0); //string, row, column
+0426 75C802    1466            mov     _LCDprint2_PARM_2,#0x02
+0429 757800    1467            mov     _LCDprint2_PARM_3,#0x00
+042C 90DE00    1468            mov     dptr,#__str_7
+042F 75F080    1469            mov     b,#0x80
+0432 120000    1470            lcall   _LCDprint2
+0435           1471   ;        sourcecode.c:349: count = 100; // keep count at 100 it will reset when a signal is detected
+0435 7C64      1472            mov     r4,#0x64
+0437 7D00      1473            mov     r5,#0x00
+0439 020000    1474            ljmp    L017007?
+043C           1475   L017008?:
+043C           1476   ;        sourcecode.c:357: LCDprint2("F:XXHz   P:  .XXX", 1, 0); //string, row, column
+043C 75C801    1477            mov     _LCDprint2_PARM_2,#0x01
+043F 757800    1478            mov     _LCDprint2_PARM_3,#0x00
+0442 90DE40    1479            mov     dptr,#__str_8
+0445 75F080    1480            mov     b,#0x80
+0448 120000    1481            lcall   _LCDprint2
+044B           1482   ;        sourcecode.c:358: LCDprint2("VR:X.XX  VT:X.XX", 2, 0); //string, row, column
+044B 75C802    1483            mov     _LCDprint2_PARM_2,#0x02
+044E 757800    1484            mov     _LCDprint2_PARM_3,#0x00
+0451 90DE80    1485            mov     dptr,#__str_9
+0454 75F080    1486            mov     b,#0x80
+0457 120000    1487            lcall   _LCDprint2
+045A           1488   ;        sourcecode.c:361: WDTCN = 0b_0001_0101;
+045A 759715    1489            mov     _WDTCN,#0x15
+045D           1490   ;        sourcecode.c:363: while(1)
+045D           1491   L017070?:
+045D           1492   ;        sourcecode.c:366: TL0 = 0; 
+045D 758A00    1493            mov     _TL0,#0x00
+0460           1494   ;        sourcecode.c:367: TH0 = 0;
+0460 758C00    1495            mov     _TH0,#0x00
+0463           1496   ;        sourcecode.c:368: TF0 = 0;
+0463 C28D      1497            clr     _TF0
+0465           1498   ;        sourcecode.c:369: overflow_count = 0;
+0465 75E800    1499            mov     _overflow_count,#0x00
+0468           1500   ;        sourcecode.c:372: WDTCN = 0xA5; // reload and restart wdt
+0468 7597A5    1501            mov     _WDTCN,#0xA5
+046B           1502   ;        sourcecode.c:376: while(Volts_at_Pin(QFP32_MUX_P2_2) > 0); // Wait for the signal to be zero
+046B           1503   L017009?:
+046B 75820F    1504            mov     dpl,#0x0F
+046E 120000    1505            lcall   _Volts_at_Pin
+0471 AC82      1506            mov     r4,dpl
+0473 AD83      1507            mov     r5,dph
+0475 AEF0      1508            mov     r6,b
+0477 FF        1509            mov     r7,a
+0478 E4        1510            clr     a
+0479 C0E0      1511            push    acc
+047B C0E0      1512            push    acc
+047D C0E0      1513            push    acc
+047F C0E0      1514            push    acc
+0481 8C82      1515            mov     dpl,r4
+0483 8D83      1516            mov     dph,r5
+0485 8EF0      1517            mov     b,r6
+0487 EF        1518            mov     a,r7
+0488 120000    1519            lcall   ___fsgt
+048B AC82      1520            mov     r4,dpl
+048D E581      1521            mov     a,sp
+048F 24FC      1522            add     a,#0xfc
+0491 F581      1523            mov     sp,a
+0493 EC        1524            mov     a,r4
+0494 7000      1525            jnz     L017009?
+0496           1526   ;        sourcecode.c:377: while(Volts_at_Pin(QFP32_MUX_P2_2) == 0); // Wait for the signal to be one
+0496           1527   L017012?:
+0496 75820F    1528            mov     dpl,#0x0F
+0499 120000    1529            lcall   _Volts_at_Pin
+049C AC82      1530            mov     r4,dpl
+049E AD83      1531            mov     r5,dph
+04A0 AEF0      1532            mov     r6,b
+04A2 FF        1533            mov     r7,a
+04A3 EC        1534            mov     a,r4
+04A4 4D        1535            orl     a,r5
+04A5 4E        1536            orl     a,r6
+04A6 8FF0      1537            mov     b,r7
+04A8 C2F7      1538            clr     b.7 ; Clear the sign bit
+04AA 45F0      1539            orl     a,b
+04AC 6000      1540            jz      L017012?
+04AE           1541   ;        sourcecode.c:378: TR0 = 1; // Start the timer
+04AE D28C      1542            setb    _TR0
+04B0           1543   ;        sourcecode.c:379: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be zero
+04B0           1544   L017017?:
+04B0 75820F    1545            mov     dpl,#0x0F
+04B3 120000    1546            lcall   _Volts_at_Pin
+04B6 AC82      1547            mov     r4,dpl
+04B8 AD83      1548            mov     r5,dph
+04BA AEF0      1549            mov     r6,b
+04BC FF        1550            mov     r7,a
+04BD E4        1551            clr     a
+04BE C0E0      1552            push    acc
+04C0 C0E0      1553            push    acc
+04C2 C0E0      1554            push    acc
+04C4 C0E0      1555            push    acc
+04C6 8C82      1556            mov     dpl,r4
+04C8 8D83      1557            mov     dph,r5
+04CA 8EF0      1558            mov     b,r6
+04CC EF        1559            mov     a,r7
+04CD 120000    1560            lcall   ___fsgt
+04D0 AC82      1561            mov     r4,dpl
+04D2 E581      1562            mov     a,sp
+04D4 24FC      1563            add     a,#0xfc
+04D6 F581      1564            mov     sp,a
+04D8 EC        1565            mov     a,r4
+04D9 6000      1566            jz      L017022?
+04DB           1567   ;        sourcecode.c:380: if (TF0 == 1) { // Did the 16-bit timer overflow?
+04DB           1568   ;        sourcecode.c:381: TF0 = 0;
+04DB 108D40    1569            jbc     _TF0,L017116?
+04DE 8000      1570            sjmp    L017017?
+04E0           1571   L017116?:
+04E0           1572   ;        sourcecode.c:382: overflow_count++;
+04E0 05E8      1573            inc     _overflow_count
+04E2           1574   ;        sourcecode.c:385: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be one
+04E2 8000      1575            sjmp    L017017?
+04E4           1576   L017022?:
+04E4 75820F    1577            mov     dpl,#0x0F
+04E7 120000    1578            lcall   _Volts_at_Pin
+04EA AC82      1579            mov     r4,dpl
+04EC AD83      1580            mov     r5,dph
+04EE AEF0      1581            mov     r6,b
+04F0 FF        1582            mov     r7,a
+04F1 E4        1583            clr     a
+04F2 C0E0      1584            push    acc
+04F4 C0E0      1585            push    acc
+04F6 C0E0      1586            push    acc
+04F8 C0E0      1587            push    acc
+04FA 8C82      1588            mov     dpl,r4
+04FC 8D83      1589            mov     dph,r5
+04FE 8EF0      1590            mov     b,r6
+0500 EF        1591            mov     a,r7
+0501 120000    1592            lcall   ___fsgt
+0504 AC82      1593            mov     r4,dpl
+0506 E581      1594            mov     a,sp
+0508 24FC      1595            add     a,#0xfc
+050A F581      1596            mov     sp,a
+050C EC        1597            mov     a,r4
+050D 6000      1598            jz      L017024?
+050F           1599   ;        sourcecode.c:386: if (TF0 == 1) { // Did the 16-bit timer overflow?
+050F           1600   ;        sourcecode.c:387: TF0 = 0;
+050F 108DC0    1601            jbc     _TF0,L017118?
+0512 8000      1602            sjmp    L017022?
+0514           1603   L017118?:
+0514           1604   ;        sourcecode.c:388: overflow_count++;
+0514 05E8      1605            inc     _overflow_count
+0516 8000      1606            sjmp    L017022?
+0518           1607   L017024?:
+0518           1608   ;        sourcecode.c:391: TR0 = 0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
+0518 C28C      1609            clr     _TR0
+051A           1610   ;        sourcecode.c:392: period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK)*(2);
+051A 85E882    1611            mov     dpl,_overflow_count
+051D 120000    1612            lcall   ___uchar2fs
+0520 AC82      1613            mov     r4,dpl
+0522 AD83      1614            mov     r5,dph
+0524 AEF0      1615            mov     r6,b
+0526 FF        1616            mov     r7,a
+0527 C004      1617            push    ar4
+0529 C005      1618            push    ar5
+052B C006      1619            push    ar6
+052D C007      1620            push    ar7
+052F 900000    1621            mov     dptr,#0x0000
+0532 75F080    1622            mov     b,#0x80
+0535 7447      1623            mov     a,#0x47
+0537 120000    1624            lcall   ___fsmul
+053A AC82      1625            mov     r4,dpl
+053C AD83      1626            mov     r5,dph
+053E AEF0      1627            mov     r6,b
+0540 FF        1628            mov     r7,a
+0541 E581      1629            mov     a,sp
+0543 24FC      1630            add     a,#0xfc
+0545 F581      1631            mov     sp,a
+0547 858C82    1632            mov     dpl,_TH0
+054A C004      1633            push    ar4
+054C C005      1634            push    ar5
+054E C006      1635            push    ar6
+0550 C007      1636            push    ar7
+0552 120000    1637            lcall   ___uchar2fs
+0555 A882      1638            mov     r0,dpl
+0557 A983      1639            mov     r1,dph
+0559 AAF0      1640            mov     r2,b
+055B FB        1641            mov     r3,a
+055C C000      1642            push    ar0
+055E C001      1643            push    ar1
+0560 C002      1644            push    ar2
+0562 C003      1645            push    ar3
+0564 900000    1646            mov     dptr,#0x0000
+0567 75F080    1647            mov     b,#0x80
+056A 7443      1648            mov     a,#0x43
+056C 120000    1649            lcall   ___fsmul
+056F AA82      1650            mov     r2,dpl
+0571 AB83      1651            mov     r3,dph
+0573 A8F0      1652            mov     r0,b
+0575 F9        1653            mov     r1,a
+0576 E581      1654            mov     a,sp
+0578 24FC      1655            add     a,#0xfc
+057A F581      1656            mov     sp,a
+057C D007      1657            pop     ar7
+057E D006      1658            pop     ar6
+0580 D005      1659            pop     ar5
+0582 D004      1660            pop     ar4
+0584 C002      1661            push    ar2
+0586 C003      1662            push    ar3
+0588 C000      1663            push    ar0
+058A C001      1664            push    ar1
+058C 8C82      1665            mov     dpl,r4
+058E 8D83      1666            mov     dph,r5
+0590 8EF0      1667            mov     b,r6
+0592 EF        1668            mov     a,r7
+0593 120000    1669            lcall   ___fsadd
+0596 AA82      1670            mov     r2,dpl
+0598 AB83      1671            mov     r3,dph
+059A ACF0      1672            mov     r4,b
+059C FD        1673            mov     r5,a
+059D E581      1674            mov     a,sp
+059F 24FC      1675            add     a,#0xfc
+05A1 F581      1676            mov     sp,a
+05A3 AE8A      1677            mov     r6,_TL0
+05A5 7F00      1678            mov     r7,#0x00
+05A7 8E82      1679            mov     dpl,r6
+05A9 8F83      1680            mov     dph,r7
+05AB C002      1681            push    ar2
+05AD C003      1682            push    ar3
+05AF C004      1683            push    ar4
+05B1 C005      1684            push    ar5
+05B3 120000    1685            lcall   ___sint2fs
+05B6 AE82      1686            mov     r6,dpl
+05B8 AF83      1687            mov     r7,dph
+05BA A8F0      1688            mov     r0,b
+05BC F9        1689            mov     r1,a
+05BD D005      1690            pop     ar5
+05BF D004      1691            pop     ar4
+05C1 D003      1692            pop     ar3
+05C3 D002      1693            pop     ar2
+05C5 C006      1694            push    ar6
+05C7 C007      1695            push    ar7
+05C9 C000      1696            push    ar0
+05CB C001      1697            push    ar1
+05CD 8A82      1698            mov     dpl,r2
+05CF 8B83      1699            mov     dph,r3
+05D1 8CF0      1700            mov     b,r4
+05D3 ED        1701            mov     a,r5
+05D4 120000    1702            lcall   ___fsadd
+05D7 AA82      1703            mov     r2,dpl
+05D9 AB83      1704            mov     r3,dph
+05DB ACF0      1705            mov     r4,b
+05DD FD        1706            mov     r5,a
+05DE E581      1707            mov     a,sp
+05E0 24FC      1708            add     a,#0xfc
+05E2 F581      1709            mov     sp,a
+05E4 C002      1710            push    ar2
+05E6 C003      1711            push    ar3
+05E8 C004      1712            push    ar4
+05EA C005      1713            push    ar5
+05EC 90F4FC    1714            mov     dptr,#0xF4FC
+05EF 75F0B2    1715            mov     b,#0xB2
+05F2 7434      1716            mov     a,#0x34
+05F4 120000    1717            lcall   ___fsmul
+05F7 8582E0    1718            mov     _main_period_1_76,dpl
+05FA 8583E1    1719            mov     (_main_period_1_76 + 1),dph
+05FD 85F0E2    1720            mov     (_main_period_1_76 + 2),b
+0600 F5E3      1721            mov     (_main_period_1_76 + 3),a
+0602 E581      1722            mov     a,sp
+0604 24FC      1723            add     a,#0xfc
+0606 F581      1724            mov     sp,a
+0608           1725   ;        sourcecode.c:394: frequency = 1.0/period;
+0608 C0E0      1726            push    _main_period_1_76
+060A C0E1      1727            push    (_main_period_1_76 + 1)
+060C C0E2      1728            push    (_main_period_1_76 + 2)
+060E C0E3      1729            push    (_main_period_1_76 + 3)
+0610 900000    1730            mov     dptr,#0x0000
+0613 75F080    1731            mov     b,#0x80
+0616 743F      1732            mov     a,#0x3F
+0618 120000    1733            lcall   ___fsdiv
+061B 858280    1734            mov     _main_frequency_1_76,dpl
+061E 858381    1735            mov     (_main_frequency_1_76 + 1),dph
+0621 85F082    1736            mov     (_main_frequency_1_76 + 2),b
+0624 F583      1737            mov     (_main_frequency_1_76 + 3),a
+0626 E581      1738            mov     a,sp
+0628 24FC      1739            add     a,#0xfc
+062A F581      1740            mov     sp,a
+062C           1741   ;        sourcecode.c:395: angfrequency = frequency * 2 * 3.1415926535; 
+062C C080      1742            push    _main_frequency_1_76
+062E C081      1743            push    (_main_frequency_1_76 + 1)
+0630 C082      1744            push    (_main_frequency_1_76 + 2)
+0632 C083      1745            push    (_main_frequency_1_76 + 3)
+0634 900FDB    1746            mov     dptr,#0x0FDB
+0637 75F0C9    1747            mov     b,#0xC9
+063A 7440      1748            mov     a,#0x40
+063C 120000    1749            lcall   ___fsmul
+063F 8582D0    1750            mov     _main_angfrequency_1_76,dpl
+0642 8583D1    1751            mov     (_main_angfrequency_1_76 + 1),dph
+0645 85F0D2    1752            mov     (_main_angfrequency_1_76 + 2),b
+0648 F5D3      1753            mov     (_main_angfrequency_1_76 + 3),a
+064A E581      1754            mov     a,sp
+064C 24FC      1755            add     a,#0xfc
+064E F581      1756            mov     sp,a
+0650           1757   ;        sourcecode.c:397: while(Volts_at_Pin(QFP32_MUX_P2_2) > 0);
+0650           1758   L017025?:
+0650 75820F    1759            mov     dpl,#0x0F
+0653 120000    1760            lcall   _Volts_at_Pin
+0656 AE82      1761            mov     r6,dpl
+0658 AF83      1762            mov     r7,dph
+065A A8F0      1763            mov     r0,b
+065C F9        1764            mov     r1,a
+065D E4        1765            clr     a
+065E C0E0      1766            push    acc
+0660 C0E0      1767            push    acc
+0662 C0E0      1768            push    acc
+0664 C0E0      1769            push    acc
+0666 8E82      1770            mov     dpl,r6
+0668 8F83      1771            mov     dph,r7
+066A 88F0      1772            mov     b,r0
+066C E9        1773            mov     a,r1
+066D 120000    1774            lcall   ___fsgt
+0670 AE82      1775            mov     r6,dpl
+0672 E581      1776            mov     a,sp
+0674 24FC      1777            add     a,#0xfc
+0676 F581      1778            mov     sp,a
+0678 EE        1779            mov     a,r6
+0679 7000      1780            jnz     L017025?
+067B           1781   ;        sourcecode.c:398: while(Volts_at_Pin(QFP32_MUX_P2_2) == 0);
+067B           1782   L017028?:
+067B 75820F    1783            mov     dpl,#0x0F
+067E 120000    1784            lcall   _Volts_at_Pin
+0681 AE82      1785            mov     r6,dpl
+0683 AF83      1786            mov     r7,dph
+0685 A8F0      1787            mov     r0,b
+0687 F9        1788            mov     r1,a
+0688 EE        1789            mov     a,r6
+0689 4F        1790            orl     a,r7
+068A 48        1791            orl     a,r0
+068B 89F0      1792            mov     b,r1
+068D C2F7      1793            clr     b.7 ; Clear the sign bit
+068F 45F0      1794            orl     a,b
+0691 6000      1795            jz      L017028?
+0693           1796   ;        sourcecode.c:399: waitms(period*1000/4);
+0693 C0E0      1797            push    _main_period_1_76
+0695 C0E1      1798            push    (_main_period_1_76 + 1)
+0697 C0E2      1799            push    (_main_period_1_76 + 2)
+0699 C0E3      1800            push    (_main_period_1_76 + 3)
+069B 900000    1801            mov     dptr,#0x0000
+069E 75F07A    1802            mov     b,#0x7A
+06A1 7444      1803            mov     a,#0x44
+06A3 120000    1804            lcall   ___fsmul
+06A6 AE82      1805            mov     r6,dpl
+06A8 AF83      1806            mov     r7,dph
+06AA A8F0      1807            mov     r0,b
+06AC F9        1808            mov     r1,a
+06AD E581      1809            mov     a,sp
+06AF 24FC      1810            add     a,#0xfc
+06B1 F581      1811            mov     sp,a
+06B3 C006      1812            push    ar6
+06B5 C007      1813            push    ar7
+06B7 C000      1814            push    ar0
+06B9 C001      1815            push    ar1
+06BB E4        1816            clr     a
+06BC C0E0      1817            push    acc
+06BE C0E0      1818            push    acc
+06C0 7480      1819            mov     a,#0x80
+06C2 C0E0      1820            push    acc
+06C4 7440      1821            mov     a,#0x40
+06C6 C0E0      1822            push    acc
+06C8 8E82      1823            mov     dpl,r6
+06CA 8F83      1824            mov     dph,r7
+06CC 88F0      1825            mov     b,r0
+06CE E9        1826            mov     a,r1
+06CF 120000    1827            lcall   ___fsdiv
+06D2 AA82      1828            mov     r2,dpl
+06D4 AB83      1829            mov     r3,dph
+06D6 ACF0      1830            mov     r4,b
+06D8 FD        1831            mov     r5,a
+06D9 E581      1832            mov     a,sp
+06DB 24FC      1833            add     a,#0xfc
+06DD F581      1834            mov     sp,a
+06DF 8A82      1835            mov     dpl,r2
+06E1 8B83      1836            mov     dph,r3
+06E3 8CF0      1837            mov     b,r4
+06E5 ED        1838            mov     a,r5
+06E6 120000    1839            lcall   ___fs2uint
+06E9 858240    1840            mov     _main_sloc0_1_0,dpl
+06EC 858341    1841            mov  (_main_sloc0_1_0 + 1),dph
+06EF 120000    1842            lcall   _waitms
+06F2           1843   ;        sourcecode.c:400: v1_rms = Volts_at_Pin(QFP32_MUX_P2_2) / 1.41321356237;
+06F2 75820F    1844            mov     dpl,#0x0F
+06F5 120000    1845            lcall   _Volts_at_Pin
+06F8 AC82      1846            mov     r4,dpl
+06FA AD83      1847            mov     r5,dph
+06FC AAF0      1848            mov     r2,b
+06FE FB        1849            mov     r3,a
+06FF 742F      1850            mov     a,#0x2F
+0701 C0E0      1851            push    acc
+0703 74E4      1852            mov     a,#0xE4
+0705 C0E0      1853            push    acc
+0707 74B4      1854            mov     a,#0xB4
+0709 C0E0      1855            push    acc
+070B 743F      1856            mov     a,#0x3F
+070D C0E0      1857            push    acc
+070F 8C82      1858            mov     dpl,r4
+0711 8D83      1859            mov     dph,r5
+0713 8AF0      1860            mov     b,r2
+0715 EB        1861            mov     a,r3
+0716 120000    1862            lcall   ___fsdiv
+0719 858218    1863            mov     _v1_rms,dpl
+071C 858319    1864            mov     (_v1_rms + 1),dph
+071F 85F01A    1865            mov     (_v1_rms + 2),b
+0722 F51B      1866            mov     (_v1_rms + 3),a
+0724 E581      1867            mov     a,sp
+0726 24FC      1868            add     a,#0xfc
+0728 F581      1869            mov     sp,a
+072A D001      1870            pop     ar1
+072C D000      1871            pop     ar0
+072E D007      1872            pop     ar7
+0730 D006      1873            pop     ar6
+0732           1874   ;        sourcecode.c:402: while(Volts_at_Pin(QFP32_MUX_P2_1) > 0); //wait for zero cross of other signal
+0732           1875   L017031?:
+0732 75820E    1876            mov     dpl,#0x0E
+0735 C006      1877            push    ar6
+0737 C007      1878            push    ar7
+0739 C000      1879            push    ar0
+073B C001      1880            push    ar1
+073D 120000    1881            lcall   _Volts_at_Pin
+0740 AA82      1882            mov     r2,dpl
+0742 AB83      1883            mov     r3,dph
+0744 ACF0      1884            mov     r4,b
+0746 FD        1885            mov     r5,a
+0747 E4        1886            clr     a
+0748 C0E0      1887            push    acc
+074A C0E0      1888            push    acc
+074C C0E0      1889            push    acc
+074E C0E0      1890            push    acc
+0750 8A82      1891            mov     dpl,r2
+0752 8B83      1892            mov     dph,r3
+0754 8CF0      1893            mov     b,r4
+0756 ED        1894            mov     a,r5
+0757 120000    1895            lcall   ___fsgt
+075A AA82      1896            mov     r2,dpl
+075C E581      1897            mov     a,sp
+075E 24FC      1898            add     a,#0xfc
+0760 F581      1899            mov     sp,a
+0762 D001      1900            pop     ar1
+0764 D000      1901            pop     ar0
+0766 D007      1902            pop     ar7
+0768 D006      1903            pop     ar6
+076A EA        1904            mov     a,r2
+076B 7000      1905            jnz     L017031?
+076D           1906   ;        sourcecode.c:403: while(Volts_at_Pin(QFP32_MUX_P2_1) == 0);
+076D           1907   L017034?:
+076D 75820E    1908            mov     dpl,#0x0E
+0770 C006      1909            push    ar6
+0772 C007      1910            push    ar7
+0774 C000      1911            push    ar0
+0776 C001      1912            push    ar1
+0778 120000    1913            lcall   _Volts_at_Pin
+077B AA82      1914            mov     r2,dpl
+077D AB83      1915            mov     r3,dph
+077F ACF0      1916            mov     r4,b
+0781 FD        1917            mov     r5,a
+0782 D001      1918            pop     ar1
+0784 D000      1919            pop     ar0
+0786 D007      1920            pop     ar7
+0788 D006      1921            pop     ar6
+078A EA        1922            mov     a,r2
+078B 4B        1923            orl     a,r3
+078C 4C        1924            orl     a,r4
+078D 8DF0      1925            mov     b,r5
+078F C2F7      1926            clr     b.7 ; Clear the sign bit
+0791 45F0      1927            orl     a,b
+0793 6000      1928            jz      L017034?
+0795           1929   ;        sourcecode.c:404: waitms(period*1000/4);
+0795 854082    1930            mov     dpl,_main_sloc0_1_0
+0798 854183    1931            mov     dph,(_main_sloc0_1_0 + 1)
+079B C006      1932            push    ar6
+079D C007      1933            push    ar7
+079F C000      1934            push    ar0
+07A1 C001      1935            push    ar1
+07A3 120000    1936            lcall   _waitms
+07A6           1937   ;        sourcecode.c:405: v2_rms = Volts_at_Pin(QFP32_MUX_P2_1) / 1.41321356237;
+07A6 75820E    1938            mov     dpl,#0x0E
+07A9 120000    1939            lcall   _Volts_at_Pin
+07AC AA82      1940            mov     r2,dpl
+07AE AB83      1941            mov     r3,dph
+07B0 ACF0      1942            mov     r4,b
+07B2 FD        1943            mov     r5,a
+07B3 742F      1944            mov     a,#0x2F
+07B5 C0E0      1945            push    acc
+07B7 74E4      1946            mov     a,#0xE4
+07B9 C0E0      1947            push    acc
+07BB 74B4      1948            mov     a,#0xB4
+07BD C0E0      1949            push    acc
+07BF 743F      1950            mov     a,#0x3F
+07C1 C0E0      1951            push    acc
+07C3 8A82      1952            mov     dpl,r2
+07C5 8B83      1953            mov     dph,r3
+07C7 8CF0      1954            mov     b,r4
+07C9 ED        1955            mov     a,r5
+07CA 120000    1956            lcall   ___fsdiv
+07CD 8582D8    1957            mov     _v2_rms,dpl
+07D0 8583D9    1958            mov     (_v2_rms + 1),dph
+07D3 85F0DA    1959            mov     (_v2_rms + 2),b
+07D6 F5DB      1960            mov     (_v2_rms + 3),a
+07D8 E581      1961            mov     a,sp
+07DA 24FC      1962            add     a,#0xfc
+07DC F581      1963            mov     sp,a
+07DE D001      1964            pop     ar1
+07E0 D000      1965            pop     ar0
+07E2 D007      1966            pop     ar7
+07E4 D006      1967            pop     ar6
+07E6           1968   ;        sourcecode.c:409: TR0=0; // Stop timer 0
+07E6 C28C      1969            clr     _TR0
+07E8           1970   ;        sourcecode.c:410: overflow_count = 0;
+07E8 75E800    1971            mov     _overflow_count,#0x00
+07EB           1972   ;        sourcecode.c:411: TH0=0; TL0=0; TF0 = 0;                // Reset the timer
+07EB 758C00    1973            mov     _TH0,#0x00
+07EE 758A00    1974            mov     _TL0,#0x00
+07F1 C28D      1975            clr     _TF0
+07F3           1976   ;        sourcecode.c:413: while (Volts_at_Pin(QFP32_MUX_P2_2) != 0);    
+07F3           1977   L017037?:
+07F3 75820F    1978            mov     dpl,#0x0F
+07F6 C006      1979            push    ar6
+07F8 C007      1980            push    ar7
+07FA C000      1981            push    ar0
+07FC C001      1982            push    ar1
+07FE 120000    1983            lcall   _Volts_at_Pin
+0801 AA82      1984            mov     r2,dpl
+0803 AB83      1985            mov     r3,dph
+0805 ACF0      1986            mov     r4,b
+0807 FD        1987            mov     r5,a
+0808 D001      1988            pop     ar1
+080A D000      1989            pop     ar0
+080C D007      1990            pop     ar7
+080E D006      1991            pop     ar6
+0810 EA        1992            mov     a,r2
+0811 4B        1993            orl     a,r3
+0812 4C        1994            orl     a,r4
+0813 8DF0      1995            mov     b,r5
+0815 C2F7      1996            clr     b.7 ; Clear the sign bit
+0817 45F0      1997            orl     a,b
+0819 7000      1998            jnz     L017037?
+081B           1999   ;        sourcecode.c:414: while (Volts_at_Pin(QFP32_MUX_P2_2) == 0);                    // Wait for reference signal to be zero
+081B           2000   L017040?:
+081B 75820F    2001            mov     dpl,#0x0F
+081E C006      2002            push    ar6
+0820 C007      2003            push    ar7
+0822 C000      2004            push    ar0
+0824 C001      2005            push    ar1
+0826 120000    2006            lcall   _Volts_at_Pin
+0829 AA82      2007            mov     r2,dpl
+082B AB83      2008            mov     r3,dph
+082D ACF0      2009            mov     r4,b
+082F FD        2010            mov     r5,a
+0830 D001      2011            pop     ar1
+0832 D000      2012            pop     ar0
+0834 D007      2013            pop     ar7
+0836 D006      2014            pop     ar6
+0838 EA        2015            mov     a,r2
+0839 4B        2016            orl     a,r3
+083A 4C        2017            orl     a,r4
+083B 8DF0      2018            mov     b,r5
+083D C2F7      2019            clr     b.7 ; Clear the sign bit
+083F 45F0      2020            orl     a,b
+0841 6000      2021            jz      L017040?
+0843           2022   ;        sourcecode.c:415: TR0=1; // start timer
+0843 D28C      2023            setb    _TR0
+0845           2024   ;        sourcecode.c:416: while (Volts_at_Pin(QFP32_MUX_P2_1) != 0) {
+0845           2025   L017045?:
+0845 75820E    2026            mov     dpl,#0x0E
+0848 C006      2027            push    ar6
+084A C007      2028            push    ar7
+084C C000      2029            push    ar0
+084E C001      2030            push    ar1
+0850 120000    2031            lcall   _Volts_at_Pin
+0853 AA82      2032            mov     r2,dpl
+0855 AB83      2033            mov     r3,dph
+0857 ACF0      2034            mov     r4,b
+0859 FD        2035            mov     r5,a
+085A D001      2036            pop     ar1
+085C D000      2037            pop     ar0
+085E D007      2038            pop     ar7
+0860 D006      2039            pop     ar6
+0862 EA        2040            mov     a,r2
+0863 4B        2041            orl     a,r3
+0864 4C        2042            orl     a,r4
+0865 8DF0      2043            mov     b,r5
+0867 C2F7      2044            clr     b.7 ; Clear the sign bit
+0869 45F0      2045            orl     a,b
+086B 6000      2046            jz      L017050?
+086D           2047   ;        sourcecode.c:417: if (TF0 == 1) { // Did the 16-bit timer overflow?
+086D           2048   ;        sourcecode.c:418: TF0 = 0;
+086D 108D00    2049            jbc     _TF0,L017126?
+0870 8000      2050            sjmp    L017045?
+0872           2051   L017126?:
+0872           2052   ;        sourcecode.c:419: overflow_count++;
+0872 05E8      2053            inc     _overflow_count
+0874           2054   ;        sourcecode.c:422: while (Volts_at_Pin(QFP32_MUX_P2_1) == 0) { // Wait for test signal to hit zero
+0874 8000      2055            sjmp    L017045?
+0876           2056   L017050?:
+0876 75820E    2057            mov     dpl,#0x0E
+0879 C006      2058            push    ar6
+087B C007      2059            push    ar7
+087D C000      2060            push    ar0
+087F C001      2061            push    ar1
+0881 120000    2062            lcall   _Volts_at_Pin
+0884 AA82      2063            mov     r2,dpl
+0886 AB83      2064            mov     r3,dph
+0888 ACF0      2065            mov     r4,b
+088A FD        2066            mov     r5,a
+088B D001      2067            pop     ar1
+088D D000      2068            pop     ar0
+088F D007      2069            pop     ar7
+0891 D006      2070            pop     ar6
+0893 EA        2071            mov     a,r2
+0894 4B        2072            orl     a,r3
+0895 4C        2073            orl     a,r4
+0896 8DF0      2074            mov     b,r5
+0898 C2F7      2075            clr     b.7 ; Clear the sign bit
+089A 45F0      2076            orl     a,b
+089C 7000      2077            jnz     L017052?
+089E           2078   ;        sourcecode.c:423: if (TF0 == 1) { // Did the 16-bit timer overflow?
+089E           2079   ;        sourcecode.c:424: TF0 = 0;
+089E 108D80    2080            jbc     _TF0,L017128?
+08A1 8000      2081            sjmp    L017050?
+08A3           2082   L017128?:
+08A3           2083   ;        sourcecode.c:425: overflow_count++;
+08A3 05E8      2084            inc     _overflow_count
+08A5 8000      2085            sjmp    L017050?
+08A7           2086   L017052?:
+08A7           2087   ;        sourcecode.c:428: TR0=0; // stop timer
+08A7 C28C      2088            clr     _TR0
+08A9           2089   ;        sourcecode.c:432: time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+08A9 85E882    2090            mov     dpl,_overflow_count
+08AC C006      2091            push    ar6
+08AE C007      2092            push    ar7
+08B0 C000      2093            push    ar0
+08B2 C001      2094            push    ar1
+08B4 120000    2095            lcall   ___uchar2fs
+08B7 AA82      2096            mov     r2,dpl
+08B9 AB83      2097            mov     r3,dph
+08BB ACF0      2098            mov     r4,b
+08BD FD        2099            mov     r5,a
+08BE C002      2100            push    ar2
+08C0 C003      2101            push    ar3
+08C2 C004      2102            push    ar4
+08C4 C005      2103            push    ar5
+08C6 900000    2104            mov     dptr,#0x0000
+08C9 75F080    2105            mov     b,#0x80
+08CC 7447      2106            mov     a,#0x47
+08CE 120000    2107            lcall   ___fsmul
+08D1 858280    2108            mov     _main_sloc1_1_0,dpl
+08D4 858381    2109            mov     (_main_sloc1_1_0 + 1),dph
+08D7 85F082    2110            mov     (_main_sloc1_1_0 + 2),b
+08DA F583      2111            mov     (_main_sloc1_1_0 + 3),a
+08DC E581      2112            mov     a,sp
+08DE 24FC      2113            add     a,#0xfc
+08E0 F581      2114            mov     sp,a
+08E2 858C82    2115            mov     dpl,_TH0
+08E5 120000    2116            lcall   ___uchar2fs
+08E8 AA82      2117            mov     r2,dpl
+08EA AB83      2118            mov     r3,dph
+08EC ACF0      2119            mov     r4,b
+08EE FD        2120            mov     r5,a
+08EF C002      2121            push    ar2
+08F1 C003      2122            push    ar3
+08F3 C004      2123            push    ar4
+08F5 C005      2124            push    ar5
+08F7 900000    2125            mov     dptr,#0x0000
+08FA 75F080    2126            mov     b,#0x80
+08FD 7443      2127            mov     a,#0x43
+08FF 120000    2128            lcall   ___fsmul
+0902 AA82      2129            mov     r2,dpl
+0904 AB83      2130            mov     r3,dph
+0906 ACF0      2131            mov     r4,b
+0908 FD        2132            mov     r5,a
+0909 E581      2133            mov     a,sp
+090B 24FC      2134            add     a,#0xfc
+090D F581      2135            mov     sp,a
+090F C002      2136            push    ar2
+0911 C003      2137            push    ar3
+0913 C004      2138            push    ar4
+0915 C005      2139            push    ar5
+0917 858082    2140            mov     dpl,_main_sloc1_1_0
+091A 858183    2141            mov     dph,(_main_sloc1_1_0 + 1)
+091D 8582F0    2142            mov     b,(_main_sloc1_1_0 + 2)
+0920 E583      2143            mov     a,(_main_sloc1_1_0 + 3)
+0922 120000    2144            lcall   ___fsadd
+0925 858280    2145            mov     _main_sloc1_1_0,dpl
+0928 858381    2146            mov     (_main_sloc1_1_0 + 1),dph
+092B 85F082    2147            mov     (_main_sloc1_1_0 + 2),b
+092E F583      2148            mov     (_main_sloc1_1_0 + 3),a
+0930 E581      2149            mov     a,sp
+0932 24FC      2150            add     a,#0xfc
+0934 F581      2151            mov     sp,a
+0936 AA8A      2152            mov     r2,_TL0
+0938 7B00      2153            mov     r3,#0x00
+093A 8A82      2154            mov     dpl,r2
+093C 8B83      2155            mov     dph,r3
+093E 120000    2156            lcall   ___sint2fs
+0941 AA82      2157            mov     r2,dpl
+0943 AB83      2158            mov     r3,dph
+0945 ACF0      2159            mov     r4,b
+0947 FD        2160            mov     r5,a
+0948 C002      2161            push    ar2
+094A C003      2162            push    ar3
+094C C004      2163            push    ar4
+094E C005      2164            push    ar5
+0950 858082    2165            mov     dpl,_main_sloc1_1_0
+0953 858183    2166            mov     dph,(_main_sloc1_1_0 + 1)
+0956 8582F0    2167            mov     b,(_main_sloc1_1_0 + 2)
+0959 E583      2168            mov     a,(_main_sloc1_1_0 + 3)
+095B 120000    2169            lcall   ___fsadd
+095E AA82      2170            mov     r2,dpl
+0960 AB83      2171            mov     r3,dph
+0962 ACF0      2172            mov     r4,b
+0964 FD        2173            mov     r5,a
+0965 E581      2174            mov     a,sp
+0967 24FC      2175            add     a,#0xfc
+0969 F581      2176            mov     sp,a
+096B C002      2177            push    ar2
+096D C003      2178            push    ar3
+096F C004      2179            push    ar4
+0971 C005      2180            push    ar5
+0973 90F4FC    2181            mov     dptr,#0xF4FC
+0976 75F032    2182            mov     b,#0x32
+0979 7434      2183            mov     a,#0x34
+097B 120000    2184            lcall   ___fsmul
+097E AA82      2185            mov     r2,dpl
+0980 AB83      2186            mov     r3,dph
+0982 ACF0      2187            mov     r4,b
+0984 FD        2188            mov     r5,a
+0985 E581      2189            mov     a,sp
+0987 24FC      2190            add     a,#0xfc
+0989 F581      2191            mov     sp,a
+098B           2192   ;        sourcecode.c:433: Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
+098B C002      2193            push    ar2
+098D C003      2194            push    ar3
+098F C004      2195            push    ar4
+0991 C005      2196            push    ar5
+0993 900000    2197            mov     dptr,#0x0000
+0996 75F0B4    2198            mov     b,#0xB4
+0999 7443      2199            mov     a,#0x43
+099B 120000    2200            lcall   ___fsmul
+099E AA82      2201            mov     r2,dpl
+09A0 AB83      2202            mov     r3,dph
+09A2 ACF0      2203            mov     r4,b
+09A4 FD        2204            mov     r5,a
+09A5 E581      2205            mov     a,sp
+09A7 24FC      2206            add     a,#0xfc
+09A9 F581      2207            mov     sp,a
+09AB C0E0      2208            push    _main_period_1_76
+09AD C0E1      2209            push    (_main_period_1_76 + 1)
+09AF C0E2      2210            push    (_main_period_1_76 + 2)
+09B1 C0E3      2211            push    (_main_period_1_76 + 3)
+09B3 8A82      2212            mov     dpl,r2
+09B5 8B83      2213            mov     dph,r3
+09B7 8CF0      2214            mov     b,r4
+09B9 ED        2215            mov     a,r5
+09BA 120000    2216            lcall   ___fsdiv
+09BD 858230    2217            mov     _main_Phase_Shift_1_76,dpl
+09C0 858331    2218            mov     (_main_Phase_Shift_1_76 + 1),dph
+09C3 85F032    2219            mov     (_main_Phase_Shift_1_76 + 2),b
+09C6 F533      2220            mov     (_main_Phase_Shift_1_76 + 3),a
+09C8 E581      2221            mov     a,sp
+09CA 24FC      2222            add     a,#0xfc
+09CC F581      2223            mov     sp,a
+09CE D001      2224            pop     ar1
+09D0 D000      2225            pop     ar0
+09D2 D007      2226            pop     ar7
+09D4 D006      2227            pop     ar6
+09D6           2228   ;        sourcecode.c:435: printf("T=%fms, Phase: %f, v1_Rms:%f, v2_Rms:%f\r", 
+09D6 C006      2229            push    ar6
+09D8 C007      2230            push    ar7
+09DA C000      2231            push    ar0
+09DC C001      2232            push    ar1
+09DE C0D8      2233            push    _v2_rms
+09E0 C0D9      2234            push    (_v2_rms + 1)
+09E2 C0DA      2235            push    (_v2_rms + 2)
+09E4 C0DB      2236            push    (_v2_rms + 3)
+09E6 C018      2237            push    _v1_rms
+09E8 C019      2238            push    (_v1_rms + 1)
+09EA C01A      2239            push    (_v1_rms + 2)
+09EC C01B      2240            push    (_v1_rms + 3)
+09EE C030      2241            push    _main_Phase_Shift_1_76
+09F0 C031      2242            push    (_main_Phase_Shift_1_76 + 1)
+09F2 C032      2243            push    (_main_Phase_Shift_1_76 + 2)
+09F4 C033      2244            push    (_main_Phase_Shift_1_76 + 3)
+09F6 C006      2245            push    ar6
+09F8 C007      2246            push    ar7
+09FA C000      2247            push    ar0
+09FC C001      2248            push    ar1
+09FE 74C0      2249            mov     a,#__str_10
+0A00 C0E0      2250            push    acc
+0A02 74E4      2251            mov     a,#(__str_10 >> 8)
+0A04 C0E0      2252            push    acc
+0A06 7480      2253            mov     a,#0x80
+0A08 C0E0      2254            push    acc
+0A0A 120000    2255            lcall   _printf
+0A0D E581      2256            mov     a,sp
+0A0F 24ED      2257            add     a,#0xed
+0A11 F581      2258            mov     sp,a
+0A13           2259   ;        sourcecode.c:438: if (Phase_Shift > 180) {
+0A13 E4        2260            clr     a
+0A14 C0E0      2261            push    acc
+0A16 C0E0      2262            push    acc
+0A18 7434      2263            mov     a,#0x34
+0A1A C0E0      2264            push    acc
+0A1C 7443      2265            mov     a,#0x43
+0A1E C0E0      2266            push    acc
+0A20 853082    2267            mov     dpl,_main_Phase_Shift_1_76
+0A23 853183    2268            mov     dph,(_main_Phase_Shift_1_76 + 1)
+0A26 8532F0    2269            mov     b,(_main_Phase_Shift_1_76 + 2)
+0A29 E533      2270            mov     a,(_main_Phase_Shift_1_76 + 3)
+0A2B 120000    2271            lcall   ___fsgt
+0A2E AA82      2272            mov     r2,dpl
+0A30 E581      2273            mov     a,sp
+0A32 24FC      2274            add     a,#0xfc
+0A34 F581      2275            mov     sp,a
+0A36 D001      2276            pop     ar1
+0A38 D000      2277            pop     ar0
+0A3A D007      2278            pop     ar7
+0A3C D006      2279            pop     ar6
+0A3E EA        2280            mov     a,r2
+0A3F 6000      2281            jz      L017054?
+0A41           2282   ;        sourcecode.c:439: Phase_Shift = 360 - Phase_Shift;
+0A41 C006      2283            push    ar6
+0A43 C007      2284            push    ar7
+0A45 C000      2285            push    ar0
+0A47 C001      2286            push    ar1
+0A49 C030      2287            push    _main_Phase_Shift_1_76
+0A4B C031      2288            push    (_main_Phase_Shift_1_76 + 1)
+0A4D C032      2289            push    (_main_Phase_Shift_1_76 + 2)
+0A4F C033      2290            push    (_main_Phase_Shift_1_76 + 3)
+0A51 900000    2291            mov     dptr,#0x0000
+0A54 75F0B4    2292            mov     b,#0xB4
+0A57 7443      2293            mov     a,#0x43
+0A59 120000    2294            lcall   ___fssub
+0A5C 858230    2295            mov     _main_Phase_Shift_1_76,dpl
+0A5F 858331    2296            mov     (_main_Phase_Shift_1_76 + 1),dph
+0A62 85F032    2297            mov     (_main_Phase_Shift_1_76 + 2),b
+0A65 F533      2298            mov     (_main_Phase_Shift_1_76 + 3),a
+0A67 E581      2299            mov     a,sp
+0A69 24FC      2300            add     a,#0xfc
+0A6B F581      2301            mov     sp,a
+0A6D           2302   ;        sourcecode.c:440: LCDprint2("-", 1, 11);
+0A6D 75C801    2303            mov     _LCDprint2_PARM_2,#0x01
+0A70 75780B    2304            mov     _LCDprint2_PARM_3,#0x0B
+0A73 90E580    2305            mov     dptr,#__str_11
+0A76 75F080    2306            mov     b,#0x80
+0A79 120000    2307            lcall   _LCDprint2
+0A7C D001      2308            pop     ar1
+0A7E D000      2309            pop     ar0
+0A80 D007      2310            pop     ar7
+0A82 D006      2311            pop     ar6
+0A84 8000      2312            sjmp    L017055?
+0A86           2313   L017054?:
+0A86           2314   ;        sourcecode.c:443: LCDprint2(" ", 1, 11);
+0A86 75C801    2315            mov     _LCDprint2_PARM_2,#0x01
+0A89 75780B    2316            mov     _LCDprint2_PARM_3,#0x0B
+0A8C 90E600    2317            mov     dptr,#__str_12
+0A8F 75F080    2318            mov     b,#0x80
+0A92 C006      2319            push    ar6
+0A94 C007      2320            push    ar7
+0A96 C000      2321            push    ar0
+0A98 C001      2322            push    ar1
+0A9A 120000    2323            lcall   _LCDprint2
+0A9D D001      2324            pop     ar1
+0A9F D000      2325            pop     ar0
+0AA1 D007      2326            pop     ar7
+0AA3 D006      2327            pop     ar6
+0AA5           2328   L017055?:
+0AA5           2329   ;        sourcecode.c:448: if (SWAP_BUTTON == 0) {  // Check if the BOOT button between P3.7 and ground is pressed
+0AA5 20A540    2330            jb      _P2_5,L017062?
+0AA8           2331   ;        sourcecode.c:449: waitms(50); // De-bounce
+0AA8 900032    2332            mov     dptr,#0x0032
+0AAB C006      2333            push    ar6
+0AAD C007      2334            push    ar7
+0AAF C000      2335            push    ar0
+0AB1 C001      2336            push    ar1
+0AB3 120000    2337            lcall   _waitms
+0AB6 D001      2338            pop     ar1
+0AB8 D000      2339            pop     ar0
+0ABA D007      2340            pop     ar7
+0ABC D006      2341            pop     ar6
+0ABE           2342   ;        sourcecode.c:450: if (SWAP_BUTTON == 0) {
+0ABE 20A540    2343            jb      _P2_5,L017062?
+0AC1           2344   ;        sourcecode.c:451: while(SWAP_BUTTON == 0); // Wait for push-button release
+0AC1           2345   L017056?:
+0AC1 30A580    2346            jnb     _P2_5,L017056?
+0AC4           2347   ;        sourcecode.c:452: bonus_counter++;
+0AC4 0520      2348            inc     _main_bonus_counter_1_76
+0AC6 E4        2349            clr     a
+0AC7 B520C0    2350            cjne    a,_main_bonus_counter_1_76,L017133?
+0ACA 0521      2351            inc     (_main_bonus_counter_1_76 + 1)
+0ACC           2352   L017133?:
+0ACC           2353   L017062?:
+0ACC           2354   ;        sourcecode.c:456: if (bonus_counter == 1) {
+0ACC 7401      2355            mov     a,#0x01
+0ACE B52000    2356            cjne    a,_main_bonus_counter_1_76,L017134?
+0AD1 E4        2357            clr     a
+0AD2 B52100    2358            cjne    a,(_main_bonus_counter_1_76 + 1),L017134?
+0AD5 8000      2359            sjmp    L017135?
+0AD7           2360   L017134?:
+0AD7 8000      2361            sjmp    L017067?
+0AD9           2362   L017135?:
+0AD9           2363   ;        sourcecode.c:457: sprintf(str_period, "%3.1f", period*1000);
+0AD9 C006      2364            push    ar6
+0ADB C007      2365            push    ar7
+0ADD C000      2366            push    ar0
+0ADF C001      2367            push    ar1
+0AE1 74C0      2368            mov     a,#__str_13
+0AE3 C0E0      2369            push    acc
+0AE5 74E7      2370            mov     a,#(__str_13 >> 8)
+0AE7 C0E0      2371            push    acc
+0AE9 7480      2372            mov     a,#0x80
+0AEB C0E0      2373            push    acc
+0AED 74B0      2374            mov     a,#_main_str_period_1_76
+0AEF C0E0      2375            push    acc
+0AF1 74CF      2376            mov     a,#(_main_str_period_1_76 >> 8)
+0AF3 C0E0      2377            push    acc
+0AF5 7440      2378            mov     a,#0x40
+0AF7 C0E0      2379            push    acc
+0AF9 120000    2380            lcall   _sprintf
+0AFC E581      2381            mov     a,sp
+0AFE 24F6      2382            add     a,#0xf6
+0B00 F581      2383            mov     sp,a
+0B02           2384   ;        sourcecode.c:458: LCDprint2(str_period, 1, 2); //string, row, column
+0B02 75C801    2385            mov     _LCDprint2_PARM_2,#0x01
+0B05 757802    2386            mov     _LCDprint2_PARM_3,#0x02
+0B08 90CFB0    2387            mov     dptr,#_main_str_period_1_76
+0B0B 75F040    2388            mov     b,#0x40
+0B0E 120000    2389            lcall   _LCDprint2
+0B11           2390   ;        sourcecode.c:459: LCDprint2("T:", 1, 0);
+0B11 75C801    2391            mov     _LCDprint2_PARM_2,#0x01
+0B14 757800    2392            mov     _LCDprint2_PARM_3,#0x00
+0B17 90E840    2393            mov     dptr,#__str_14
+0B1A 75F080    2394            mov     b,#0x80
+0B1D 120000    2395            lcall   _LCDprint2
+0B20           2396   ;        sourcecode.c:460: LCDprint2("ms", 1, 7);
+0B20 75C801    2397            mov     _LCDprint2_PARM_2,#0x01
+0B23 757807    2398            mov     _LCDprint2_PARM_3,#0x07
+0B26 90E880    2399            mov     dptr,#__str_15
+0B29 75F080    2400            mov     b,#0x80
+0B2C 120000    2401            lcall   _LCDprint2
+0B2F 020000    2402            ljmp    L017068?
+0B32           2403   L017067?:
+0B32           2404   ;        sourcecode.c:462: else if (bonus_counter == 2) {
+0B32 7402      2405            mov     a,#0x02
+0B34 B52000    2406            cjne    a,_main_bonus_counter_1_76,L017136?
+0B37 E4        2407            clr     a
+0B38 B52100    2408            cjne    a,(_main_bonus_counter_1_76 + 1),L017136?
+0B3B 8000      2409            sjmp    L017137?
+0B3D           2410   L017136?:
+0B3D 8000      2411            sjmp    L017064?
+0B3F           2412   L017137?:
+0B3F           2413   ;        sourcecode.c:463: sprintf(str_angfrequency, "%3.0f", angfrequency);
+0B3F C0D0      2414            push    _main_angfrequency_1_76
+0B41 C0D1      2415            push    (_main_angfrequency_1_76 + 1)
+0B43 C0D2      2416            push    (_main_angfrequency_1_76 + 2)
+0B45 C0D3      2417            push    (_main_angfrequency_1_76 + 3)
+0B47 74C0      2418            mov     a,#__str_16
+0B49 C0E0      2419            push    acc
+0B4B 74E9      2420            mov     a,#(__str_16 >> 8)
+0B4D C0E0      2421            push    acc
+0B4F 7480      2422            mov     a,#0x80
+0B51 C0E0      2423            push    acc
+0B53 7400      2424            mov     a,#_main_str_angfrequency_1_76
+0B55 C0E0      2425            push    acc
+0B57 74D0      2426            mov     a,#(_main_str_angfrequency_1_76 >> 8)
+0B59 C0E0      2427            push    acc
+0B5B 7440      2428            mov     a,#0x40
+0B5D C0E0      2429            push    acc
+0B5F 120000    2430            lcall   _sprintf
+0B62 E581      2431            mov     a,sp
+0B64 24F6      2432            add     a,#0xf6
+0B66 F581      2433            mov     sp,a
+0B68           2434   ;        sourcecode.c:464: LCDprint2(str_angfrequency, 1, 2); //string, row, column
+0B68 75C801    2435            mov     _LCDprint2_PARM_2,#0x01
+0B6B 757802    2436            mov     _LCDprint2_PARM_3,#0x02
+0B6E 90D000    2437            mov     dptr,#_main_str_angfrequency_1_76
+0B71 75F040    2438            mov     b,#0x40
+0B74 120000    2439            lcall   _LCDprint2
+0B77           2440   ;        sourcecode.c:465: LCDprint2("w:", 1, 0);
+0B77 75C801    2441            mov     _LCDprint2_PARM_2,#0x01
+0B7A 757800    2442            mov     _LCDprint2_PARM_3,#0x00
+0B7D 90EA00    2443            mov     dptr,#__str_17
+0B80 75F080    2444            mov     b,#0x80
+0B83 120000    2445            lcall   _LCDprint2
+0B86           2446   ;        sourcecode.c:466: LCDprint2("rad ", 1, 5);
+0B86 75C801    2447            mov     _LCDprint2_PARM_2,#0x01
+0B89 757805    2448            mov     _LCDprint2_PARM_3,#0x05
+0B8C 90EA40    2449            mov     dptr,#__str_18
+0B8F 75F080    2450            mov     b,#0x80
+0B92 120000    2451            lcall   _LCDprint2
+0B95 8000      2452            sjmp    L017068?
+0B97           2453   L017064?:
+0B97           2454   ;        sourcecode.c:469: bonus_counter = 0;
+0B97 E4        2455            clr     a
+0B98 F520      2456            mov     _main_bonus_counter_1_76,a
+0B9A F521      2457            mov     (_main_bonus_counter_1_76 + 1),a
+0B9C           2458   ;        sourcecode.c:470: sprintf(str_frequency, "%2.0f", frequency);
+0B9C C080      2459            push    _main_frequency_1_76
+0B9E C081      2460            push    (_main_frequency_1_76 + 1)
+0BA0 C082      2461            push    (_main_frequency_1_76 + 2)
+0BA2 C083      2462            push    (_main_frequency_1_76 + 3)
+0BA4 7480      2463            mov     a,#__str_19
+0BA6 C0E0      2464            push    acc
+0BA8 74EA      2465            mov     a,#(__str_19 >> 8)
+0BAA C0E0      2466            push    acc
+0BAC 7480      2467            mov     a,#0x80
+0BAE C0E0      2468            push    acc
+0BB0 7470      2469            mov     a,#_main_str_frequency_1_76
+0BB2 C0E0      2470            push    acc
+0BB4 74CE      2471            mov     a,#(_main_str_frequency_1_76 >> 8)
+0BB6 C0E0      2472            push    acc
+0BB8 7440      2473            mov     a,#0x40
+0BBA C0E0      2474            push    acc
+0BBC 120000    2475            lcall   _sprintf
+0BBF E581      2476            mov     a,sp
+0BC1 24F6      2477            add     a,#0xf6
+0BC3 F581      2478            mov     sp,a
+0BC5           2479   ;        sourcecode.c:471: LCDprint2(str_frequency, 1, 2); //string, row, column
+0BC5 75C801    2480            mov     _LCDprint2_PARM_2,#0x01
+0BC8 757802    2481            mov     _LCDprint2_PARM_3,#0x02
+0BCB 90CE70    2482            mov     dptr,#_main_str_frequency_1_76
+0BCE 75F040    2483            mov     b,#0x40
+0BD1 120000    2484            lcall   _LCDprint2
+0BD4           2485   ;        sourcecode.c:472: LCDprint2("Hz  ", 1, 4);
+0BD4 75C801    2486            mov     _LCDprint2_PARM_2,#0x01
+0BD7 757804    2487            mov     _LCDprint2_PARM_3,#0x04
+0BDA 90EAC0    2488            mov     dptr,#__str_20
+0BDD 75F080    2489            mov     b,#0x80
+0BE0 120000    2490            lcall   _LCDprint2
+0BE3           2491   ;        sourcecode.c:473: LCDprint2("F:", 1, 0);
+0BE3 75C801    2492            mov     _LCDprint2_PARM_2,#0x01
+0BE6 757800    2493            mov     _LCDprint2_PARM_3,#0x00
+0BE9 90EB00    2494            mov     dptr,#__str_21
+0BEC 75F080    2495            mov     b,#0x80
+0BEF 120000    2496            lcall   _LCDprint2
+0BF2           2497   L017068?:
+0BF2           2498   ;        sourcecode.c:483: sprintf(str_vref, "%1.2f", v1_rms);   
+0BF2 C018      2499            push    _v1_rms
+0BF4 C019      2500            push    (_v1_rms + 1)
+0BF6 C01A      2501            push    (_v1_rms + 2)
+0BF8 C01B      2502            push    (_v1_rms + 3)
+0BFA 7440      2503            mov     a,#__str_22
+0BFC C0E0      2504            push    acc
+0BFE 74EB      2505            mov     a,#(__str_22 >> 8)
+0C00 C0E0      2506            push    acc
+0C02 7480      2507            mov     a,#0x80
+0C04 C0E0      2508            push    acc
+0C06 74C0      2509            mov     a,#_main_str_vref_1_76
+0C08 C0E0      2510            push    acc
+0C0A 74CE      2511            mov     a,#(_main_str_vref_1_76 >> 8)
+0C0C C0E0      2512            push    acc
+0C0E 7440      2513            mov     a,#0x40
+0C10 C0E0      2514            push    acc
+0C12 120000    2515            lcall   _sprintf
+0C15 E581      2516            mov     a,sp
+0C17 24F6      2517            add     a,#0xf6
+0C19 F581      2518            mov     sp,a
+0C1B           2519   ;        sourcecode.c:484: sprintf(str_vtest, "%1.2f", v2_rms); 
+0C1B C0D8      2520            push    _v2_rms
+0C1D C0D9      2521            push    (_v2_rms + 1)
+0C1F C0DA      2522            push    (_v2_rms + 2)
+0C21 C0DB      2523            push    (_v2_rms + 3)
+0C23 7440      2524            mov     a,#__str_22
+0C25 C0E0      2525            push    acc
+0C27 74EB      2526            mov     a,#(__str_22 >> 8)
+0C29 C0E0      2527            push    acc
+0C2B 7480      2528            mov     a,#0x80
+0C2D C0E0      2529            push    acc
+0C2F 7410      2530            mov     a,#_main_str_vtest_1_76
+0C31 C0E0      2531            push    acc
+0C33 74CF      2532            mov     a,#(_main_str_vtest_1_76 >> 8)
+0C35 C0E0      2533            push    acc
+0C37 7440      2534            mov     a,#0x40
+0C39 C0E0      2535            push    acc
+0C3B 120000    2536            lcall   _sprintf
+0C3E E581      2537            mov     a,sp
+0C40 24F6      2538            add     a,#0xf6
+0C42 F581      2539            mov     sp,a
+0C44           2540   ;        sourcecode.c:485: sprintf(str_phase, "%3f", Phase_Shift);
+0C44 C030      2541            push    _main_Phase_Shift_1_76
+0C46 C031      2542            push    (_main_Phase_Shift_1_76 + 1)
+0C48 C032      2543            push    (_main_Phase_Shift_1_76 + 2)
+0C4A C033      2544            push    (_main_Phase_Shift_1_76 + 3)
+0C4C 7480      2545            mov     a,#__str_23
+0C4E C0E0      2546            push    acc
+0C50 74EB      2547            mov     a,#(__str_23 >> 8)
+0C52 C0E0      2548            push    acc
+0C54 7480      2549            mov     a,#0x80
+0C56 C0E0      2550            push    acc
+0C58 7460      2551            mov     a,#_main_str_phase_1_76
+0C5A C0E0      2552            push    acc
+0C5C 74CF      2553            mov     a,#(_main_str_phase_1_76 >> 8)
+0C5E C0E0      2554            push    acc
+0C60 7440      2555            mov     a,#0x40
+0C62 C0E0      2556            push    acc
+0C64 120000    2557            lcall   _sprintf
+0C67 E581      2558            mov     a,sp
+0C69 24F6      2559            add     a,#0xf6
+0C6B F581      2560            mov     sp,a
+0C6D           2561   ;        sourcecode.c:489: LCDprint2(str_phase, 1, 12); //string, row, column
+0C6D 75C801    2562            mov     _LCDprint2_PARM_2,#0x01
+0C70 75780C    2563            mov     _LCDprint2_PARM_3,#0x0C
+0C73 90CF60    2564            mov     dptr,#_main_str_phase_1_76
+0C76 75F040    2565            mov     b,#0x40
+0C79 120000    2566            lcall   _LCDprint2
+0C7C           2567   ;        sourcecode.c:490: LCDprint2(str_vref, 2, 3); //string, row, column
+0C7C 75C802    2568            mov     _LCDprint2_PARM_2,#0x02
+0C7F 757803    2569            mov     _LCDprint2_PARM_3,#0x03
+0C82 90CEC0    2570            mov     dptr,#_main_str_vref_1_76
+0C85 75F040    2571            mov     b,#0x40
+0C88 120000    2572            lcall   _LCDprint2
+0C8B           2573   ;        sourcecode.c:491: LCDprint2(str_vtest, 2, 12); //string, row, column
+0C8B 75C802    2574            mov     _LCDprint2_PARM_2,#0x02
+0C8E 75780C    2575            mov     _LCDprint2_PARM_3,#0x0C
+0C91 90CF10    2576            mov     dptr,#_main_str_vtest_1_76
+0C94 75F040    2577            mov     b,#0x40
+0C97 120000    2578            lcall   _LCDprint2
+0C9A 020000    2579            ljmp    L017070?
+0C9D           2580            rseg R_CSEG
+0C9D           2581   
+0000           2582            rseg R_XINIT
+0000           2583   
+0000           2584            rseg R_CONST
+0000           2585   __str_0:
+0000 1B        2586            db 0x1B
+0001 5B324A    2587            db '[2J'
+0004 00        2588            db 0x00
+0005           2589   __str_1:
+0005 41444320  2590            db 'ADC test program'
      74657374
      2070726F
      6772616D
-0015 0A        2474            db 0x0A
-0016 46696C65  2475            db 'File: %s'
+0015 0A        2591            db 0x0A
+0016 46696C65  2592            db 'File: %s'
      3A202573
-001E 0A        2476            db 0x0A
-001F 436F6D70  2477            db 'Compiled: %s, %s'
+001E 0A        2593            db 0x0A
+001F 436F6D70  2594            db 'Compiled: %s, %s'
      696C6564
      3A202573
      2C202573
-002F 0A        2478            db 0x0A
-0030 0A        2479            db 0x0A
-0031 00        2480            db 0x00
-0032           2481   __str_2:
-0032 736F7572  2482            db 'sourcecode.c'
+002F 0A        2595            db 0x0A
+0030 0A        2596            db 0x0A
+0031 00        2597            db 0x00
+0032           2598   __str_2:
+0032 736F7572  2599            db 'sourcecode.c'
      6365636F
      64652E63
-003E 00        2483            db 0x00
-003F           2484   __str_3:
-003F 4D617220  2485            db 'Mar  7 2024'
+003E 00        2600            db 0x00
+003F           2601   __str_3:
+003F 4D617220  2602            db 'Mar  7 2024'
      20372032
      303234
-004A 00        2486            db 0x00
-004B           2487   __str_4:
-004B 30353A34  2488            db '05:40:11'
-     303A3131
-0053 00        2489            db 0x00
-0054           2490   __str_5:
-0054 463A5858  2491            db 'F:XXHz   P:  .XXX'
+004A 00        2603            db 0x00
+004B           2604   __str_4:
+004B 30363A32  2605            db '06:29:01'
+     393A3031
+0053 00        2606            db 0x00
+0054           2607   __str_5:
+0054 20202020  2608            db '                   '
+     20202020
+     20202020
+     20202020
+     202020
+0067 00        2609            db 0x00
+0068           2610   __str_6:
+0068 436F6E6E  2611            db 'Connect ref and    '
+     65637420
+     72656620
+     616E6420
+     202020
+007B 00        2612            db 0x00
+007C           2613   __str_7:
+007C 20207465  2614            db '  test signals     '
+     73742073
+     69676E61
+     6C732020
+     202020
+008F 00        2615            db 0x00
+0090           2616   __str_8:
+0090 463A5858  2617            db 'F:XXHz   P:  .XXX'
      487A2020
      20503A20
      202E5858
      58
-0065 00        2492            db 0x00
-0066           2493   __str_6:
-0066 56523A58  2494            db 'VR:X.XX  VT:X.XX'
+00A1 00        2618            db 0x00
+00A2           2619   __str_9:
+00A2 56523A58  2620            db 'VR:X.XX  VT:X.XX'
      2E585820
      2056543A
      582E5858
-0076 00        2495            db 0x00
-0077           2496   __str_7:
-0077 543D2566  2497            db 'T=%fms, Phase: %f, v1_Rms:%f, v2_Rms:%f'
+00B2 00        2621            db 0x00
+00B3           2622   __str_10:
+00B3 543D2566  2623            db 'T=%fms, Phase: %f, v1_Rms:%f, v2_Rms:%f'
      6D732C20
      50686173
      653A2025
@@ -2523,52 +2661,52 @@
      2C207632
      5F526D73
      3A2566
-009E 0D        2498            db 0x0D
-009F 00        2499            db 0x00
-00A0           2500   __str_8:
-00A0 2D        2501            db '-'
-00A1 00        2502            db 0x00
-00A2           2503   __str_9:
-00A2 20        2504            db ' '
-00A3 00        2505            db 0x00
-00A4           2506   __str_10:
-00A4 25332E31  2507            db '%3.1f'
+00DA 0D        2624            db 0x0D
+00DB 00        2625            db 0x00
+00DC           2626   __str_11:
+00DC 2D        2627            db '-'
+00DD 00        2628            db 0x00
+00DE           2629   __str_12:
+00DE 20        2630            db ' '
+00DF 00        2631            db 0x00
+00E0           2632   __str_13:
+00E0 25332E31  2633            db '%3.1f'
      66
-00A9 00        2508            db 0x00
-00AA           2509   __str_11:
-00AA 543A      2510            db 'T:'
-00AC 00        2511            db 0x00
-00AD           2512   __str_12:
-00AD 6D73      2513            db 'ms'
-00AF 00        2514            db 0x00
-00B0           2515   __str_13:
-00B0 25332E30  2516            db '%3.0f'
+00E5 00        2634            db 0x00
+00E6           2635   __str_14:
+00E6 543A      2636            db 'T:'
+00E8 00        2637            db 0x00
+00E9           2638   __str_15:
+00E9 6D73      2639            db 'ms'
+00EB 00        2640            db 0x00
+00EC           2641   __str_16:
+00EC 25332E30  2642            db '%3.0f'
      66
-00B5 00        2517            db 0x00
-00B6           2518   __str_14:
-00B6 773A      2519            db 'w:'
-00B8 00        2520            db 0x00
-00B9           2521   __str_15:
-00B9 72616420  2522            db 'rad '
-00BD 00        2523            db 0x00
-00BE           2524   __str_16:
-00BE 25322E30  2525            db '%2.0f'
+00F1 00        2643            db 0x00
+00F2           2644   __str_17:
+00F2 773A      2645            db 'w:'
+00F4 00        2646            db 0x00
+00F5           2647   __str_18:
+00F5 72616420  2648            db 'rad '
+00F9 00        2649            db 0x00
+00FA           2650   __str_19:
+00FA 25322E30  2651            db '%2.0f'
      66
-00C3 00        2526            db 0x00
-00C4           2527   __str_17:
-00C4 487A2020  2528            db 'Hz  '
-00C8 00        2529            db 0x00
-00C9           2530   __str_18:
-00C9 463A      2531            db 'F:'
-00CB 00        2532            db 0x00
-00CC           2533   __str_19:
-00CC 25312E32  2534            db '%1.2f'
+00FF 00        2652            db 0x00
+0100           2653   __str_20:
+0100 487A2020  2654            db 'Hz  '
+0104 00        2655            db 0x00
+0105           2656   __str_21:
+0105 463A      2657            db 'F:'
+0107 00        2658            db 0x00
+0108           2659   __str_22:
+0108 25312E32  2660            db '%1.2f'
      66
-00D1 00        2535            db 0x00
-00D2           2536   __str_20:
-00D2 253366    2537            db '%3f'
-00D5 00        2538            db 0x00
-00D6           2539   
-0003           2540            CSEG
-0003           2541   
-0003           2542   end
+010D 00        2661            db 0x00
+010E           2662   __str_23:
+010E 253366    2663            db '%3f'
+0111 00        2664            db 0x00
+0112           2665   
+0003           2666            CSEG
+0003           2667   
+0003           2668   end

@@ -33,9 +33,7 @@ float v1 = 0; float v2 = 0;
 
 char _c51_external_startup (void)
 {
-	// Enable Watchdog
-	SFRPAGE = 0x00;
-	WDTCN = 0b_0000_0010;
+
 	//WDTCN = 0xDE; //First key
 	//WDTCN = 0xAD; //Second key
   
@@ -219,7 +217,6 @@ void TIMER0_Init(void)
 }
 
 
-
 void LCD_pulse (void)
 {
 	LCD_E=1;
@@ -296,6 +293,7 @@ void LCDprint2(char * string, unsigned char line, unsigned char col)
 	}
 }
 
+
 //--------------------------//
 //			Main			//
 //--------------------------//
@@ -306,7 +304,8 @@ void main (void)
 	float time_difference;
 	float frequency;
 	float angfrequency;
-	unsigned int bonus_counter = 0; 
+	unsigned int bonus_counter = 0;
+	unsigned int count = 0; 
 
 	unsigned char str_frequency[4];
 	unsigned char str_vref[5];
@@ -328,16 +327,38 @@ void main (void)
 	        "Compiled: %s, %s\n\n",
 	        __FILE__, __DATE__, __TIME__);
 
-	// Starting message on LCD, looks like:
-	// 'F : X X H z         P : _ X X X'
-	// 'V R : X . X X     V T : X . X X'
-	LCDprint2("F:XXHz   P:  .XXX", 1, 0); //string, row, column
-	LCDprint2("VR:X.XX  VT:X.XX", 2, 0); //string, row, column
+	
 	
 	InitPinADC(2, 1); // Configure P2.1 as analog input
 	InitPinADC(2, 2); // Configure P2.2 as analog input
 	
     InitADC();
+
+
+	// Check if a signal is connected
+	while (1){
+		if ((Volts_at_Pin(QFP32_MUX_P2_2) < 3.3) && (Volts_at_Pin(QFP32_MUX_P2_1) < 3.3)){
+			LCDprint2("                   ", 1, 0); // clear the screen
+			LCDprint2("                   ", 2, 0);
+			break;
+		}
+		count++;
+		if (count > 100){
+			LCDprint2("Connect ref and    ", 1, 0); //string, row, column
+			LCDprint2("  test signals     ", 2, 0); //string, row, column
+			count = 100; // keep count at 100 it will reset when a signal is detected
+		}
+		
+	}
+
+	// Starting message on LCD, looks like:
+	// 'F : X X H z         P : _ X X X'
+	// 'V R : X . X X     V T : X . X X'
+	LCDprint2("F:XXHz   P:  .XXX", 1, 0); //string, row, column
+	LCDprint2("VR:X.XX  VT:X.XX", 2, 0); //string, row, column
+
+	// Enable Watchdog
+	WDTCN = 0b_0001_0101;
 
 	while(1)
 	{
@@ -348,6 +369,7 @@ void main (void)
 		overflow_count = 0;
 
 		//Feed the dog
+		WDTCN = 0xA5; // reload and restart wdt
 
 
 		
