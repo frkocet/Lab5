@@ -243,10 +243,13 @@ void main (void)
         printf("\n");
 		
         
-		while (Volts_at_Pin(QFP32_MUX_P2_2) > 0){
+		while (Volts_at_Pin(QFP32_MUX_P2_1) > 0){
             printf("V@P2.1:%f\r", Volts_at_Pin(QFP32_MUX_P2_1));
         }  		// Wait for test signal to hit zero
 	    P3_2=0;
         printf("\n");
+
+        while (Volts_at_Pin(QFP32_MUX_P2_2) == 0); // wait for voltage to go positive again
+        while (Volts_at_Pin(QFP32_MUX_P2_1) == 0);  
 	 }
 }

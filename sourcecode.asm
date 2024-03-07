@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-; This file was generated Wed Mar 06 20:20:01 2024
+; This file was generated Wed Mar 06 22:10:10 2024
 ;--------------------------------------------------------
 $name sourcecode
 $optc51 --model-small
@@ -499,8 +499,6 @@ _v2:
 	ds 4
 _main_period_1_61:
 	ds 4
-_main_Phase_Shift_1_61:
-	ds 4
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -941,7 +939,7 @@ _TIMER0_Init:
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
 ;period                    Allocated with name '_main_period_1_61'
-;Phase_Shift               Allocated with name '_main_Phase_Shift_1_61'
+;Phase_Shift               Allocated to registers r2 r3 r4 r5 
 ;time_difference           Allocated to registers r2 r3 r4 r5 
 ;------------------------------------------------------------
 ;	sourcecode.c:217: void main (void)
@@ -1163,7 +1161,7 @@ L010016?:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	sourcecode.c:264: while(P0_6 != 0) //wait for zero cross of reference
+;	sourcecode.c:265: while(P0_6 != 0) //wait for zero cross of reference
 	clr	a
 	push	acc
 	push	acc
@@ -1185,10 +1183,10 @@ L010016?:
 	mov	sp,a
 L010020?:
 	jnb	_P0_6,L010022?
-;	sourcecode.c:265: while(P0_6 != 1)
+;	sourcecode.c:266: while(P0_6 != 1)
 L010017?:
 	jb	_P0_6,L010020?
-;	sourcecode.c:266: waitms(period/4);
+;	sourcecode.c:267: waitms(period/4);
 	mov	dpl,r6
 	mov	dph,r7
 	mov	b,r0
@@ -1205,14 +1203,14 @@ L010017?:
 	pop	ar6
 	sjmp	L010017?
 L010022?:
-;	sourcecode.c:267: v1_max = Volts_at_Pin(QFP32_MUX_P2_1);
+;	sourcecode.c:268: v1_max = Volts_at_Pin(QFP32_MUX_P2_1);
 	mov	dpl,#0x0E
 	lcall	_Volts_at_Pin
 	mov	_v1_max,dpl
 	mov	(_v1_max + 1),dph
 	mov	(_v1_max + 2),b
 	mov	(_v1_max + 3),a
-;	sourcecode.c:269: while(P2_2 != 0) //wait for zero cross of other signal
+;	sourcecode.c:270: while(P2_2 != 0) //wait for zero cross of other signal
 	clr	a
 	push	acc
 	push	acc
@@ -1234,10 +1232,10 @@ L010022?:
 	mov	sp,a
 L010026?:
 	jnb	_P2_2,L010028?
-;	sourcecode.c:270: while(P2_2 != 1)
+;	sourcecode.c:271: while(P2_2 != 1)
 L010023?:
 	jb	_P2_2,L010026?
-;	sourcecode.c:271: waitms(period/4);
+;	sourcecode.c:272: waitms(period/4);
 	mov	dpl,r6
 	mov	dph,r7
 	mov	b,r0
@@ -1254,76 +1252,109 @@ L010023?:
 	pop	ar6
 	sjmp	L010023?
 L010028?:
-;	sourcecode.c:272: v2_max = Volts_at_Pin(QFP32_MUX_P2_2);
+;	sourcecode.c:273: v2_max = Volts_at_Pin(QFP32_MUX_P2_2);
 	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
 	mov	_v2_max,dpl
 	mov	(_v2_max + 1),dph
 	mov	(_v2_max + 2),b
 	mov	(_v2_max + 3),a
-;	sourcecode.c:280: TR0=0; // Stop timer 0
+;	sourcecode.c:304: TR0=0; // Stop timer 0
 	clr	_TR0
-;	sourcecode.c:281: overflow_count = 0;
+;	sourcecode.c:305: overflow_count = 0;
 	mov	_overflow_count,#0x00
-;	sourcecode.c:282: TH0=0; TL0=0; TF0 = 0; 		// Reset the timer
+;	sourcecode.c:306: TH0=0; TL0=0; TF0 = 0; 		// Reset the timer
 	mov	_TH0,#0x00
 	mov	_TL0,#0x00
 	clr	_TF0
-;	sourcecode.c:284: while (P0_6 != 0); 			// Wait for reference signal to be zero
+;	sourcecode.c:309: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0); 			// Wait for reference signal to be zero
 L010029?:
-	jb	_P0_6,L010029?
-;	sourcecode.c:285: waitms(1);
-	mov	dptr,#0x0001
-	lcall	_waitms
-;	sourcecode.c:286: TR0=1; // start timer
+	mov	dpl,#0x0F
+	lcall	_Volts_at_Pin
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	clr	a
+	push	acc
+	push	acc
+	push	acc
+	push	acc
+	mov	dpl,r6
+	mov	dph,r7
+	mov	b,r0
+	mov	a,r1
+	lcall	___fsgt
+	mov	r6,dpl
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	a,r6
+	jnz	L010029?
+;	sourcecode.c:310: TR0=1; // start timer
 	setb	_TR0
-;	sourcecode.c:287: P3_2=1; //set pin high for testing
-	setb	_P3_2
-;	sourcecode.c:290: while (P0_1 != 0) { 		// Wait for test signal to hit zero
+;	sourcecode.c:312: while (Volts_at_Pin(QFP32_MUX_P2_1) > 0) { // Wait for test signal to hit zero
 L010034?:
-	jnb	_P0_1,L010036?
-;	sourcecode.c:291: if (TF0 == 1) { // Did the 16-bit timer overflow?
-;	sourcecode.c:292: TF0 = 0;
+	mov	dpl,#0x0E
+	lcall	_Volts_at_Pin
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
+	clr	a
+	push	acc
+	push	acc
+	push	acc
+	push	acc
+	mov	dpl,r6
+	mov	dph,r7
+	mov	b,r0
+	mov	a,r1
+	lcall	___fsgt
+	mov	r6,dpl
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	a,r6
+	jz	L010036?
+;	sourcecode.c:313: if (TF0 == 1) { // Did the 16-bit timer overflow?
+;	sourcecode.c:314: TF0 = 0;
 	jbc	_TF0,L010075?
 	sjmp	L010034?
 L010075?:
-;	sourcecode.c:293: overflow_count++;
+;	sourcecode.c:315: overflow_count++;
 	inc	_overflow_count
 	sjmp	L010034?
 L010036?:
-;	sourcecode.c:296: waitms(1);
-	mov	dptr,#0x0001
-	lcall	_waitms
-;	sourcecode.c:297: TR0=0;
+;	sourcecode.c:318: TR0=0; // stop timer
 	clr	_TR0
-;	sourcecode.c:298: P3_2=0;
-	clr	_P3_2
-;	sourcecode.c:303: overflow_count, TH0, TL0);
-	mov	r6,_TL0
-	mov	r7,#0x00
-	mov	r0,_TH0
-	mov	r1,#0x00
-	mov	r2,_overflow_count
-	mov	r3,#0x00
-;	sourcecode.c:302: printf("overflow count:%d, %d, %d\n", 
+;	sourcecode.c:323: time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+	mov	dpl,_overflow_count
+	lcall	___uchar2fs
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
 	push	ar6
 	push	ar7
 	push	ar0
 	push	ar1
-	push	ar2
-	push	ar3
-	mov	a,#__str_5
-	push	acc
-	mov	a,#(__str_5 >> 8)
-	push	acc
-	mov	a,#0x80
-	push	acc
-	lcall	_printf
+	mov	dptr,#0x0000
+	mov	b,#0x80
+	mov	a,#0x47
+	lcall	___fsmul
+	mov	r6,dpl
+	mov	r7,dph
+	mov	r0,b
+	mov	r1,a
 	mov	a,sp
-	add	a,#0xf7
+	add	a,#0xfc
 	mov	sp,a
-;	sourcecode.c:305: time_difference = (TH0*256.0+TL0)*(12.0/SYSCLK);
 	mov	dpl,_TH0
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
 	lcall	___uchar2fs
 	mov	r2,dpl
 	mov	r3,dph
@@ -1337,6 +1368,26 @@ L010036?:
 	mov	b,#0x80
 	mov	a,#0x43
 	lcall	___fsmul
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar6
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	dpl,r6
+	mov	dph,r7
+	mov	b,r0
+	mov	a,r1
+	lcall	___fsadd
 	mov	r2,dpl
 	mov	r3,dph
 	mov	r4,b
@@ -1392,11 +1443,7 @@ L010036?:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	sourcecode.c:306: Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
-	push	ar2
-	push	ar3
-	push	ar4
-	push	ar5
+;	sourcecode.c:324: Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
 	push	ar2
 	push	ar3
 	push	ar4
@@ -1405,34 +1452,6 @@ L010036?:
 	mov	b,#0xB4
 	mov	a,#0x43
 	lcall	___fsmul
-	mov	r6,dpl
-	mov	r7,dph
-	mov	r0,b
-	mov	r1,a
-	mov	a,sp
-	add	a,#0xfc
-	mov	sp,a
-	push	_main_period_1_61
-	push	(_main_period_1_61 + 1)
-	push	(_main_period_1_61 + 2)
-	push	(_main_period_1_61 + 3)
-	mov	dpl,r6
-	mov	dph,r7
-	mov	b,r0
-	mov	a,r1
-	lcall	___fsdiv
-	mov	_main_Phase_Shift_1_61,dpl
-	mov	(_main_Phase_Shift_1_61 + 1),dph
-	mov	(_main_Phase_Shift_1_61 + 2),b
-	mov	(_main_Phase_Shift_1_61 + 3),a
-	mov	a,sp
-	add	a,#0xfc
-	mov	sp,a
-;	sourcecode.c:309: period*1000.0, time_difference*1000.0, Phase_Shift);
-	mov	dptr,#0x0000
-	mov	b,#0x7A
-	mov	a,#0x44
-	lcall	___fsmul
 	mov	r2,dpl
 	mov	r3,dph
 	mov	r4,b
@@ -1440,6 +1459,23 @@ L010036?:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
+	push	_main_period_1_61
+	push	(_main_period_1_61 + 1)
+	push	(_main_period_1_61 + 2)
+	push	(_main_period_1_61 + 3)
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsdiv
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+;	sourcecode.c:327: period*1000.0, Phase_Shift, v1_max, v2_max);
 	push	ar2
 	push	ar3
 	push	ar4
@@ -1448,7 +1484,7 @@ L010036?:
 	push	(_main_period_1_61 + 1)
 	push	(_main_period_1_61 + 2)
 	push	(_main_period_1_61 + 3)
-;	sourcecode.c:308: printf("T=%fms, Time diff: %5.5fms, Phase: %f \n", 
+;	sourcecode.c:326: printf("T=%fms, Phase: %f, v1_Max:%f, v2_Max:%f\r", 
 	mov	dptr,#0x0000
 	mov	b,#0x7A
 	mov	a,#0x44
@@ -1464,10 +1500,14 @@ L010036?:
 	pop	ar4
 	pop	ar3
 	pop	ar2
-	push	_main_Phase_Shift_1_61
-	push	(_main_Phase_Shift_1_61 + 1)
-	push	(_main_Phase_Shift_1_61 + 2)
-	push	(_main_Phase_Shift_1_61 + 3)
+	push	_v2_max
+	push	(_v2_max + 1)
+	push	(_v2_max + 2)
+	push	(_v2_max + 3)
+	push	_v1_max
+	push	(_v1_max + 1)
+	push	(_v1_max + 2)
+	push	(_v1_max + 3)
 	push	ar2
 	push	ar3
 	push	ar4
@@ -1476,15 +1516,15 @@ L010036?:
 	push	ar7
 	push	ar0
 	push	ar1
-	mov	a,#__str_6
+	mov	a,#__str_5
 	push	acc
-	mov	a,#(__str_6 >> 8)
+	mov	a,#(__str_5 >> 8)
 	push	acc
 	mov	a,#0x80
 	push	acc
 	lcall	_printf
 	mov	a,sp
-	add	a,#0xf1
+	add	a,#0xed
 	mov	sp,a
 	ljmp	L010038?
 	rseg R_CSEG
@@ -1512,15 +1552,11 @@ __str_3:
 	db 'Mar  6 2024'
 	db 0x00
 __str_4:
-	db '20:20:00'
+	db '22:10:09'
 	db 0x00
 __str_5:
-	db 'overflow count:%d, %d, %d'
-	db 0x0A
-	db 0x00
-__str_6:
-	db 'T=%fms, Time diff: %5.5fms, Phase: %f '
-	db 0x0A
+	db 'T=%fms, Phase: %f, v1_Max:%f, v2_Max:%f'
+	db 0x0D
 	db 0x00
 
 	CSEG

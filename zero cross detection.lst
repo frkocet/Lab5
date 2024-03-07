@@ -1,7 +1,7 @@
 0000              1   ;--------------------------------------------------------
 0000              2   ; File Created by C51
 0000              3   ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-0000              4   ; This file was generated Wed Mar 06 20:51:50 2024
+0000              4   ; This file was generated Wed Mar 06 21:05:49 2024
 0000              5   ;--------------------------------------------------------
                   5   $name zero_cross_detection
                   6   $optc51 --model-small
@@ -1061,9 +1061,9 @@
 025C 1581      1061            dec     sp
 025E 1581      1062            dec     sp
 0260 1581      1063            dec     sp
-0262           1064   ;        C:\Users\ethan\OneDrive - UBC\Desktop\Lab5\zero cross detection.c:246: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0){
+0262           1064   ;        C:\Users\ethan\OneDrive - UBC\Desktop\Lab5\zero cross detection.c:246: while (Volts_at_Pin(QFP32_MUX_P2_1) > 0){
 0262           1065   L010004?:
-0262 75820F    1066            mov     dpl,#0x0F
+0262 75820E    1066            mov     dpl,#0x0E
 0265 120000    1067            lcall   _Volts_at_Pin
 0268 AA82      1068            mov     r2,dpl
 026A AB83      1069            mov     r3,dph
@@ -1121,84 +1121,116 @@
 02CA 1581      1121            dec     sp
 02CC 1581      1122            dec     sp
 02CE 1581      1123            dec     sp
-02D0 020000    1124            ljmp    L010001?
-02D3           1125            rseg R_CSEG
-02D3           1126   
-0000           1127            rseg R_XINIT
-0000           1128   
-0000           1129            rseg R_CONST
-0000           1130   __str_0:
-0000 1B        1131            db 0x1B
-0001 5B324A    1132            db '[2J'
-0004 00        1133            db 0x00
-0005           1134   __str_1:
-0005 41444320  1135            db 'ADC test program'
+02D0           1124   ;        C:\Users\ethan\OneDrive - UBC\Desktop\Lab5\zero cross detection.c:252: while (Volts_at_Pin(QFP32_MUX_P2_2) == 0); // wait for voltage to go positive again
+02D0           1125   L010007?:
+02D0 75820F    1126            mov     dpl,#0x0F
+02D3 120000    1127            lcall   _Volts_at_Pin
+02D6 AA82      1128            mov     r2,dpl
+02D8 AB83      1129            mov     r3,dph
+02DA ACF0      1130            mov     r4,b
+02DC FD        1131            mov     r5,a
+02DD EA        1132            mov     a,r2
+02DE 4B        1133            orl     a,r3
+02DF 4C        1134            orl     a,r4
+02E0 8DF0      1135            mov     b,r5
+02E2 C2F7      1136            clr     b.7 ; Clear the sign bit
+02E4 45F0      1137            orl     a,b
+02E6 6000      1138            jz      L010007?
+02E8           1139   ;        C:\Users\ethan\OneDrive - UBC\Desktop\Lab5\zero cross detection.c:253: while (Volts_at_Pin(QFP32_MUX_P2_1) == 0);  
+02E8           1140   L010010?:
+02E8 75820E    1141            mov     dpl,#0x0E
+02EB 120000    1142            lcall   _Volts_at_Pin
+02EE AA82      1143            mov     r2,dpl
+02F0 AB83      1144            mov     r3,dph
+02F2 ACF0      1145            mov     r4,b
+02F4 FD        1146            mov     r5,a
+02F5 EA        1147            mov     a,r2
+02F6 4B        1148            orl     a,r3
+02F7 4C        1149            orl     a,r4
+02F8 8DF0      1150            mov     b,r5
+02FA C2F7      1151            clr     b.7 ; Clear the sign bit
+02FC 45F0      1152            orl     a,b
+02FE 6000      1153            jz      L010028?
+0300 020000    1154            ljmp    L010001?
+0303           1155   L010028?:
+0303 8000      1156            sjmp    L010010?
+0305           1157            rseg R_CSEG
+0305           1158   
+0000           1159            rseg R_XINIT
+0000           1160   
+0000           1161            rseg R_CONST
+0000           1162   __str_0:
+0000 1B        1163            db 0x1B
+0001 5B324A    1164            db '[2J'
+0004 00        1165            db 0x00
+0005           1166   __str_1:
+0005 41444320  1167            db 'ADC test program'
      74657374
      2070726F
      6772616D
-0015 0A        1136            db 0x0A
-0016 46696C65  1137            db 'File: %s'
+0015 0A        1168            db 0x0A
+0016 46696C65  1169            db 'File: %s'
      3A202573
-001E 0A        1138            db 0x0A
-001F 436F6D70  1139            db 'Compiled: %s, %s'
+001E 0A        1170            db 0x0A
+001F 436F6D70  1171            db 'Compiled: %s, %s'
      696C6564
      3A202573
      2C202573
-002F 0A        1140            db 0x0A
-0030 0A        1141            db 0x0A
-0031 00        1142            db 0x00
-0032           1143   __str_2:
-0032 433A      1144            db 'C:'
-0034 5C        1145            db 0x5C
-0035 55736572  1146            db 'Users'
+002F 0A        1172            db 0x0A
+0030 0A        1173            db 0x0A
+0031 00        1174            db 0x00
+0032           1175   __str_2:
+0032 433A      1176            db 'C:'
+0034 5C        1177            db 0x5C
+0035 55736572  1178            db 'Users'
      73
-003A 5C        1147            db 0x5C
-003B 65746861  1148            db 'ethan'
+003A 5C        1179            db 0x5C
+003B 65746861  1180            db 'ethan'
      6E
-0040 5C        1149            db 0x5C
-0041 4F6E6544  1150            db 'OneDrive - UBC'
+0040 5C        1181            db 0x5C
+0041 4F6E6544  1182            db 'OneDrive - UBC'
      72697665
      202D2055
      4243
-004F 5C        1151            db 0x5C
-0050 4465736B  1152            db 'Desktop'
+004F 5C        1183            db 0x5C
+0050 4465736B  1184            db 'Desktop'
      746F70
-0057 5C        1153            db 0x5C
-0058 4C616235  1154            db 'Lab5'
-005C 5C        1155            db 0x5C
-005D 7A65726F  1156            db 'zero cross detect'
+0057 5C        1185            db 0x5C
+0058 4C616235  1186            db 'Lab5'
+005C 5C        1187            db 0x5C
+005D 7A65726F  1188            db 'zero cross detect'
      2063726F
      73732064
      65746563
      74
-006E 696F6E2E  1157            db 'ion.c'
+006E 696F6E2E  1189            db 'ion.c'
      63
-0073 00        1158            db 0x00
-0074           1159   __str_3:
-0074 4D617220  1160            db 'Mar  6 2024'
+0073 00        1190            db 0x00
+0074           1191   __str_3:
+0074 4D617220  1192            db 'Mar  6 2024'
      20362032
      303234
-007F 00        1161            db 0x00
-0080           1162   __str_4:
-0080 32303A35  1163            db '20:51:50'
-     313A3530
-0088 00        1164            db 0x00
-0089           1165   __str_5:
-0089 56405032  1166            db 'V@P2.2:%f'
+007F 00        1193            db 0x00
+0080           1194   __str_4:
+0080 32313A30  1195            db '21:05:49'
+     353A3439
+0088 00        1196            db 0x00
+0089           1197   __str_5:
+0089 56405032  1198            db 'V@P2.2:%f'
      2E323A25
      66
-0092 0D        1167            db 0x0D
-0093 00        1168            db 0x00
-0094           1169   __str_6:
-0094 0A        1170            db 0x0A
-0095 00        1171            db 0x00
-0096           1172   __str_7:
-0096 56405032  1173            db 'V@P2.1:%f'
+0092 0D        1199            db 0x0D
+0093 00        1200            db 0x00
+0094           1201   __str_6:
+0094 0A        1202            db 0x0A
+0095 00        1203            db 0x00
+0096           1204   __str_7:
+0096 56405032  1205            db 'V@P2.1:%f'
      2E313A25
      66
-009F 0D        1174            db 0x0D
-00A0 00        1175            db 0x00
-00A1           1176   
-0003           1177            CSEG
-0003           1178   
-0003           1179   end
+009F 0D        1206            db 0x0D
+00A0 00        1207            db 0x00
+00A1           1208   
+0003           1209            CSEG
+0003           1210   
+0003           1211   end

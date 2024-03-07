@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-; This file was generated Wed Mar 06 20:51:50 2024
+; This file was generated Wed Mar 06 21:05:49 2024
 ;--------------------------------------------------------
 $name zero_cross_detection
 $optc51 --model-small
@@ -1061,9 +1061,9 @@ L010003?:
 	dec	sp
 	dec	sp
 	dec	sp
-;	C:\Users\ethan\OneDrive - UBC\Desktop\Lab5\zero cross detection.c:246: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0){
+;	C:\Users\ethan\OneDrive - UBC\Desktop\Lab5\zero cross detection.c:246: while (Volts_at_Pin(QFP32_MUX_P2_1) > 0){
 L010004?:
-	mov	dpl,#0x0F
+	mov	dpl,#0x0E
 	lcall	_Volts_at_Pin
 	mov	r2,dpl
 	mov	r3,dph
@@ -1121,7 +1121,39 @@ L010006?:
 	dec	sp
 	dec	sp
 	dec	sp
+;	C:\Users\ethan\OneDrive - UBC\Desktop\Lab5\zero cross detection.c:252: while (Volts_at_Pin(QFP32_MUX_P2_2) == 0); // wait for voltage to go positive again
+L010007?:
+	mov	dpl,#0x0F
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,r2
+	orl	a,r3
+	orl	a,r4
+	mov	b,r5
+	clr	b.7 ; Clear the sign bit
+	orl	a,b
+	jz	L010007?
+;	C:\Users\ethan\OneDrive - UBC\Desktop\Lab5\zero cross detection.c:253: while (Volts_at_Pin(QFP32_MUX_P2_1) == 0);  
+L010010?:
+	mov	dpl,#0x0E
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,r2
+	orl	a,r3
+	orl	a,r4
+	mov	b,r5
+	clr	b.7 ; Clear the sign bit
+	orl	a,b
+	jz	L010028?
 	ljmp	L010001?
+L010028?:
+	sjmp	L010010?
 	rseg R_CSEG
 
 	rseg R_XINIT
@@ -1160,7 +1192,7 @@ __str_3:
 	db 'Mar  6 2024'
 	db 0x00
 __str_4:
-	db '20:51:50'
+	db '21:05:49'
 	db 0x00
 __str_5:
 	db 'V@P2.2:%f'

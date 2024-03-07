@@ -261,6 +261,8 @@ void main (void)
 		TR0 = 0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
 		period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
 
+
+
 		while(P0_6 != 0) //wait for zero cross of reference
 		while(P0_6 != 1)
 		waitms(period/4);
@@ -271,45 +273,33 @@ void main (void)
 		waitms(period/4);
 		v2_max = Volts_at_Pin(QFP32_MUX_P2_2);
 		
-		
-		// Send the period to the serial port
-		//printf( "\rT=%f ms    ", period*1000.0);
-		
+
 
 		// Find phase shift between signals
 		TR0=0; // Stop timer 0
 		overflow_count = 0;
 		TH0=0; TL0=0; TF0 = 0; 		// Reset the timer
 
-		while (P0_6 != 0); 			// Wait for reference signal to be zero
-		waitms(1);
-		TR0=1; // start timer
-		P3_2=1; //set pin high for testing
-		//printf("ref hit 0\n\n");
 
-		while (P0_1 != 0) { 		// Wait for test signal to hit zero
+		while (Volts_at_Pin(QFP32_MUX_P2_2) > 0); 			// Wait for reference signal to be zero
+		TR0=1; // start timer
+
+		while (Volts_at_Pin(QFP32_MUX_P2_1) > 0) { // Wait for test signal to hit zero
 			if (TF0 == 1) { // Did the 16-bit timer overflow?
 				TF0 = 0;
 				overflow_count++;
 			}
 		}
-//		waitms(1);
-		TR0=0;
-		P3_2=0;
-		//printf("test hit 0\n\n");
+		TR0=0; // stop timer
+
+
 
 		// Do some math to find phase shift
-		printf("overflow count:%d, %d, %d\n", 
-		overflow_count, TH0, TL0);
-		//time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
-		time_difference = (TH0*256.0+TL0)*(12.0/SYSCLK);
+		time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
 		Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
-		
-		printf("T=%fms, Time diff: %5.5fms, Phase: %f \n", 
-		period*1000.0, time_difference*1000.0, Phase_Shift);
 
-
-//		printf ("Max Amp @p2.1=%7.5fV, Max Amp @p2.2=%7.5fV,\r", v1_max, v2_max); //print the two values for max amplitude
+		printf("T=%fms, Phase: %f, v1_Max:%f, v2_Max:%f\r", 
+		period*1000.0, Phase_Shift, v1_max, v2_max);
 		//printf("\x1b[0K"); // ANSI: Clear from cursor to end of line
 		
 	 }

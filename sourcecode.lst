@@ -1,7 +1,7 @@
 0000              1   ;--------------------------------------------------------
 0000              2   ; File Created by C51
 0000              3   ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-0000              4   ; This file was generated Wed Mar 06 20:20:01 2024
+0000              4   ; This file was generated Wed Mar 06 22:10:10 2024
 0000              5   ;--------------------------------------------------------
                   5   $name sourcecode
                   6   $optc51 --model-small
@@ -499,1057 +499,1087 @@
 000D            499            ds 4
 0011            500   _main_period_1_61:
 0011            501            ds 4
-0015            502   _main_Phase_Shift_1_61:
-0015            503            ds 4
-0019            504   ;--------------------------------------------------------
-0019            505   ; overlayable items in internal ram 
-0019            506   ;--------------------------------------------------------
-0000            507            rseg    R_OSEG
-0000            508            rseg    R_OSEG
-0000            509   _InitPinADC_PARM_2:
-0000            510            ds 1
-0001            511            rseg    R_OSEG
+0015            502   ;--------------------------------------------------------
+0015            503   ; overlayable items in internal ram 
+0015            504   ;--------------------------------------------------------
+0000            505            rseg    R_OSEG
+0000            506            rseg    R_OSEG
+0000            507   _InitPinADC_PARM_2:
+0000            508            ds 1
+0001            509            rseg    R_OSEG
+0001            510   ;--------------------------------------------------------
+0001            511   ; indirectly addressable internal ram data
 0001            512   ;--------------------------------------------------------
-0001            513   ; indirectly addressable internal ram data
-0001            514   ;--------------------------------------------------------
-0000            515            rseg R_ISEG
+0000            513            rseg R_ISEG
+0000            514   ;--------------------------------------------------------
+0000            515   ; absolute internal ram data
 0000            516   ;--------------------------------------------------------
-0000            517   ; absolute internal ram data
+0000            517            DSEG
 0000            518   ;--------------------------------------------------------
-0000            519            DSEG
+0000            519   ; bit data
 0000            520   ;--------------------------------------------------------
-0000            521   ; bit data
+0000            521            rseg R_BSEG
 0000            522   ;--------------------------------------------------------
-0000            523            rseg R_BSEG
+0000            523   ; paged external ram data
 0000            524   ;--------------------------------------------------------
-0000            525   ; paged external ram data
+0000            525            rseg R_PSEG
 0000            526   ;--------------------------------------------------------
-0000            527            rseg R_PSEG
+0000            527   ; external ram data
 0000            528   ;--------------------------------------------------------
-0000            529   ; external ram data
+0000            529            rseg R_XSEG
 0000            530   ;--------------------------------------------------------
-0000            531            rseg R_XSEG
+0000            531   ; absolute external ram data
 0000            532   ;--------------------------------------------------------
-0000            533   ; absolute external ram data
+0000            533            XSEG
 0000            534   ;--------------------------------------------------------
-0000            535            XSEG
+0000            535   ; external initialized ram data
 0000            536   ;--------------------------------------------------------
-0000            537   ; external initialized ram data
-0000            538   ;--------------------------------------------------------
-0000            539            rseg R_IXSEG
-0000            540            rseg R_HOME
-0000            541            rseg R_GSINIT
-0000            542            rseg R_CSEG
+0000            537            rseg R_IXSEG
+0000            538            rseg R_HOME
+0000            539            rseg R_GSINIT
+0000            540            rseg R_CSEG
+0000            541   ;--------------------------------------------------------
+0000            542   ; Reset entry point and interrupt vectors
 0000            543   ;--------------------------------------------------------
-0000            544   ; Reset entry point and interrupt vectors
-0000            545   ;--------------------------------------------------------
-0000            546            CSEG at 0x0000
-0000 020000     547            ljmp    _crt0
+0000            544            CSEG at 0x0000
+0000 020000     545            ljmp    _crt0
+0003            546   ;--------------------------------------------------------
+0003            547   ; global & static initialisations
 0003            548   ;--------------------------------------------------------
-0003            549   ; global & static initialisations
-0003            550   ;--------------------------------------------------------
-0000            551            rseg R_HOME
-0000            552            rseg R_GSINIT
-0000            553            rseg R_GSINIT
+0000            549            rseg R_HOME
+0000            550            rseg R_GSINIT
+0000            551            rseg R_GSINIT
+0000            552   ;--------------------------------------------------------
+0000            553   ; data variables initialization
 0000            554   ;--------------------------------------------------------
-0000            555   ; data variables initialization
-0000            556   ;--------------------------------------------------------
-0000            557            rseg R_DINIT
-0000            558   ;        sourcecode.c:15: float v1_max = 0; float v2_max = 0;
-0000 751800     559            mov     _v1_max,#0x00
-0003 751900     560            mov     (_v1_max + 1),#0x00
-0006 751A00     561            mov     (_v1_max + 2),#0x00
-0009 751B00     562            mov     (_v1_max + 3),#0x00
-000C            563   ;        sourcecode.c:15: float v1 = 0; float v2 = 0;
-000C 75D800     564            mov     _v2_max,#0x00
-000F 75D900     565            mov     (_v2_max + 1),#0x00
-0012 75DA00     566            mov     (_v2_max + 2),#0x00
-0015 75DB00     567            mov     (_v2_max + 3),#0x00
-0018            568   ;        sourcecode.c:16: 
-0018 759800     569            mov     _v1,#0x00
-001B 759900     570            mov     (_v1 + 1),#0x00
-001E 759A00     571            mov     (_v1 + 2),#0x00
-0021 759B00     572            mov     (_v1 + 3),#0x00
-0024            573   ;        sourcecode.c:16: float v1 = 0; float v2 = 0;
-0024 755800     574            mov     _v2,#0x00
-0027 755900     575            mov     (_v2 + 1),#0x00
-002A 755A00     576            mov     (_v2 + 2),#0x00
-002D 755B00     577            mov     (_v2 + 3),#0x00
-0030            578            ; The linker places a 'ret' at the end of segment R_DINIT.
+0000            555            rseg R_DINIT
+0000            556   ;        sourcecode.c:15: float v1_max = 0; float v2_max = 0;
+0000 751800     557            mov     _v1_max,#0x00
+0003 751900     558            mov     (_v1_max + 1),#0x00
+0006 751A00     559            mov     (_v1_max + 2),#0x00
+0009 751B00     560            mov     (_v1_max + 3),#0x00
+000C            561   ;        sourcecode.c:15: float v1 = 0; float v2 = 0;
+000C 75D800     562            mov     _v2_max,#0x00
+000F 75D900     563            mov     (_v2_max + 1),#0x00
+0012 75DA00     564            mov     (_v2_max + 2),#0x00
+0015 75DB00     565            mov     (_v2_max + 3),#0x00
+0018            566   ;        sourcecode.c:16: 
+0018 759800     567            mov     _v1,#0x00
+001B 759900     568            mov     (_v1 + 1),#0x00
+001E 759A00     569            mov     (_v1 + 2),#0x00
+0021 759B00     570            mov     (_v1 + 3),#0x00
+0024            571   ;        sourcecode.c:16: float v1 = 0; float v2 = 0;
+0024 755800     572            mov     _v2,#0x00
+0027 755900     573            mov     (_v2 + 1),#0x00
+002A 755A00     574            mov     (_v2 + 2),#0x00
+002D 755B00     575            mov     (_v2 + 3),#0x00
+0030            576            ; The linker places a 'ret' at the end of segment R_DINIT.
+0030            577   ;--------------------------------------------------------
+0030            578   ; code
 0030            579   ;--------------------------------------------------------
-0030            580   ; code
-0030            581   ;--------------------------------------------------------
-0000            582            rseg R_CSEG
+0000            580            rseg R_CSEG
+0000            581   ;------------------------------------------------------------
+0000            582   ;Allocation info for local variables in function '_c51_external_startup'
 0000            583   ;------------------------------------------------------------
-0000            584   ;Allocation info for local variables in function '_c51_external_startup'
-0000            585   ;------------------------------------------------------------
-0000            586   ;------------------------------------------------------------
-0000            587   ;        sourcecode.c:18: char _c51_external_startup (void)
+0000            584   ;------------------------------------------------------------
+0000            585   ;        sourcecode.c:18: char _c51_external_startup (void)
+0000            586   ;        -----------------------------------------
+0000            587   ;         function _c51_external_startup
 0000            588   ;        -----------------------------------------
-0000            589   ;         function _c51_external_startup
-0000            590   ;        -----------------------------------------
-0000            591   __c51_external_startup:
-0000            592            using   0
-0000            593   ;        sourcecode.c:21: SFRPAGE = 0x00;
-0000 75A700     594            mov     _SFRPAGE,#0x00
-0003            595   ;        sourcecode.c:22: WDTCN = 0xDE; //First key
-0003 7597DE     596            mov     _WDTCN,#0xDE
-0006            597   ;        sourcecode.c:23: WDTCN = 0xAD; //Second key
-0006 7597AD     598            mov     _WDTCN,#0xAD
-0009            599   ;        sourcecode.c:25: VDM0CN=0x80;       // enable VDD monitor
-0009 75FF80     600            mov     _VDM0CN,#0x80
-000C            601   ;        sourcecode.c:26: RSTSRC=0x02|0x04;  // Enable reset on missing clock detector and VDD
-000C 75EF06     602            mov     _RSTSRC,#0x06
-000F            603   ;        sourcecode.c:33: SFRPAGE = 0x10;
-000F 75A710     604            mov     _SFRPAGE,#0x10
-0012            605   ;        sourcecode.c:34: PFE0CN  = 0x20; // SYSCLK < 75 MHz.
-0012 75C120     606            mov     _PFE0CN,#0x20
-0015            607   ;        sourcecode.c:35: SFRPAGE = 0x00;
-0015 75A700     608            mov     _SFRPAGE,#0x00
-0018            609   ;        sourcecode.c:56: CLKSEL = 0x00;
-0018 75A900     610            mov     _CLKSEL,#0x00
-001B            611   ;        sourcecode.c:57: CLKSEL = 0x00;
-001B 75A900     612            mov     _CLKSEL,#0x00
-001E            613   ;        sourcecode.c:58: while ((CLKSEL & 0x80) == 0);
-001E            614   L002001?:
-001E E5A9       615            mov     a,_CLKSEL
-0020 30E7B0     616            jnb     acc.7,L002001?
-0023            617   ;        sourcecode.c:59: CLKSEL = 0x03;
-0023 75A903     618            mov     _CLKSEL,#0x03
-0026            619   ;        sourcecode.c:60: CLKSEL = 0x03;
-0026 75A903     620            mov     _CLKSEL,#0x03
-0029            621   ;        sourcecode.c:61: while ((CLKSEL & 0x80) == 0);
-0029            622   L002004?:
-0029 E5A9       623            mov     a,_CLKSEL
-002B 30E730     624            jnb     acc.7,L002004?
-002E            625   ;        sourcecode.c:66: P0MDOUT |= 0x10; // Enable UART0 TX as push-pull output
-002E 43A410     626            orl     _P0MDOUT,#0x10
-0031            627   ;        sourcecode.c:67: XBR0     = 0x01; // Enable UART0 on P0.4(TX) and P0.5(RX)                     
-0031 75E101     628            mov     _XBR0,#0x01
-0034            629   ;        sourcecode.c:68: XBR1     = 0X00;
-0034 75E200     630            mov     _XBR1,#0x00
-0037            631   ;        sourcecode.c:69: XBR2     = 0x40; // Enable crossbar and weak pull-ups
-0037 75E340     632            mov     _XBR2,#0x40
-003A            633   ;        sourcecode.c:75: SCON0 = 0x10;
-003A 759810     634            mov     _SCON0,#0x10
-003D            635   ;        sourcecode.c:76: TH1 = 0x100-((SYSCLK/BAUDRATE)/(2L*12L));
-003D 758DE6     636            mov     _TH1,#0xE6
-0040            637   ;        sourcecode.c:77: TL1 = TH1;      // Init Timer1
-0040 858D8B     638            mov     _TL1,_TH1
-0043            639   ;        sourcecode.c:78: TMOD &= ~0xf0;  // TMOD: timer 1 in 8-bit auto-reload
-0043 53890F     640            anl     _TMOD,#0x0F
-0046            641   ;        sourcecode.c:79: TMOD |=  0x20;                       
-0046 438920     642            orl     _TMOD,#0x20
-0049            643   ;        sourcecode.c:80: TR1 = 1; // START Timer1
-0049 D28E       644            setb    _TR1
-004B            645   ;        sourcecode.c:81: TI = 1;  // Indicate TX0 ready
-004B D299       646            setb    _TI
-004D            647   ;        sourcecode.c:83: return 0;
-004D 758200     648            mov     dpl,#0x00
-0050 22         649            ret
+0000            589   __c51_external_startup:
+0000            590            using   0
+0000            591   ;        sourcecode.c:21: SFRPAGE = 0x00;
+0000 75A700     592            mov     _SFRPAGE,#0x00
+0003            593   ;        sourcecode.c:22: WDTCN = 0xDE; //First key
+0003 7597DE     594            mov     _WDTCN,#0xDE
+0006            595   ;        sourcecode.c:23: WDTCN = 0xAD; //Second key
+0006 7597AD     596            mov     _WDTCN,#0xAD
+0009            597   ;        sourcecode.c:25: VDM0CN=0x80;       // enable VDD monitor
+0009 75FF80     598            mov     _VDM0CN,#0x80
+000C            599   ;        sourcecode.c:26: RSTSRC=0x02|0x04;  // Enable reset on missing clock detector and VDD
+000C 75EF06     600            mov     _RSTSRC,#0x06
+000F            601   ;        sourcecode.c:33: SFRPAGE = 0x10;
+000F 75A710     602            mov     _SFRPAGE,#0x10
+0012            603   ;        sourcecode.c:34: PFE0CN  = 0x20; // SYSCLK < 75 MHz.
+0012 75C120     604            mov     _PFE0CN,#0x20
+0015            605   ;        sourcecode.c:35: SFRPAGE = 0x00;
+0015 75A700     606            mov     _SFRPAGE,#0x00
+0018            607   ;        sourcecode.c:56: CLKSEL = 0x00;
+0018 75A900     608            mov     _CLKSEL,#0x00
+001B            609   ;        sourcecode.c:57: CLKSEL = 0x00;
+001B 75A900     610            mov     _CLKSEL,#0x00
+001E            611   ;        sourcecode.c:58: while ((CLKSEL & 0x80) == 0);
+001E            612   L002001?:
+001E E5A9       613            mov     a,_CLKSEL
+0020 30E760     614            jnb     acc.7,L002001?
+0023            615   ;        sourcecode.c:59: CLKSEL = 0x03;
+0023 75A903     616            mov     _CLKSEL,#0x03
+0026            617   ;        sourcecode.c:60: CLKSEL = 0x03;
+0026 75A903     618            mov     _CLKSEL,#0x03
+0029            619   ;        sourcecode.c:61: while ((CLKSEL & 0x80) == 0);
+0029            620   L002004?:
+0029 E5A9       621            mov     a,_CLKSEL
+002B 30E7E0     622            jnb     acc.7,L002004?
+002E            623   ;        sourcecode.c:66: P0MDOUT |= 0x10; // Enable UART0 TX as push-pull output
+002E 43A410     624            orl     _P0MDOUT,#0x10
+0031            625   ;        sourcecode.c:67: XBR0     = 0x01; // Enable UART0 on P0.4(TX) and P0.5(RX)                     
+0031 75E101     626            mov     _XBR0,#0x01
+0034            627   ;        sourcecode.c:68: XBR1     = 0X00;
+0034 75E200     628            mov     _XBR1,#0x00
+0037            629   ;        sourcecode.c:69: XBR2     = 0x40; // Enable crossbar and weak pull-ups
+0037 75E340     630            mov     _XBR2,#0x40
+003A            631   ;        sourcecode.c:75: SCON0 = 0x10;
+003A 759810     632            mov     _SCON0,#0x10
+003D            633   ;        sourcecode.c:76: TH1 = 0x100-((SYSCLK/BAUDRATE)/(2L*12L));
+003D 758DE6     634            mov     _TH1,#0xE6
+0040            635   ;        sourcecode.c:77: TL1 = TH1;      // Init Timer1
+0040 858D8B     636            mov     _TL1,_TH1
+0043            637   ;        sourcecode.c:78: TMOD &= ~0xf0;  // TMOD: timer 1 in 8-bit auto-reload
+0043 53890F     638            anl     _TMOD,#0x0F
+0046            639   ;        sourcecode.c:79: TMOD |=  0x20;                       
+0046 438920     640            orl     _TMOD,#0x20
+0049            641   ;        sourcecode.c:80: TR1 = 1; // START Timer1
+0049 D28E       642            setb    _TR1
+004B            643   ;        sourcecode.c:81: TI = 1;  // Indicate TX0 ready
+004B D299       644            setb    _TI
+004D            645   ;        sourcecode.c:83: return 0;
+004D 758200     646            mov     dpl,#0x00
+0050 22         647            ret
+0051            648   ;------------------------------------------------------------
+0051            649   ;Allocation info for local variables in function 'InitADC'
 0051            650   ;------------------------------------------------------------
-0051            651   ;Allocation info for local variables in function 'InitADC'
-0051            652   ;------------------------------------------------------------
-0051            653   ;------------------------------------------------------------
-0051            654   ;        sourcecode.c:86: void InitADC (void)
+0051            651   ;------------------------------------------------------------
+0051            652   ;        sourcecode.c:86: void InitADC (void)
+0051            653   ;        -----------------------------------------
+0051            654   ;         function InitADC
 0051            655   ;        -----------------------------------------
-0051            656   ;         function InitADC
-0051            657   ;        -----------------------------------------
-0051            658   _InitADC:
-0051            659   ;        sourcecode.c:88: SFRPAGE = 0x00;
-0051 75A700     660            mov     _SFRPAGE,#0x00
-0054            661   ;        sourcecode.c:89: ADEN=0; // Disable ADC
-0054 C2EF       662            clr     _ADEN
-0056            663   ;        sourcecode.c:94: (0x0 << 0) ; // Accumulate n conversions: 0x0: 1, 0x1:4, 0x2:8, 0x3:16, 0x4:32
-0056 75B280     664            mov     _ADC0CN1,#0x80
-0059            665   ;        sourcecode.c:98: (0x0 << 2); // 0:SYSCLK ADCCLK = SYSCLK. 1:HFOSC0 ADCCLK = HFOSC0.
-0059 75BC20     666            mov     _ADC0CF0,#0x20
-005C            667   ;        sourcecode.c:102: (0x1E << 0); // Conversion Tracking Time. Tadtk = ADTK / (Fsarclk)
-005C 75B91E     668            mov     _ADC0CF1,#0x1E
-005F            669   ;        sourcecode.c:111: (0x0 << 0) ; // TEMPE. 0: Disable the Temperature Sensor. 1: Enable the Temperature Sensor.
-005F 75E800     670            mov     _ADC0CN0,#0x00
-0062            671   ;        sourcecode.c:116: (0x1F << 0); // ADPWR. Power Up Delay Time. Tpwrtime = ((4 * (ADPWR + 1)) + 2) / (Fadcclk)
-0062 75DF3F     672            mov     _ADC0CF2,#0x3F
-0065            673   ;        sourcecode.c:120: (0x0 << 0) ; // ADCM. 0x0: ADBUSY, 0x1: TIMER0, 0x2: TIMER2, 0x3: TIMER3, 0x4: CNVSTR, 0x5: CEX5, 0x6: TIMER4, 0x7: TIMER5, 0x8: CLU0, 0x9: CLU1, 0xA: CLU2, 0xB: CLU3
-0065 75B300     674            mov     _ADC0CN2,#0x00
-0068            675   ;        sourcecode.c:122: ADEN=1; // Enable ADC
-0068 D2EF       676            setb    _ADEN
-006A 22         677            ret
+0051            656   _InitADC:
+0051            657   ;        sourcecode.c:88: SFRPAGE = 0x00;
+0051 75A700     658            mov     _SFRPAGE,#0x00
+0054            659   ;        sourcecode.c:89: ADEN=0; // Disable ADC
+0054 C2EF       660            clr     _ADEN
+0056            661   ;        sourcecode.c:94: (0x0 << 0) ; // Accumulate n conversions: 0x0: 1, 0x1:4, 0x2:8, 0x3:16, 0x4:32
+0056 75B280     662            mov     _ADC0CN1,#0x80
+0059            663   ;        sourcecode.c:98: (0x0 << 2); // 0:SYSCLK ADCCLK = SYSCLK. 1:HFOSC0 ADCCLK = HFOSC0.
+0059 75BC20     664            mov     _ADC0CF0,#0x20
+005C            665   ;        sourcecode.c:102: (0x1E << 0); // Conversion Tracking Time. Tadtk = ADTK / (Fsarclk)
+005C 75B91E     666            mov     _ADC0CF1,#0x1E
+005F            667   ;        sourcecode.c:111: (0x0 << 0) ; // TEMPE. 0: Disable the Temperature Sensor. 1: Enable the Temperature Sensor.
+005F 75E800     668            mov     _ADC0CN0,#0x00
+0062            669   ;        sourcecode.c:116: (0x1F << 0); // ADPWR. Power Up Delay Time. Tpwrtime = ((4 * (ADPWR + 1)) + 2) / (Fadcclk)
+0062 75DF3F     670            mov     _ADC0CF2,#0x3F
+0065            671   ;        sourcecode.c:120: (0x0 << 0) ; // ADCM. 0x0: ADBUSY, 0x1: TIMER0, 0x2: TIMER2, 0x3: TIMER3, 0x4: CNVSTR, 0x5: CEX5, 0x6: TIMER4, 0x7: TIMER5, 0x8: CLU0, 0x9: CLU1, 0xA: CLU2, 0xB: CLU3
+0065 75B300     672            mov     _ADC0CN2,#0x00
+0068            673   ;        sourcecode.c:122: ADEN=1; // Enable ADC
+0068 D2EF       674            setb    _ADEN
+006A 22         675            ret
+006B            676   ;------------------------------------------------------------
+006B            677   ;Allocation info for local variables in function 'Timer3us'
 006B            678   ;------------------------------------------------------------
-006B            679   ;Allocation info for local variables in function 'Timer3us'
-006B            680   ;------------------------------------------------------------
-006B            681   ;us                        Allocated to registers r2 
-006B            682   ;i                         Allocated to registers r3 
-006B            683   ;------------------------------------------------------------
-006B            684   ;        sourcecode.c:126: void Timer3us(unsigned char us)
+006B            679   ;us                        Allocated to registers r2 
+006B            680   ;i                         Allocated to registers r3 
+006B            681   ;------------------------------------------------------------
+006B            682   ;        sourcecode.c:126: void Timer3us(unsigned char us)
+006B            683   ;        -----------------------------------------
+006B            684   ;         function Timer3us
 006B            685   ;        -----------------------------------------
-006B            686   ;         function Timer3us
-006B            687   ;        -----------------------------------------
-006B            688   _Timer3us:
-006B AA82       689            mov     r2,dpl
-006D            690   ;        sourcecode.c:131: CKCON0|=0b_0100_0000;
-006D 438E40     691            orl     _CKCON0,#0x40
-0070            692   ;        sourcecode.c:133: TMR3RL = (-(SYSCLK)/1000000L); // Set Timer3 to overflow in 1us.
-0070 7592B8     693            mov     _TMR3RL,#0xB8
-0073 7593FF     694            mov     (_TMR3RL >> 8),#0xFF
-0076            695   ;        sourcecode.c:134: TMR3 = TMR3RL;                 // Initialize Timer3 for first overflow
-0076 859294     696            mov     _TMR3,_TMR3RL
-0079 859395     697            mov     (_TMR3 >> 8),(_TMR3RL >> 8)
-007C            698   ;        sourcecode.c:136: TMR3CN0 = 0x04;                 // Sart Timer3 and clear overflow flag
-007C 759104     699            mov     _TMR3CN0,#0x04
-007F            700   ;        sourcecode.c:137: for (i = 0; i < us; i++)       // Count <us> overflows
-007F 7B00       701            mov     r3,#0x00
-0081            702   L004004?:
-0081 C3         703            clr     c
-0082 EB         704            mov     a,r3
-0083 9A         705            subb    a,r2
-0084 5000       706            jnc     L004007?
-0086            707   ;        sourcecode.c:139: while (!(TMR3CN0 & 0x80));  // Wait for overflow
-0086            708   L004001?:
-0086 E591       709            mov     a,_TMR3CN0
-0088 30E730     710            jnb     acc.7,L004001?
-008B            711   ;        sourcecode.c:140: TMR3CN0 &= ~(0x80);         // Clear overflow indicator
-008B 53917F     712            anl     _TMR3CN0,#0x7F
-008E            713   ;        sourcecode.c:137: for (i = 0; i < us; i++)       // Count <us> overflows
-008E 0B         714            inc     r3
-008F 8000       715            sjmp    L004004?
-0091            716   L004007?:
-0091            717   ;        sourcecode.c:142: TMR3CN0 = 0 ;                   // Stop Timer3 and clear overflow flag
-0091 759100     718            mov     _TMR3CN0,#0x00
-0094 22         719            ret
+006B            686   _Timer3us:
+006B AA82       687            mov     r2,dpl
+006D            688   ;        sourcecode.c:131: CKCON0|=0b_0100_0000;
+006D 438E40     689            orl     _CKCON0,#0x40
+0070            690   ;        sourcecode.c:133: TMR3RL = (-(SYSCLK)/1000000L); // Set Timer3 to overflow in 1us.
+0070 7592B8     691            mov     _TMR3RL,#0xB8
+0073 7593FF     692            mov     (_TMR3RL >> 8),#0xFF
+0076            693   ;        sourcecode.c:134: TMR3 = TMR3RL;                 // Initialize Timer3 for first overflow
+0076 859294     694            mov     _TMR3,_TMR3RL
+0079 859395     695            mov     (_TMR3 >> 8),(_TMR3RL >> 8)
+007C            696   ;        sourcecode.c:136: TMR3CN0 = 0x04;                 // Sart Timer3 and clear overflow flag
+007C 759104     697            mov     _TMR3CN0,#0x04
+007F            698   ;        sourcecode.c:137: for (i = 0; i < us; i++)       // Count <us> overflows
+007F 7B00       699            mov     r3,#0x00
+0081            700   L004004?:
+0081 C3         701            clr     c
+0082 EB         702            mov     a,r3
+0083 9A         703            subb    a,r2
+0084 5000       704            jnc     L004007?
+0086            705   ;        sourcecode.c:139: while (!(TMR3CN0 & 0x80));  // Wait for overflow
+0086            706   L004001?:
+0086 E591       707            mov     a,_TMR3CN0
+0088 30E7E0     708            jnb     acc.7,L004001?
+008B            709   ;        sourcecode.c:140: TMR3CN0 &= ~(0x80);         // Clear overflow indicator
+008B 53917F     710            anl     _TMR3CN0,#0x7F
+008E            711   ;        sourcecode.c:137: for (i = 0; i < us; i++)       // Count <us> overflows
+008E 0B         712            inc     r3
+008F 8000       713            sjmp    L004004?
+0091            714   L004007?:
+0091            715   ;        sourcecode.c:142: TMR3CN0 = 0 ;                   // Stop Timer3 and clear overflow flag
+0091 759100     716            mov     _TMR3CN0,#0x00
+0094 22         717            ret
+0095            718   ;------------------------------------------------------------
+0095            719   ;Allocation info for local variables in function 'waitms'
 0095            720   ;------------------------------------------------------------
-0095            721   ;Allocation info for local variables in function 'waitms'
-0095            722   ;------------------------------------------------------------
-0095            723   ;ms                        Allocated to registers r2 r3 
-0095            724   ;j                         Allocated to registers r4 r5 
-0095            725   ;k                         Allocated to registers r6 
-0095            726   ;------------------------------------------------------------
-0095            727   ;        sourcecode.c:145: void waitms (unsigned int ms)
+0095            721   ;ms                        Allocated to registers r2 r3 
+0095            722   ;j                         Allocated to registers r4 r5 
+0095            723   ;k                         Allocated to registers r6 
+0095            724   ;------------------------------------------------------------
+0095            725   ;        sourcecode.c:145: void waitms (unsigned int ms)
+0095            726   ;        -----------------------------------------
+0095            727   ;         function waitms
 0095            728   ;        -----------------------------------------
-0095            729   ;         function waitms
-0095            730   ;        -----------------------------------------
-0095            731   _waitms:
-0095 AA82       732            mov     r2,dpl
-0097 AB83       733            mov     r3,dph
-0099            734   ;        sourcecode.c:149: for(j=0; j<ms; j++)
-0099 7C00       735            mov     r4,#0x00
-009B 7D00       736            mov     r5,#0x00
-009D            737   L005005?:
-009D C3         738            clr     c
-009E EC         739            mov     a,r4
-009F 9A         740            subb    a,r2
-00A0 ED         741            mov     a,r5
-00A1 9B         742            subb    a,r3
-00A2 5000       743            jnc     L005009?
-00A4            744   ;        sourcecode.c:150: for (k=0; k<4; k++) Timer3us(250);
-00A4 7E00       745            mov     r6,#0x00
-00A6            746   L005001?:
-00A6 BE0470     747            cjne    r6,#0x04,L005018?
-00A9            748   L005018?:
-00A9 5000       749            jnc     L005007?
-00AB 7582FA     750            mov     dpl,#0xFA
-00AE C002       751            push    ar2
-00B0 C003       752            push    ar3
-00B2 C004       753            push    ar4
-00B4 C005       754            push    ar5
-00B6 C006       755            push    ar6
-00B8 120000     756            lcall   _Timer3us
-00BB D006       757            pop     ar6
-00BD D005       758            pop     ar5
-00BF D004       759            pop     ar4
-00C1 D003       760            pop     ar3
-00C3 D002       761            pop     ar2
-00C5 0E         762            inc     r6
-00C6 8000       763            sjmp    L005001?
-00C8            764   L005007?:
-00C8            765   ;        sourcecode.c:149: for(j=0; j<ms; j++)
-00C8 0C         766            inc     r4
-00C9 BC00B0     767            cjne    r4,#0x00,L005005?
-00CC 0D         768            inc     r5
-00CD 8000       769            sjmp    L005005?
-00CF            770   L005009?:
-00CF 22         771            ret
+0095            729   _waitms:
+0095 AA82       730            mov     r2,dpl
+0097 AB83       731            mov     r3,dph
+0099            732   ;        sourcecode.c:149: for(j=0; j<ms; j++)
+0099 7C00       733            mov     r4,#0x00
+009B 7D00       734            mov     r5,#0x00
+009D            735   L005005?:
+009D C3         736            clr     c
+009E EC         737            mov     a,r4
+009F 9A         738            subb    a,r2
+00A0 ED         739            mov     a,r5
+00A1 9B         740            subb    a,r3
+00A2 5000       741            jnc     L005009?
+00A4            742   ;        sourcecode.c:150: for (k=0; k<4; k++) Timer3us(250);
+00A4 7E00       743            mov     r6,#0x00
+00A6            744   L005001?:
+00A6 BE0420     745            cjne    r6,#0x04,L005018?
+00A9            746   L005018?:
+00A9 5000       747            jnc     L005007?
+00AB 7582FA     748            mov     dpl,#0xFA
+00AE C002       749            push    ar2
+00B0 C003       750            push    ar3
+00B2 C004       751            push    ar4
+00B4 C005       752            push    ar5
+00B6 C006       753            push    ar6
+00B8 120000     754            lcall   _Timer3us
+00BB D006       755            pop     ar6
+00BD D005       756            pop     ar5
+00BF D004       757            pop     ar4
+00C1 D003       758            pop     ar3
+00C3 D002       759            pop     ar2
+00C5 0E         760            inc     r6
+00C6 8000       761            sjmp    L005001?
+00C8            762   L005007?:
+00C8            763   ;        sourcecode.c:149: for(j=0; j<ms; j++)
+00C8 0C         764            inc     r4
+00C9 BC0060     765            cjne    r4,#0x00,L005005?
+00CC 0D         766            inc     r5
+00CD 8000       767            sjmp    L005005?
+00CF            768   L005009?:
+00CF 22         769            ret
+00D0            770   ;------------------------------------------------------------
+00D0            771   ;Allocation info for local variables in function 'InitPinADC'
 00D0            772   ;------------------------------------------------------------
-00D0            773   ;Allocation info for local variables in function 'InitPinADC'
-00D0            774   ;------------------------------------------------------------
-00D0            775   ;pinno                     Allocated with name '_InitPinADC_PARM_2'
-00D0            776   ;portno                    Allocated to registers r2 
-00D0            777   ;mask                      Allocated to registers r3 
-00D0            778   ;------------------------------------------------------------
-00D0            779   ;        sourcecode.c:155: void InitPinADC (unsigned char portno, unsigned char pinno)
+00D0            773   ;pinno                     Allocated with name '_InitPinADC_PARM_2'
+00D0            774   ;portno                    Allocated to registers r2 
+00D0            775   ;mask                      Allocated to registers r3 
+00D0            776   ;------------------------------------------------------------
+00D0            777   ;        sourcecode.c:155: void InitPinADC (unsigned char portno, unsigned char pinno)
+00D0            778   ;        -----------------------------------------
+00D0            779   ;         function InitPinADC
 00D0            780   ;        -----------------------------------------
-00D0            781   ;         function InitPinADC
-00D0            782   ;        -----------------------------------------
-00D0            783   _InitPinADC:
-00D0 AA82       784            mov     r2,dpl
-00D2            785   ;        sourcecode.c:159: mask=1<<pinno;
-00D2 85C8F0     786            mov     b,_InitPinADC_PARM_2
-00D5 05F0       787            inc     b
-00D7 7401       788            mov     a,#0x01
-00D9 8000       789            sjmp    L006013?
-00DB            790   L006011?:
-00DB 25E0       791            add     a,acc
-00DD            792   L006013?:
-00DD D5F070     793            djnz    b,L006011?
-00E0 FB         794            mov     r3,a
-00E1            795   ;        sourcecode.c:161: SFRPAGE = 0x20;
-00E1 75A720     796            mov     _SFRPAGE,#0x20
-00E4            797   ;        sourcecode.c:162: switch (portno)
-00E4 BA00B0     798            cjne    r2,#0x00,L006014?
-00E7 8000       799            sjmp    L006001?
-00E9            800   L006014?:
-00E9 BA0130     801            cjne    r2,#0x01,L006015?
-00EC 8000       802            sjmp    L006002?
-00EE            803   L006015?:
-00EE            804   ;        sourcecode.c:164: case 0:
-00EE BA02B0     805            cjne    r2,#0x02,L006005?
-00F1 8000       806            sjmp    L006003?
-00F3            807   L006001?:
-00F3            808   ;        sourcecode.c:165: P0MDIN &= (~mask); // Set pin as analog input
-00F3 EB         809            mov     a,r3
-00F4 F4         810            cpl     a
-00F5 FA         811            mov     r2,a
-00F6 52F1       812            anl     _P0MDIN,a
-00F8            813   ;        sourcecode.c:166: P0SKIP |= mask; // Skip Crossbar decoding for this pin
-00F8 EB         814            mov     a,r3
-00F9 42D4       815            orl     _P0SKIP,a
-00FB            816   ;        sourcecode.c:167: break;
-00FB            817   ;        sourcecode.c:168: case 1:
-00FB 8000       818            sjmp    L006005?
-00FD            819   L006002?:
-00FD            820   ;        sourcecode.c:169: P1MDIN &= (~mask); // Set pin as analog input
-00FD EB         821            mov     a,r3
-00FE F4         822            cpl     a
-00FF FA         823            mov     r2,a
-0100 52F2       824            anl     _P1MDIN,a
-0102            825   ;        sourcecode.c:170: P1SKIP |= mask; // Skip Crossbar decoding for this pin
-0102 EB         826            mov     a,r3
-0103 42D5       827            orl     _P1SKIP,a
-0105            828   ;        sourcecode.c:171: break;
-0105            829   ;        sourcecode.c:172: case 2:
-0105 8000       830            sjmp    L006005?
-0107            831   L006003?:
-0107            832   ;        sourcecode.c:173: P2MDIN &= (~mask); // Set pin as analog input
-0107 EB         833            mov     a,r3
-0108 F4         834            cpl     a
-0109 FA         835            mov     r2,a
-010A 52F3       836            anl     _P2MDIN,a
-010C            837   ;        sourcecode.c:174: P2SKIP |= mask; // Skip Crossbar decoding for this pin
-010C EB         838            mov     a,r3
-010D 42CC       839            orl     _P2SKIP,a
-010F            840   ;        sourcecode.c:178: }
-010F            841   L006005?:
-010F            842   ;        sourcecode.c:179: SFRPAGE = 0x00;
-010F 75A700     843            mov     _SFRPAGE,#0x00
-0112 22         844            ret
+00D0            781   _InitPinADC:
+00D0 AA82       782            mov     r2,dpl
+00D2            783   ;        sourcecode.c:159: mask=1<<pinno;
+00D2 85C8F0     784            mov     b,_InitPinADC_PARM_2
+00D5 05F0       785            inc     b
+00D7 7401       786            mov     a,#0x01
+00D9 8000       787            sjmp    L006013?
+00DB            788   L006011?:
+00DB 25E0       789            add     a,acc
+00DD            790   L006013?:
+00DD D5F020     791            djnz    b,L006011?
+00E0 FB         792            mov     r3,a
+00E1            793   ;        sourcecode.c:161: SFRPAGE = 0x20;
+00E1 75A720     794            mov     _SFRPAGE,#0x20
+00E4            795   ;        sourcecode.c:162: switch (portno)
+00E4 BA0060     796            cjne    r2,#0x00,L006014?
+00E7 8000       797            sjmp    L006001?
+00E9            798   L006014?:
+00E9 BA01E0     799            cjne    r2,#0x01,L006015?
+00EC 8000       800            sjmp    L006002?
+00EE            801   L006015?:
+00EE            802   ;        sourcecode.c:164: case 0:
+00EE BA0260     803            cjne    r2,#0x02,L006005?
+00F1 8000       804            sjmp    L006003?
+00F3            805   L006001?:
+00F3            806   ;        sourcecode.c:165: P0MDIN &= (~mask); // Set pin as analog input
+00F3 EB         807            mov     a,r3
+00F4 F4         808            cpl     a
+00F5 FA         809            mov     r2,a
+00F6 52F1       810            anl     _P0MDIN,a
+00F8            811   ;        sourcecode.c:166: P0SKIP |= mask; // Skip Crossbar decoding for this pin
+00F8 EB         812            mov     a,r3
+00F9 42D4       813            orl     _P0SKIP,a
+00FB            814   ;        sourcecode.c:167: break;
+00FB            815   ;        sourcecode.c:168: case 1:
+00FB 8000       816            sjmp    L006005?
+00FD            817   L006002?:
+00FD            818   ;        sourcecode.c:169: P1MDIN &= (~mask); // Set pin as analog input
+00FD EB         819            mov     a,r3
+00FE F4         820            cpl     a
+00FF FA         821            mov     r2,a
+0100 52F2       822            anl     _P1MDIN,a
+0102            823   ;        sourcecode.c:170: P1SKIP |= mask; // Skip Crossbar decoding for this pin
+0102 EB         824            mov     a,r3
+0103 42D5       825            orl     _P1SKIP,a
+0105            826   ;        sourcecode.c:171: break;
+0105            827   ;        sourcecode.c:172: case 2:
+0105 8000       828            sjmp    L006005?
+0107            829   L006003?:
+0107            830   ;        sourcecode.c:173: P2MDIN &= (~mask); // Set pin as analog input
+0107 EB         831            mov     a,r3
+0108 F4         832            cpl     a
+0109 FA         833            mov     r2,a
+010A 52F3       834            anl     _P2MDIN,a
+010C            835   ;        sourcecode.c:174: P2SKIP |= mask; // Skip Crossbar decoding for this pin
+010C EB         836            mov     a,r3
+010D 42CC       837            orl     _P2SKIP,a
+010F            838   ;        sourcecode.c:178: }
+010F            839   L006005?:
+010F            840   ;        sourcecode.c:179: SFRPAGE = 0x00;
+010F 75A700     841            mov     _SFRPAGE,#0x00
+0112 22         842            ret
+0113            843   ;------------------------------------------------------------
+0113            844   ;Allocation info for local variables in function 'ADC_at_Pin'
 0113            845   ;------------------------------------------------------------
-0113            846   ;Allocation info for local variables in function 'ADC_at_Pin'
+0113            846   ;pin                       Allocated to registers 
 0113            847   ;------------------------------------------------------------
-0113            848   ;pin                       Allocated to registers 
-0113            849   ;------------------------------------------------------------
-0113            850   ;        sourcecode.c:182: unsigned int ADC_at_Pin(unsigned char pin)
+0113            848   ;        sourcecode.c:182: unsigned int ADC_at_Pin(unsigned char pin)
+0113            849   ;        -----------------------------------------
+0113            850   ;         function ADC_at_Pin
 0113            851   ;        -----------------------------------------
-0113            852   ;         function ADC_at_Pin
-0113            853   ;        -----------------------------------------
-0113            854   _ADC_at_Pin:
-0113 8582BB     855            mov     _ADC0MX,dpl
-0116            856   ;        sourcecode.c:185: ADINT = 0;
-0116 C2ED       857            clr     _ADINT
-0118            858   ;        sourcecode.c:186: ADBUSY = 1;     // Convert voltage at the pin
-0118 D2EC       859            setb    _ADBUSY
-011A            860   ;        sourcecode.c:187: while (!ADINT); // Wait for conversion to complete
-011A            861   L007001?:
-011A 30ED30     862            jnb     _ADINT,L007001?
-011D            863   ;        sourcecode.c:188: return (ADC0);
-011D 85BD82     864            mov     dpl,_ADC0
-0120 85BE83     865            mov     dph,(_ADC0 >> 8)
-0123 22         866            ret
+0113            852   _ADC_at_Pin:
+0113 8582BB     853            mov     _ADC0MX,dpl
+0116            854   ;        sourcecode.c:185: ADINT = 0;
+0116 C2ED       855            clr     _ADINT
+0118            856   ;        sourcecode.c:186: ADBUSY = 1;     // Convert voltage at the pin
+0118 D2EC       857            setb    _ADBUSY
+011A            858   ;        sourcecode.c:187: while (!ADINT); // Wait for conversion to complete
+011A            859   L007001?:
+011A 30EDE8     860            jnb     _ADINT,L007001?
+011D            861   ;        sourcecode.c:188: return (ADC0);
+011D 85BD82     862            mov     dpl,_ADC0
+0120 85BE83     863            mov     dph,(_ADC0 >> 8)
+0123 22         864            ret
+0124            865   ;------------------------------------------------------------
+0124            866   ;Allocation info for local variables in function 'Volts_at_Pin'
 0124            867   ;------------------------------------------------------------
-0124            868   ;Allocation info for local variables in function 'Volts_at_Pin'
+0124            868   ;pin                       Allocated to registers r2 
 0124            869   ;------------------------------------------------------------
-0124            870   ;pin                       Allocated to registers r2 
-0124            871   ;------------------------------------------------------------
-0124            872   ;        sourcecode.c:199: float Volts_at_Pin(unsigned char pin)
+0124            870   ;        sourcecode.c:199: float Volts_at_Pin(unsigned char pin)
+0124            871   ;        -----------------------------------------
+0124            872   ;         function Volts_at_Pin
 0124            873   ;        -----------------------------------------
-0124            874   ;         function Volts_at_Pin
-0124            875   ;        -----------------------------------------
-0124            876   _Volts_at_Pin:
-0124            877   ;        sourcecode.c:201: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
-0124 120000     878            lcall   _ADC_at_Pin
-0127 120000     879            lcall   ___uint2fs
-012A AA82       880            mov     r2,dpl
-012C AB83       881            mov     r3,dph
-012E ACF0       882            mov     r4,b
-0130 FD         883            mov     r5,a
-0131 C002       884            push    ar2
-0133 C003       885            push    ar3
-0135 C004       886            push    ar4
-0137 C005       887            push    ar5
-0139 90923A     888            mov     dptr,#0x923A
-013C 75F053     889            mov     b,#0x53
-013F 7440       890            mov     a,#0x40
-0141 120000     891            lcall   ___fsmul
-0144 AA82       892            mov     r2,dpl
-0146 AB83       893            mov     r3,dph
-0148 ACF0       894            mov     r4,b
-014A FD         895            mov     r5,a
-014B E581       896            mov     a,sp
-014D 24FC       897            add     a,#0xfc
-014F F581       898            mov     sp,a
-0151 E4         899            clr     a
-0152 C0E0       900            push    acc
-0154 74FC       901            mov     a,#0xFC
-0156 C0E0       902            push    acc
-0158 747F       903            mov     a,#0x7F
-015A C0E0       904            push    acc
-015C 7446       905            mov     a,#0x46
-015E C0E0       906            push    acc
-0160 8A82       907            mov     dpl,r2
-0162 8B83       908            mov     dph,r3
-0164 8CF0       909            mov     b,r4
-0166 ED         910            mov     a,r5
-0167 120000     911            lcall   ___fsdiv
-016A AA82       912            mov     r2,dpl
-016C AB83       913            mov     r3,dph
-016E ACF0       914            mov     r4,b
-0170 FD         915            mov     r5,a
-0171 E581       916            mov     a,sp
-0173 24FC       917            add     a,#0xfc
-0175 F581       918            mov     sp,a
-0177 8A82       919            mov     dpl,r2
-0179 8B83       920            mov     dph,r3
-017B 8CF0       921            mov     b,r4
-017D ED         922            mov     a,r5
-017E 22         923            ret
+0124            874   _Volts_at_Pin:
+0124            875   ;        sourcecode.c:201: return ((ADC_at_Pin(pin)*VDD)/0b_0011_1111_1111_1111);
+0124 120000     876            lcall   _ADC_at_Pin
+0127 120000     877            lcall   ___uint2fs
+012A AA82       878            mov     r2,dpl
+012C AB83       879            mov     r3,dph
+012E ACF0       880            mov     r4,b
+0130 FD         881            mov     r5,a
+0131 C002       882            push    ar2
+0133 C003       883            push    ar3
+0135 C004       884            push    ar4
+0137 C005       885            push    ar5
+0139 90923A     886            mov     dptr,#0x923A
+013C 75F053     887            mov     b,#0x53
+013F 7440       888            mov     a,#0x40
+0141 120000     889            lcall   ___fsmul
+0144 AA82       890            mov     r2,dpl
+0146 AB83       891            mov     r3,dph
+0148 ACF0       892            mov     r4,b
+014A FD         893            mov     r5,a
+014B E581       894            mov     a,sp
+014D 24FC       895            add     a,#0xfc
+014F F581       896            mov     sp,a
+0151 E4         897            clr     a
+0152 C0E0       898            push    acc
+0154 74FC       899            mov     a,#0xFC
+0156 C0E0       900            push    acc
+0158 747F       901            mov     a,#0x7F
+015A C0E0       902            push    acc
+015C 7446       903            mov     a,#0x46
+015E C0E0       904            push    acc
+0160 8A82       905            mov     dpl,r2
+0162 8B83       906            mov     dph,r3
+0164 8CF0       907            mov     b,r4
+0166 ED         908            mov     a,r5
+0167 120000     909            lcall   ___fsdiv
+016A AA82       910            mov     r2,dpl
+016C AB83       911            mov     r3,dph
+016E ACF0       912            mov     r4,b
+0170 FD         913            mov     r5,a
+0171 E581       914            mov     a,sp
+0173 24FC       915            add     a,#0xfc
+0175 F581       916            mov     sp,a
+0177 8A82       917            mov     dpl,r2
+0179 8B83       918            mov     dph,r3
+017B 8CF0       919            mov     b,r4
+017D ED         920            mov     a,r5
+017E 22         921            ret
+017F            922   ;------------------------------------------------------------
+017F            923   ;Allocation info for local variables in function 'TIMER0_Init'
 017F            924   ;------------------------------------------------------------
-017F            925   ;Allocation info for local variables in function 'TIMER0_Init'
-017F            926   ;------------------------------------------------------------
-017F            927   ;------------------------------------------------------------
-017F            928   ;        sourcecode.c:204: void TIMER0_Init(void)
+017F            925   ;------------------------------------------------------------
+017F            926   ;        sourcecode.c:204: void TIMER0_Init(void)
+017F            927   ;        -----------------------------------------
+017F            928   ;         function TIMER0_Init
 017F            929   ;        -----------------------------------------
-017F            930   ;         function TIMER0_Init
-017F            931   ;        -----------------------------------------
-017F            932   _TIMER0_Init:
-017F            933   ;        sourcecode.c:206: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
-017F 5389F0     934            anl     _TMOD,#0xF0
-0182            935   ;        sourcecode.c:207: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
-0182 438901     936            orl     _TMOD,#0x01
-0185            937   ;        sourcecode.c:208: TR0=0; // Stop Timer/Counter 0
-0185 C28C       938            clr     _TR0
-0187 22         939            ret
+017F            930   _TIMER0_Init:
+017F            931   ;        sourcecode.c:206: TMOD&=0b_1111_0000; // Set the bits of Timer/Counter 0 to zero
+017F 5389F0     932            anl     _TMOD,#0xF0
+0182            933   ;        sourcecode.c:207: TMOD|=0b_0000_0001; // Timer/Counter 0 used as a 16-bit counter
+0182 438901     934            orl     _TMOD,#0x01
+0185            935   ;        sourcecode.c:208: TR0=0; // Stop Timer/Counter 0
+0185 C28C       936            clr     _TR0
+0187 22         937            ret
+0188            938   ;------------------------------------------------------------
+0188            939   ;Allocation info for local variables in function 'main'
 0188            940   ;------------------------------------------------------------
-0188            941   ;Allocation info for local variables in function 'main'
-0188            942   ;------------------------------------------------------------
-0188            943   ;period                    Allocated with name '_main_period_1_61'
-0188            944   ;Phase_Shift               Allocated with name '_main_Phase_Shift_1_61'
-0188            945   ;time_difference           Allocated to registers r2 r3 r4 r5 
-0188            946   ;------------------------------------------------------------
-0188            947   ;        sourcecode.c:217: void main (void)
+0188            941   ;period                    Allocated with name '_main_period_1_61'
+0188            942   ;Phase_Shift               Allocated to registers r2 r3 r4 r5 
+0188            943   ;time_difference           Allocated to registers r2 r3 r4 r5 
+0188            944   ;------------------------------------------------------------
+0188            945   ;        sourcecode.c:217: void main (void)
+0188            946   ;        -----------------------------------------
+0188            947   ;         function main
 0188            948   ;        -----------------------------------------
-0188            949   ;         function main
-0188            950   ;        -----------------------------------------
-0188            951   _main:
-0188            952   ;        sourcecode.c:223: TIMER0_Init();
-0188 120000     953            lcall   _TIMER0_Init
-018B            954   ;        sourcecode.c:225: waitms(500); // Give PuTTy a chance to start before sending
-018B 9001F4     955            mov     dptr,#0x01F4
-018E 120000     956            lcall   _waitms
-0191            957   ;        sourcecode.c:226: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
-0191 7470       958            mov     a,#__str_0
-0193 C0E0       959            push    acc
-0195 74D1       960            mov     a,#(__str_0 >> 8)
-0197 C0E0       961            push    acc
-0199 7480       962            mov     a,#0x80
-019B C0E0       963            push    acc
-019D 120000     964            lcall   _printf
-01A0 1581       965            dec     sp
-01A2 1581       966            dec     sp
-01A4 1581       967            dec     sp
-01A6            968   ;        sourcecode.c:231: __FILE__, __DATE__, __TIME__);
-01A6            969   ;        sourcecode.c:230: "Compiled: %s, %s\n\n",
-01A6 74F0       970            mov     a,#__str_4
-01A8 C0E0       971            push    acc
-01AA 74D1       972            mov     a,#(__str_4 >> 8)
-01AC C0E0       973            push    acc
-01AE 7480       974            mov     a,#0x80
-01B0 C0E0       975            push    acc
-01B2 7430       976            mov     a,#__str_3
-01B4 C0E0       977            push    acc
-01B6 74D2       978            mov     a,#(__str_3 >> 8)
-01B8 C0E0       979            push    acc
-01BA 7480       980            mov     a,#0x80
-01BC C0E0       981            push    acc
-01BE 7470       982            mov     a,#__str_2
-01C0 C0E0       983            push    acc
-01C2 74D2       984            mov     a,#(__str_2 >> 8)
-01C4 C0E0       985            push    acc
-01C6 7480       986            mov     a,#0x80
-01C8 C0E0       987            push    acc
-01CA 74B0       988            mov     a,#__str_1
-01CC C0E0       989            push    acc
-01CE 74D2       990            mov     a,#(__str_1 >> 8)
-01D0 C0E0       991            push    acc
-01D2 7480       992            mov     a,#0x80
-01D4 C0E0       993            push    acc
-01D6 120000     994            lcall   _printf
-01D9 E581       995            mov     a,sp
-01DB 24F4       996            add     a,#0xf4
-01DD F581       997            mov     sp,a
-01DF            998   ;        sourcecode.c:233: InitPinADC(2, 1); // Configure P2.1 as analog input
-01DF 75C801     999            mov     _InitPinADC_PARM_2,#0x01
-01E2 758202    1000            mov     dpl,#0x02
-01E5 120000    1001            lcall   _InitPinADC
-01E8           1002   ;        sourcecode.c:234: InitPinADC(2, 2); // Configure P2.2 as analog input
-01E8 75C802    1003            mov     _InitPinADC_PARM_2,#0x02
-01EB 758202    1004            mov     dpl,#0x02
-01EE 120000    1005            lcall   _InitPinADC
-01F1           1006   ;        sourcecode.c:236: InitADC();
-01F1 120000    1007            lcall   _InitADC
-01F4           1008   ;        sourcecode.c:238: while(1)
-01F4           1009   L010038?:
-01F4           1010   ;        sourcecode.c:241: TL0 = 0; 
-01F4 758A00    1011            mov     _TL0,#0x00
-01F7           1012   ;        sourcecode.c:242: TH0 = 0;
-01F7 758C00    1013            mov     _TH0,#0x00
-01FA           1014   ;        sourcecode.c:243: TF0 = 0;
-01FA C28D      1015            clr     _TF0
-01FC           1016   ;        sourcecode.c:244: overflow_count = 0;
-01FC 755800    1017            mov     _overflow_count,#0x00
-01FF           1018   ;        sourcecode.c:246: while (P0_6 != 0); // Wait for the signal to be zero
-01FF           1019   L010001?:
-01FF 208630    1020            jb      _P0_6,L010001?
-0202           1021   ;        sourcecode.c:247: while (P0_6 != 1); // Wait for the signal to be one
-0202           1022   L010004?:
-0202 308670    1023            jnb     _P0_6,L010004?
-0205           1024   ;        sourcecode.c:248: TR0 = 1; // Start the timer
-0205 D28C      1025            setb    _TR0
-0207           1026   ;        sourcecode.c:249: while (P0_6 != 0) { // Wait for the signal to be zero
-0207           1027   L010009?:
-0207 3086F0    1028            jnb     _P0_6,L010014?
-020A           1029   ;        sourcecode.c:250: if (TF0 == 1) { // Did the 16-bit timer overflow?
-020A           1030   ;        sourcecode.c:251: TF0 = 0;
-020A 108D30    1031            jbc     _TF0,L010066?
-020D 8000      1032            sjmp    L010009?
-020F           1033   L010066?:
-020F           1034   ;        sourcecode.c:252: overflow_count++;
-020F 0558      1035            inc     _overflow_count
-0211           1036   ;        sourcecode.c:255: while (P0_6 != 1) { // Wait for the signal to be one
-0211 8000      1037            sjmp    L010009?
-0213           1038   L010014?:
-0213 208670    1039            jb      _P0_6,L010016?
-0216           1040   ;        sourcecode.c:256: if (TF0 == 1) { // Did the 16-bit timer overflow?
-0216           1041   ;        sourcecode.c:257: TF0 = 0;
-0216 108DB0    1042            jbc     _TF0,L010068?
-0219 8000      1043            sjmp    L010014?
-021B           1044   L010068?:
-021B           1045   ;        sourcecode.c:258: overflow_count++;
-021B 0558      1046            inc     _overflow_count
-021D 8000      1047            sjmp    L010014?
-021F           1048   L010016?:
-021F           1049   ;        sourcecode.c:261: TR0 = 0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
-021F C28C      1050            clr     _TR0
-0221           1051   ;        sourcecode.c:262: period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
-0221 855882    1052            mov     dpl,_overflow_count
-0224 120000    1053            lcall   ___uchar2fs
-0227 AA82      1054            mov     r2,dpl
-0229 AB83      1055            mov     r3,dph
-022B ACF0      1056            mov     r4,b
-022D FD        1057            mov     r5,a
-022E C002      1058            push    ar2
-0230 C003      1059            push    ar3
-0232 C004      1060            push    ar4
-0234 C005      1061            push    ar5
-0236 900000    1062            mov     dptr,#0x0000
-0239 75F080    1063            mov     b,#0x80
-023C 7447      1064            mov     a,#0x47
-023E 120000    1065            lcall   ___fsmul
-0241 AA82      1066            mov     r2,dpl
-0243 AB83      1067            mov     r3,dph
-0245 ACF0      1068            mov     r4,b
-0247 FD        1069            mov     r5,a
-0248 E581      1070            mov     a,sp
-024A 24FC      1071            add     a,#0xfc
-024C F581      1072            mov     sp,a
-024E 858C82    1073            mov     dpl,_TH0
-0251 C002      1074            push    ar2
-0253 C003      1075            push    ar3
-0255 C004      1076            push    ar4
-0257 C005      1077            push    ar5
-0259 120000    1078            lcall   ___uchar2fs
-025C AE82      1079            mov     r6,dpl
-025E AF83      1080            mov     r7,dph
-0260 A8F0      1081            mov     r0,b
-0262 F9        1082            mov     r1,a
-0263 C006      1083            push    ar6
-0265 C007      1084            push    ar7
-0267 C000      1085            push    ar0
-0269 C001      1086            push    ar1
-026B 900000    1087            mov     dptr,#0x0000
-026E 75F080    1088            mov     b,#0x80
-0271 7443      1089            mov     a,#0x43
-0273 120000    1090            lcall   ___fsmul
-0276 AE82      1091            mov     r6,dpl
-0278 AF83      1092            mov     r7,dph
-027A A8F0      1093            mov     r0,b
-027C F9        1094            mov     r1,a
-027D E581      1095            mov     a,sp
-027F 24FC      1096            add     a,#0xfc
-0281 F581      1097            mov     sp,a
-0283 D005      1098            pop     ar5
-0285 D004      1099            pop     ar4
-0287 D003      1100            pop     ar3
-0289 D002      1101            pop     ar2
-028B C006      1102            push    ar6
-028D C007      1103            push    ar7
-028F C000      1104            push    ar0
-0291 C001      1105            push    ar1
-0293 8A82      1106            mov     dpl,r2
-0295 8B83      1107            mov     dph,r3
-0297 8CF0      1108            mov     b,r4
-0299 ED        1109            mov     a,r5
-029A 120000    1110            lcall   ___fsadd
-029D AA82      1111            mov     r2,dpl
-029F AB83      1112            mov     r3,dph
-02A1 ACF0      1113            mov     r4,b
-02A3 FD        1114            mov     r5,a
-02A4 E581      1115            mov     a,sp
-02A6 24FC      1116            add     a,#0xfc
-02A8 F581      1117            mov     sp,a
-02AA AE8A      1118            mov     r6,_TL0
-02AC 7F00      1119            mov     r7,#0x00
-02AE 8E82      1120            mov     dpl,r6
-02B0 8F83      1121            mov     dph,r7
-02B2 C002      1122            push    ar2
-02B4 C003      1123            push    ar3
-02B6 C004      1124            push    ar4
-02B8 C005      1125            push    ar5
-02BA 120000    1126            lcall   ___sint2fs
-02BD AE82      1127            mov     r6,dpl
-02BF AF83      1128            mov     r7,dph
-02C1 A8F0      1129            mov     r0,b
-02C3 F9        1130            mov     r1,a
-02C4 D005      1131            pop     ar5
-02C6 D004      1132            pop     ar4
-02C8 D003      1133            pop     ar3
-02CA D002      1134            pop     ar2
-02CC C006      1135            push    ar6
-02CE C007      1136            push    ar7
-02D0 C000      1137            push    ar0
-02D2 C001      1138            push    ar1
-02D4 8A82      1139            mov     dpl,r2
-02D6 8B83      1140            mov     dph,r3
-02D8 8CF0      1141            mov     b,r4
-02DA ED        1142            mov     a,r5
-02DB 120000    1143            lcall   ___fsadd
-02DE AA82      1144            mov     r2,dpl
-02E0 AB83      1145            mov     r3,dph
-02E2 ACF0      1146            mov     r4,b
-02E4 FD        1147            mov     r5,a
-02E5 E581      1148            mov     a,sp
-02E7 24FC      1149            add     a,#0xfc
-02E9 F581      1150            mov     sp,a
-02EB C002      1151            push    ar2
-02ED C003      1152            push    ar3
-02EF C004      1153            push    ar4
-02F1 C005      1154            push    ar5
-02F3 90F4FC    1155            mov     dptr,#0xF4FC
-02F6 75F032    1156            mov     b,#0x32
-02F9 7434      1157            mov     a,#0x34
-02FB 120000    1158            lcall   ___fsmul
-02FE 8582E0    1159            mov     _main_period_1_61,dpl
-0301 8583E1    1160            mov     (_main_period_1_61 + 1),dph
-0304 85F0E2    1161            mov     (_main_period_1_61 + 2),b
-0307 F5E3      1162            mov     (_main_period_1_61 + 3),a
-0309 E581      1163            mov     a,sp
-030B 24FC      1164            add     a,#0xfc
-030D F581      1165            mov     sp,a
-030F           1166   ;        sourcecode.c:264: while(P0_6 != 0) //wait for zero cross of reference
-030F E4        1167            clr     a
-0310 C0E0      1168            push    acc
-0312 C0E0      1169            push    acc
-0314 7480      1170            mov     a,#0x80
-0316 C0E0      1171            push    acc
-0318 7440      1172            mov     a,#0x40
-031A C0E0      1173            push    acc
-031C 85E082    1174            mov     dpl,_main_period_1_61
-031F 85E183    1175            mov     dph,(_main_period_1_61 + 1)
-0322 85E2F0    1176            mov     b,(_main_period_1_61 + 2)
-0325 E5E3      1177            mov     a,(_main_period_1_61 + 3)
-0327 120000    1178            lcall   ___fsdiv
-032A AE82      1179            mov     r6,dpl
-032C AF83      1180            mov     r7,dph
-032E A8F0      1181            mov     r0,b
-0330 F9        1182            mov     r1,a
-0331 E581      1183            mov     a,sp
-0333 24FC      1184            add     a,#0xfc
-0335 F581      1185            mov     sp,a
-0337           1186   L010020?:
-0337 3086F0    1187            jnb     _P0_6,L010022?
-033A           1188   ;        sourcecode.c:265: while(P0_6 != 1)
-033A           1189   L010017?:
-033A 2086B0    1190            jb      _P0_6,L010020?
-033D           1191   ;        sourcecode.c:266: waitms(period/4);
-033D 8E82      1192            mov     dpl,r6
-033F 8F83      1193            mov     dph,r7
-0341 88F0      1194            mov     b,r0
-0343 E9        1195            mov     a,r1
-0344 C006      1196            push    ar6
-0346 C007      1197            push    ar7
-0348 C000      1198            push    ar0
-034A C001      1199            push    ar1
-034C 120000    1200            lcall   ___fs2uint
-034F 120000    1201            lcall   _waitms
-0352 D001      1202            pop     ar1
-0354 D000      1203            pop     ar0
-0356 D007      1204            pop     ar7
-0358 D006      1205            pop     ar6
-035A 8000      1206            sjmp    L010017?
-035C           1207   L010022?:
-035C           1208   ;        sourcecode.c:267: v1_max = Volts_at_Pin(QFP32_MUX_P2_1);
-035C 75820E    1209            mov     dpl,#0x0E
-035F 120000    1210            lcall   _Volts_at_Pin
-0362 858218    1211            mov     _v1_max,dpl
-0365 858319    1212            mov     (_v1_max + 1),dph
-0368 85F01A    1213            mov     (_v1_max + 2),b
-036B F51B      1214            mov     (_v1_max + 3),a
-036D           1215   ;        sourcecode.c:269: while(P2_2 != 0) //wait for zero cross of other signal
-036D E4        1216            clr     a
-036E C0E0      1217            push    acc
-0370 C0E0      1218            push    acc
-0372 7480      1219            mov     a,#0x80
-0374 C0E0      1220            push    acc
-0376 7440      1221            mov     a,#0x40
-0378 C0E0      1222            push    acc
-037A 85E082    1223            mov     dpl,_main_period_1_61
-037D 85E183    1224            mov     dph,(_main_period_1_61 + 1)
-0380 85E2F0    1225            mov     b,(_main_period_1_61 + 2)
-0383 E5E3      1226            mov     a,(_main_period_1_61 + 3)
-0385 120000    1227            lcall   ___fsdiv
-0388 AE82      1228            mov     r6,dpl
-038A AF83      1229            mov     r7,dph
-038C A8F0      1230            mov     r0,b
-038E F9        1231            mov     r1,a
-038F E581      1232            mov     a,sp
-0391 24FC      1233            add     a,#0xfc
-0393 F581      1234            mov     sp,a
-0395           1235   L010026?:
-0395 30A2F0    1236            jnb     _P2_2,L010028?
-0398           1237   ;        sourcecode.c:270: while(P2_2 != 1)
-0398           1238   L010023?:
-0398 20A2B0    1239            jb      _P2_2,L010026?
-039B           1240   ;        sourcecode.c:271: waitms(period/4);
-039B 8E82      1241            mov     dpl,r6
-039D 8F83      1242            mov     dph,r7
-039F 88F0      1243            mov     b,r0
-03A1 E9        1244            mov     a,r1
-03A2 C006      1245            push    ar6
-03A4 C007      1246            push    ar7
-03A6 C000      1247            push    ar0
-03A8 C001      1248            push    ar1
-03AA 120000    1249            lcall   ___fs2uint
-03AD 120000    1250            lcall   _waitms
-03B0 D001      1251            pop     ar1
-03B2 D000      1252            pop     ar0
-03B4 D007      1253            pop     ar7
-03B6 D006      1254            pop     ar6
-03B8 8000      1255            sjmp    L010023?
-03BA           1256   L010028?:
-03BA           1257   ;        sourcecode.c:272: v2_max = Volts_at_Pin(QFP32_MUX_P2_2);
-03BA 75820F    1258            mov     dpl,#0x0F
-03BD 120000    1259            lcall   _Volts_at_Pin
-03C0 8582D8    1260            mov     _v2_max,dpl
-03C3 8583D9    1261            mov     (_v2_max + 1),dph
-03C6 85F0DA    1262            mov     (_v2_max + 2),b
-03C9 F5DB      1263            mov     (_v2_max + 3),a
-03CB           1264   ;        sourcecode.c:280: TR0=0; // Stop timer 0
-03CB C28C      1265            clr     _TR0
-03CD           1266   ;        sourcecode.c:281: overflow_count = 0;
-03CD 755800    1267            mov     _overflow_count,#0x00
-03D0           1268   ;        sourcecode.c:282: TH0=0; TL0=0; TF0 = 0;                // Reset the timer
-03D0 758C00    1269            mov     _TH0,#0x00
-03D3 758A00    1270            mov     _TL0,#0x00
-03D6 C28D      1271            clr     _TF0
-03D8           1272   ;        sourcecode.c:284: while (P0_6 != 0);                    // Wait for reference signal to be zero
-03D8           1273   L010029?:
-03D8 208670    1274            jb      _P0_6,L010029?
-03DB           1275   ;        sourcecode.c:285: waitms(1);
-03DB 900001    1276            mov     dptr,#0x0001
-03DE 120000    1277            lcall   _waitms
-03E1           1278   ;        sourcecode.c:286: TR0=1; // start timer
-03E1 D28C      1279            setb    _TR0
-03E3           1280   ;        sourcecode.c:287: P3_2=1; //set pin high for testing
-03E3 D2B2      1281            setb    _P3_2
-03E5           1282   ;        sourcecode.c:290: while (P0_1 != 0) {           // Wait for test signal to hit zero
-03E5           1283   L010034?:
-03E5 3081F0    1284            jnb     _P0_1,L010036?
-03E8           1285   ;        sourcecode.c:291: if (TF0 == 1) { // Did the 16-bit timer overflow?
-03E8           1286   ;        sourcecode.c:292: TF0 = 0;
-03E8 108D30    1287            jbc     _TF0,L010075?
-03EB 8000      1288            sjmp    L010034?
-03ED           1289   L010075?:
-03ED           1290   ;        sourcecode.c:293: overflow_count++;
-03ED 0558      1291            inc     _overflow_count
-03EF 8000      1292            sjmp    L010034?
-03F1           1293   L010036?:
-03F1           1294   ;        sourcecode.c:296: waitms(1);
-03F1 900001    1295            mov     dptr,#0x0001
-03F4 120000    1296            lcall   _waitms
-03F7           1297   ;        sourcecode.c:297: TR0=0;
-03F7 C28C      1298            clr     _TR0
-03F9           1299   ;        sourcecode.c:298: P3_2=0;
-03F9 C2B2      1300            clr     _P3_2
-03FB           1301   ;        sourcecode.c:303: overflow_count, TH0, TL0);
-03FB AE8A      1302            mov     r6,_TL0
-03FD 7F00      1303            mov     r7,#0x00
-03FF A88C      1304            mov     r0,_TH0
-0401 7900      1305            mov     r1,#0x00
-0403 AA58      1306            mov     r2,_overflow_count
-0405 7B00      1307            mov     r3,#0x00
-0407           1308   ;        sourcecode.c:302: printf("overflow count:%d, %d, %d\n", 
-0407 C006      1309            push    ar6
-0409 C007      1310            push    ar7
-040B C000      1311            push    ar0
-040D C001      1312            push    ar1
-040F C002      1313            push    ar2
-0411 C003      1314            push    ar3
-0413 7470      1315            mov     a,#__str_5
-0415 C0E0      1316            push    acc
-0417 74D8      1317            mov     a,#(__str_5 >> 8)
-0419 C0E0      1318            push    acc
-041B 7480      1319            mov     a,#0x80
-041D C0E0      1320            push    acc
-041F 120000    1321            lcall   _printf
-0422 E581      1322            mov     a,sp
-0424 24F7      1323            add     a,#0xf7
-0426 F581      1324            mov     sp,a
-0428           1325   ;        sourcecode.c:305: time_difference = (TH0*256.0+TL0)*(12.0/SYSCLK);
-0428 858C82    1326            mov     dpl,_TH0
-042B 120000    1327            lcall   ___uchar2fs
-042E AA82      1328            mov     r2,dpl
-0430 AB83      1329            mov     r3,dph
-0432 ACF0      1330            mov     r4,b
-0434 FD        1331            mov     r5,a
-0435 C002      1332            push    ar2
-0437 C003      1333            push    ar3
-0439 C004      1334            push    ar4
-043B C005      1335            push    ar5
-043D 900000    1336            mov     dptr,#0x0000
-0440 75F080    1337            mov     b,#0x80
-0443 7443      1338            mov     a,#0x43
-0445 120000    1339            lcall   ___fsmul
-0448 AA82      1340            mov     r2,dpl
-044A AB83      1341            mov     r3,dph
-044C ACF0      1342            mov     r4,b
-044E FD        1343            mov     r5,a
-044F E581      1344            mov     a,sp
-0451 24FC      1345            add     a,#0xfc
-0453 F581      1346            mov     sp,a
-0455 AE8A      1347            mov     r6,_TL0
-0457 7F00      1348            mov     r7,#0x00
-0459 8E82      1349            mov     dpl,r6
-045B 8F83      1350            mov     dph,r7
-045D C002      1351            push    ar2
-045F C003      1352            push    ar3
-0461 C004      1353            push    ar4
-0463 C005      1354            push    ar5
-0465 120000    1355            lcall   ___sint2fs
-0468 AE82      1356            mov     r6,dpl
-046A AF83      1357            mov     r7,dph
-046C A8F0      1358            mov     r0,b
-046E F9        1359            mov     r1,a
-046F D005      1360            pop     ar5
-0471 D004      1361            pop     ar4
-0473 D003      1362            pop     ar3
-0475 D002      1363            pop     ar2
-0477 C006      1364            push    ar6
-0479 C007      1365            push    ar7
-047B C000      1366            push    ar0
-047D C001      1367            push    ar1
-047F 8A82      1368            mov     dpl,r2
-0481 8B83      1369            mov     dph,r3
-0483 8CF0      1370            mov     b,r4
-0485 ED        1371            mov     a,r5
-0486 120000    1372            lcall   ___fsadd
-0489 AA82      1373            mov     r2,dpl
-048B AB83      1374            mov     r3,dph
-048D ACF0      1375            mov     r4,b
-048F FD        1376            mov     r5,a
-0490 E581      1377            mov     a,sp
-0492 24FC      1378            add     a,#0xfc
-0494 F581      1379            mov     sp,a
-0496 C002      1380            push    ar2
-0498 C003      1381            push    ar3
-049A C004      1382            push    ar4
-049C C005      1383            push    ar5
-049E 90F4FC    1384            mov     dptr,#0xF4FC
-04A1 75F032    1385            mov     b,#0x32
-04A4 7434      1386            mov     a,#0x34
-04A6 120000    1387            lcall   ___fsmul
-04A9 AA82      1388            mov     r2,dpl
-04AB AB83      1389            mov     r3,dph
-04AD ACF0      1390            mov     r4,b
-04AF FD        1391            mov     r5,a
-04B0 E581      1392            mov     a,sp
-04B2 24FC      1393            add     a,#0xfc
-04B4 F581      1394            mov     sp,a
-04B6           1395   ;        sourcecode.c:306: Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
-04B6 C002      1396            push    ar2
-04B8 C003      1397            push    ar3
-04BA C004      1398            push    ar4
-04BC C005      1399            push    ar5
-04BE C002      1400            push    ar2
-04C0 C003      1401            push    ar3
-04C2 C004      1402            push    ar4
-04C4 C005      1403            push    ar5
-04C6 900000    1404            mov     dptr,#0x0000
-04C9 75F0B4    1405            mov     b,#0xB4
-04CC 7443      1406            mov     a,#0x43
-04CE 120000    1407            lcall   ___fsmul
-04D1 AE82      1408            mov     r6,dpl
-04D3 AF83      1409            mov     r7,dph
-04D5 A8F0      1410            mov     r0,b
-04D7 F9        1411            mov     r1,a
-04D8 E581      1412            mov     a,sp
-04DA 24FC      1413            add     a,#0xfc
-04DC F581      1414            mov     sp,a
-04DE C0E0      1415            push    _main_period_1_61
-04E0 C0E1      1416            push    (_main_period_1_61 + 1)
-04E2 C0E2      1417            push    (_main_period_1_61 + 2)
-04E4 C0E3      1418            push    (_main_period_1_61 + 3)
-04E6 8E82      1419            mov     dpl,r6
-04E8 8F83      1420            mov     dph,r7
-04EA 88F0      1421            mov     b,r0
-04EC E9        1422            mov     a,r1
-04ED 120000    1423            lcall   ___fsdiv
-04F0 858230    1424            mov     _main_Phase_Shift_1_61,dpl
-04F3 858331    1425            mov     (_main_Phase_Shift_1_61 + 1),dph
-04F6 85F032    1426            mov     (_main_Phase_Shift_1_61 + 2),b
-04F9 F533      1427            mov     (_main_Phase_Shift_1_61 + 3),a
-04FB E581      1428            mov     a,sp
-04FD 24FC      1429            add     a,#0xfc
-04FF F581      1430            mov     sp,a
-0501           1431   ;        sourcecode.c:309: period*1000.0, time_difference*1000.0, Phase_Shift);
-0501 900000    1432            mov     dptr,#0x0000
-0504 75F07A    1433            mov     b,#0x7A
-0507 7444      1434            mov     a,#0x44
-0509 120000    1435            lcall   ___fsmul
-050C AA82      1436            mov     r2,dpl
-050E AB83      1437            mov     r3,dph
-0510 ACF0      1438            mov     r4,b
-0512 FD        1439            mov     r5,a
-0513 E581      1440            mov     a,sp
-0515 24FC      1441            add     a,#0xfc
-0517 F581      1442            mov     sp,a
-0519 C002      1443            push    ar2
-051B C003      1444            push    ar3
-051D C004      1445            push    ar4
-051F C005      1446            push    ar5
-0521 C0E0      1447            push    _main_period_1_61
-0523 C0E1      1448            push    (_main_period_1_61 + 1)
-0525 C0E2      1449            push    (_main_period_1_61 + 2)
-0527 C0E3      1450            push    (_main_period_1_61 + 3)
-0529           1451   ;        sourcecode.c:308: printf("T=%fms, Time diff: %5.5fms, Phase: %f \n", 
-0529 900000    1452            mov     dptr,#0x0000
-052C 75F07A    1453            mov     b,#0x7A
-052F 7444      1454            mov     a,#0x44
-0531 120000    1455            lcall   ___fsmul
-0534 AE82      1456            mov     r6,dpl
-0536 AF83      1457            mov     r7,dph
-0538 A8F0      1458            mov     r0,b
-053A F9        1459            mov     r1,a
-053B E581      1460            mov     a,sp
-053D 24FC      1461            add     a,#0xfc
-053F F581      1462            mov     sp,a
-0541 D005      1463            pop     ar5
-0543 D004      1464            pop     ar4
-0545 D003      1465            pop     ar3
-0547 D002      1466            pop     ar2
-0549 C030      1467            push    _main_Phase_Shift_1_61
-054B C031      1468            push    (_main_Phase_Shift_1_61 + 1)
-054D C032      1469            push    (_main_Phase_Shift_1_61 + 2)
-054F C033      1470            push    (_main_Phase_Shift_1_61 + 3)
-0551 C002      1471            push    ar2
-0553 C003      1472            push    ar3
-0555 C004      1473            push    ar4
-0557 C005      1474            push    ar5
-0559 C006      1475            push    ar6
-055B C007      1476            push    ar7
-055D C000      1477            push    ar0
-055F C001      1478            push    ar1
-0561 74B0      1479            mov     a,#__str_6
-0563 C0E0      1480            push    acc
-0565 74D8      1481            mov     a,#(__str_6 >> 8)
-0567 C0E0      1482            push    acc
-0569 7480      1483            mov     a,#0x80
-056B C0E0      1484            push    acc
-056D 120000    1485            lcall   _printf
-0570 E581      1486            mov     a,sp
-0572 24F1      1487            add     a,#0xf1
-0574 F581      1488            mov     sp,a
-0576 020000    1489            ljmp    L010038?
-0579           1490            rseg R_CSEG
-0579           1491   
-0000           1492            rseg R_XINIT
-0000           1493   
-0000           1494            rseg R_CONST
-0000           1495   __str_0:
-0000 1B        1496            db 0x1B
-0001 5B324A    1497            db '[2J'
-0004 00        1498            db 0x00
-0005           1499   __str_1:
-0005 41444320  1500            db 'ADC test program'
+0188            949   _main:
+0188            950   ;        sourcecode.c:223: TIMER0_Init();
+0188 120000     951            lcall   _TIMER0_Init
+018B            952   ;        sourcecode.c:225: waitms(500); // Give PuTTy a chance to start before sending
+018B 9001F4     953            mov     dptr,#0x01F4
+018E 120000     954            lcall   _waitms
+0191            955   ;        sourcecode.c:226: printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
+0191 7428       956            mov     a,#__str_0
+0193 C0E0       957            push    acc
+0195 74D1       958            mov     a,#(__str_0 >> 8)
+0197 C0E0       959            push    acc
+0199 7480       960            mov     a,#0x80
+019B C0E0       961            push    acc
+019D 120000     962            lcall   _printf
+01A0 1581       963            dec     sp
+01A2 1581       964            dec     sp
+01A4 1581       965            dec     sp
+01A6            966   ;        sourcecode.c:231: __FILE__, __DATE__, __TIME__);
+01A6            967   ;        sourcecode.c:230: "Compiled: %s, %s\n\n",
+01A6 74A8       968            mov     a,#__str_4
+01A8 C0E0       969            push    acc
+01AA 74D1       970            mov     a,#(__str_4 >> 8)
+01AC C0E0       971            push    acc
+01AE 7480       972            mov     a,#0x80
+01B0 C0E0       973            push    acc
+01B2 74E8       974            mov     a,#__str_3
+01B4 C0E0       975            push    acc
+01B6 74D1       976            mov     a,#(__str_3 >> 8)
+01B8 C0E0       977            push    acc
+01BA 7480       978            mov     a,#0x80
+01BC C0E0       979            push    acc
+01BE 7428       980            mov     a,#__str_2
+01C0 C0E0       981            push    acc
+01C2 74D2       982            mov     a,#(__str_2 >> 8)
+01C4 C0E0       983            push    acc
+01C6 7480       984            mov     a,#0x80
+01C8 C0E0       985            push    acc
+01CA 7468       986            mov     a,#__str_1
+01CC C0E0       987            push    acc
+01CE 74D2       988            mov     a,#(__str_1 >> 8)
+01D0 C0E0       989            push    acc
+01D2 7480       990            mov     a,#0x80
+01D4 C0E0       991            push    acc
+01D6 120000     992            lcall   _printf
+01D9 E581       993            mov     a,sp
+01DB 24F4       994            add     a,#0xf4
+01DD F581       995            mov     sp,a
+01DF            996   ;        sourcecode.c:233: InitPinADC(2, 1); // Configure P2.1 as analog input
+01DF 75C801     997            mov     _InitPinADC_PARM_2,#0x01
+01E2 758202     998            mov     dpl,#0x02
+01E5 120000     999            lcall   _InitPinADC
+01E8           1000   ;        sourcecode.c:234: InitPinADC(2, 2); // Configure P2.2 as analog input
+01E8 75C802    1001            mov     _InitPinADC_PARM_2,#0x02
+01EB 758202    1002            mov     dpl,#0x02
+01EE 120000    1003            lcall   _InitPinADC
+01F1           1004   ;        sourcecode.c:236: InitADC();
+01F1 120000    1005            lcall   _InitADC
+01F4           1006   ;        sourcecode.c:238: while(1)
+01F4           1007   L010038?:
+01F4           1008   ;        sourcecode.c:241: TL0 = 0; 
+01F4 758A00    1009            mov     _TL0,#0x00
+01F7           1010   ;        sourcecode.c:242: TH0 = 0;
+01F7 758C00    1011            mov     _TH0,#0x00
+01FA           1012   ;        sourcecode.c:243: TF0 = 0;
+01FA C28D      1013            clr     _TF0
+01FC           1014   ;        sourcecode.c:244: overflow_count = 0;
+01FC 755800    1015            mov     _overflow_count,#0x00
+01FF           1016   ;        sourcecode.c:246: while (P0_6 != 0); // Wait for the signal to be zero
+01FF           1017   L010001?:
+01FF 2086E8    1018            jb      _P0_6,L010001?
+0202           1019   ;        sourcecode.c:247: while (P0_6 != 1); // Wait for the signal to be one
+0202           1020   L010004?:
+0202 308628    1021            jnb     _P0_6,L010004?
+0205           1022   ;        sourcecode.c:248: TR0 = 1; // Start the timer
+0205 D28C      1023            setb    _TR0
+0207           1024   ;        sourcecode.c:249: while (P0_6 != 0) { // Wait for the signal to be zero
+0207           1025   L010009?:
+0207 3086A8    1026            jnb     _P0_6,L010014?
+020A           1027   ;        sourcecode.c:250: if (TF0 == 1) { // Did the 16-bit timer overflow?
+020A           1028   ;        sourcecode.c:251: TF0 = 0;
+020A 108DE8    1029            jbc     _TF0,L010066?
+020D 8000      1030            sjmp    L010009?
+020F           1031   L010066?:
+020F           1032   ;        sourcecode.c:252: overflow_count++;
+020F 0558      1033            inc     _overflow_count
+0211           1034   ;        sourcecode.c:255: while (P0_6 != 1) { // Wait for the signal to be one
+0211 8000      1035            sjmp    L010009?
+0213           1036   L010014?:
+0213 208628    1037            jb      _P0_6,L010016?
+0216           1038   ;        sourcecode.c:256: if (TF0 == 1) { // Did the 16-bit timer overflow?
+0216           1039   ;        sourcecode.c:257: TF0 = 0;
+0216 108D68    1040            jbc     _TF0,L010068?
+0219 8000      1041            sjmp    L010014?
+021B           1042   L010068?:
+021B           1043   ;        sourcecode.c:258: overflow_count++;
+021B 0558      1044            inc     _overflow_count
+021D 8000      1045            sjmp    L010014?
+021F           1046   L010016?:
+021F           1047   ;        sourcecode.c:261: TR0 = 0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
+021F C28C      1048            clr     _TR0
+0221           1049   ;        sourcecode.c:262: period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+0221 855882    1050            mov     dpl,_overflow_count
+0224 120000    1051            lcall   ___uchar2fs
+0227 AA82      1052            mov     r2,dpl
+0229 AB83      1053            mov     r3,dph
+022B ACF0      1054            mov     r4,b
+022D FD        1055            mov     r5,a
+022E C002      1056            push    ar2
+0230 C003      1057            push    ar3
+0232 C004      1058            push    ar4
+0234 C005      1059            push    ar5
+0236 900000    1060            mov     dptr,#0x0000
+0239 75F080    1061            mov     b,#0x80
+023C 7447      1062            mov     a,#0x47
+023E 120000    1063            lcall   ___fsmul
+0241 AA82      1064            mov     r2,dpl
+0243 AB83      1065            mov     r3,dph
+0245 ACF0      1066            mov     r4,b
+0247 FD        1067            mov     r5,a
+0248 E581      1068            mov     a,sp
+024A 24FC      1069            add     a,#0xfc
+024C F581      1070            mov     sp,a
+024E 858C82    1071            mov     dpl,_TH0
+0251 C002      1072            push    ar2
+0253 C003      1073            push    ar3
+0255 C004      1074            push    ar4
+0257 C005      1075            push    ar5
+0259 120000    1076            lcall   ___uchar2fs
+025C AE82      1077            mov     r6,dpl
+025E AF83      1078            mov     r7,dph
+0260 A8F0      1079            mov     r0,b
+0262 F9        1080            mov     r1,a
+0263 C006      1081            push    ar6
+0265 C007      1082            push    ar7
+0267 C000      1083            push    ar0
+0269 C001      1084            push    ar1
+026B 900000    1085            mov     dptr,#0x0000
+026E 75F080    1086            mov     b,#0x80
+0271 7443      1087            mov     a,#0x43
+0273 120000    1088            lcall   ___fsmul
+0276 AE82      1089            mov     r6,dpl
+0278 AF83      1090            mov     r7,dph
+027A A8F0      1091            mov     r0,b
+027C F9        1092            mov     r1,a
+027D E581      1093            mov     a,sp
+027F 24FC      1094            add     a,#0xfc
+0281 F581      1095            mov     sp,a
+0283 D005      1096            pop     ar5
+0285 D004      1097            pop     ar4
+0287 D003      1098            pop     ar3
+0289 D002      1099            pop     ar2
+028B C006      1100            push    ar6
+028D C007      1101            push    ar7
+028F C000      1102            push    ar0
+0291 C001      1103            push    ar1
+0293 8A82      1104            mov     dpl,r2
+0295 8B83      1105            mov     dph,r3
+0297 8CF0      1106            mov     b,r4
+0299 ED        1107            mov     a,r5
+029A 120000    1108            lcall   ___fsadd
+029D AA82      1109            mov     r2,dpl
+029F AB83      1110            mov     r3,dph
+02A1 ACF0      1111            mov     r4,b
+02A3 FD        1112            mov     r5,a
+02A4 E581      1113            mov     a,sp
+02A6 24FC      1114            add     a,#0xfc
+02A8 F581      1115            mov     sp,a
+02AA AE8A      1116            mov     r6,_TL0
+02AC 7F00      1117            mov     r7,#0x00
+02AE 8E82      1118            mov     dpl,r6
+02B0 8F83      1119            mov     dph,r7
+02B2 C002      1120            push    ar2
+02B4 C003      1121            push    ar3
+02B6 C004      1122            push    ar4
+02B8 C005      1123            push    ar5
+02BA 120000    1124            lcall   ___sint2fs
+02BD AE82      1125            mov     r6,dpl
+02BF AF83      1126            mov     r7,dph
+02C1 A8F0      1127            mov     r0,b
+02C3 F9        1128            mov     r1,a
+02C4 D005      1129            pop     ar5
+02C6 D004      1130            pop     ar4
+02C8 D003      1131            pop     ar3
+02CA D002      1132            pop     ar2
+02CC C006      1133            push    ar6
+02CE C007      1134            push    ar7
+02D0 C000      1135            push    ar0
+02D2 C001      1136            push    ar1
+02D4 8A82      1137            mov     dpl,r2
+02D6 8B83      1138            mov     dph,r3
+02D8 8CF0      1139            mov     b,r4
+02DA ED        1140            mov     a,r5
+02DB 120000    1141            lcall   ___fsadd
+02DE AA82      1142            mov     r2,dpl
+02E0 AB83      1143            mov     r3,dph
+02E2 ACF0      1144            mov     r4,b
+02E4 FD        1145            mov     r5,a
+02E5 E581      1146            mov     a,sp
+02E7 24FC      1147            add     a,#0xfc
+02E9 F581      1148            mov     sp,a
+02EB C002      1149            push    ar2
+02ED C003      1150            push    ar3
+02EF C004      1151            push    ar4
+02F1 C005      1152            push    ar5
+02F3 90F4FC    1153            mov     dptr,#0xF4FC
+02F6 75F032    1154            mov     b,#0x32
+02F9 7434      1155            mov     a,#0x34
+02FB 120000    1156            lcall   ___fsmul
+02FE 8582E0    1157            mov     _main_period_1_61,dpl
+0301 8583E1    1158            mov     (_main_period_1_61 + 1),dph
+0304 85F0E2    1159            mov     (_main_period_1_61 + 2),b
+0307 F5E3      1160            mov     (_main_period_1_61 + 3),a
+0309 E581      1161            mov     a,sp
+030B 24FC      1162            add     a,#0xfc
+030D F581      1163            mov     sp,a
+030F           1164   ;        sourcecode.c:265: while(P0_6 != 0) //wait for zero cross of reference
+030F E4        1165            clr     a
+0310 C0E0      1166            push    acc
+0312 C0E0      1167            push    acc
+0314 7480      1168            mov     a,#0x80
+0316 C0E0      1169            push    acc
+0318 7440      1170            mov     a,#0x40
+031A C0E0      1171            push    acc
+031C 85E082    1172            mov     dpl,_main_period_1_61
+031F 85E183    1173            mov     dph,(_main_period_1_61 + 1)
+0322 85E2F0    1174            mov     b,(_main_period_1_61 + 2)
+0325 E5E3      1175            mov     a,(_main_period_1_61 + 3)
+0327 120000    1176            lcall   ___fsdiv
+032A AE82      1177            mov     r6,dpl
+032C AF83      1178            mov     r7,dph
+032E A8F0      1179            mov     r0,b
+0330 F9        1180            mov     r1,a
+0331 E581      1181            mov     a,sp
+0333 24FC      1182            add     a,#0xfc
+0335 F581      1183            mov     sp,a
+0337           1184   L010020?:
+0337 3086A8    1185            jnb     _P0_6,L010022?
+033A           1186   ;        sourcecode.c:266: while(P0_6 != 1)
+033A           1187   L010017?:
+033A 208668    1188            jb      _P0_6,L010020?
+033D           1189   ;        sourcecode.c:267: waitms(period/4);
+033D 8E82      1190            mov     dpl,r6
+033F 8F83      1191            mov     dph,r7
+0341 88F0      1192            mov     b,r0
+0343 E9        1193            mov     a,r1
+0344 C006      1194            push    ar6
+0346 C007      1195            push    ar7
+0348 C000      1196            push    ar0
+034A C001      1197            push    ar1
+034C 120000    1198            lcall   ___fs2uint
+034F 120000    1199            lcall   _waitms
+0352 D001      1200            pop     ar1
+0354 D000      1201            pop     ar0
+0356 D007      1202            pop     ar7
+0358 D006      1203            pop     ar6
+035A 8000      1204            sjmp    L010017?
+035C           1205   L010022?:
+035C           1206   ;        sourcecode.c:268: v1_max = Volts_at_Pin(QFP32_MUX_P2_1);
+035C 75820E    1207            mov     dpl,#0x0E
+035F 120000    1208            lcall   _Volts_at_Pin
+0362 858218    1209            mov     _v1_max,dpl
+0365 858319    1210            mov     (_v1_max + 1),dph
+0368 85F01A    1211            mov     (_v1_max + 2),b
+036B F51B      1212            mov     (_v1_max + 3),a
+036D           1213   ;        sourcecode.c:270: while(P2_2 != 0) //wait for zero cross of other signal
+036D E4        1214            clr     a
+036E C0E0      1215            push    acc
+0370 C0E0      1216            push    acc
+0372 7480      1217            mov     a,#0x80
+0374 C0E0      1218            push    acc
+0376 7440      1219            mov     a,#0x40
+0378 C0E0      1220            push    acc
+037A 85E082    1221            mov     dpl,_main_period_1_61
+037D 85E183    1222            mov     dph,(_main_period_1_61 + 1)
+0380 85E2F0    1223            mov     b,(_main_period_1_61 + 2)
+0383 E5E3      1224            mov     a,(_main_period_1_61 + 3)
+0385 120000    1225            lcall   ___fsdiv
+0388 AE82      1226            mov     r6,dpl
+038A AF83      1227            mov     r7,dph
+038C A8F0      1228            mov     r0,b
+038E F9        1229            mov     r1,a
+038F E581      1230            mov     a,sp
+0391 24FC      1231            add     a,#0xfc
+0393 F581      1232            mov     sp,a
+0395           1233   L010026?:
+0395 30A2A8    1234            jnb     _P2_2,L010028?
+0398           1235   ;        sourcecode.c:271: while(P2_2 != 1)
+0398           1236   L010023?:
+0398 20A268    1237            jb      _P2_2,L010026?
+039B           1238   ;        sourcecode.c:272: waitms(period/4);
+039B 8E82      1239            mov     dpl,r6
+039D 8F83      1240            mov     dph,r7
+039F 88F0      1241            mov     b,r0
+03A1 E9        1242            mov     a,r1
+03A2 C006      1243            push    ar6
+03A4 C007      1244            push    ar7
+03A6 C000      1245            push    ar0
+03A8 C001      1246            push    ar1
+03AA 120000    1247            lcall   ___fs2uint
+03AD 120000    1248            lcall   _waitms
+03B0 D001      1249            pop     ar1
+03B2 D000      1250            pop     ar0
+03B4 D007      1251            pop     ar7
+03B6 D006      1252            pop     ar6
+03B8 8000      1253            sjmp    L010023?
+03BA           1254   L010028?:
+03BA           1255   ;        sourcecode.c:273: v2_max = Volts_at_Pin(QFP32_MUX_P2_2);
+03BA 75820F    1256            mov     dpl,#0x0F
+03BD 120000    1257            lcall   _Volts_at_Pin
+03C0 8582D8    1258            mov     _v2_max,dpl
+03C3 8583D9    1259            mov     (_v2_max + 1),dph
+03C6 85F0DA    1260            mov     (_v2_max + 2),b
+03C9 F5DB      1261            mov     (_v2_max + 3),a
+03CB           1262   ;        sourcecode.c:304: TR0=0; // Stop timer 0
+03CB C28C      1263            clr     _TR0
+03CD           1264   ;        sourcecode.c:305: overflow_count = 0;
+03CD 755800    1265            mov     _overflow_count,#0x00
+03D0           1266   ;        sourcecode.c:306: TH0=0; TL0=0; TF0 = 0;                // Reset the timer
+03D0 758C00    1267            mov     _TH0,#0x00
+03D3 758A00    1268            mov     _TL0,#0x00
+03D6 C28D      1269            clr     _TF0
+03D8           1270   ;        sourcecode.c:309: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0);                     // Wait for reference signal to be zero
+03D8           1271   L010029?:
+03D8 75820F    1272            mov     dpl,#0x0F
+03DB 120000    1273            lcall   _Volts_at_Pin
+03DE AE82      1274            mov     r6,dpl
+03E0 AF83      1275            mov     r7,dph
+03E2 A8F0      1276            mov     r0,b
+03E4 F9        1277            mov     r1,a
+03E5 E4        1278            clr     a
+03E6 C0E0      1279            push    acc
+03E8 C0E0      1280            push    acc
+03EA C0E0      1281            push    acc
+03EC C0E0      1282            push    acc
+03EE 8E82      1283            mov     dpl,r6
+03F0 8F83      1284            mov     dph,r7
+03F2 88F0      1285            mov     b,r0
+03F4 E9        1286            mov     a,r1
+03F5 120000    1287            lcall   ___fsgt
+03F8 AE82      1288            mov     r6,dpl
+03FA E581      1289            mov     a,sp
+03FC 24FC      1290            add     a,#0xfc
+03FE F581      1291            mov     sp,a
+0400 EE        1292            mov     a,r6
+0401 7000      1293            jnz     L010029?
+0403           1294   ;        sourcecode.c:310: TR0=1; // start timer
+0403 D28C      1295            setb    _TR0
+0405           1296   ;        sourcecode.c:312: while (Volts_at_Pin(QFP32_MUX_P2_1) > 0) { // Wait for test signal to hit zero
+0405           1297   L010034?:
+0405 75820E    1298            mov     dpl,#0x0E
+0408 120000    1299            lcall   _Volts_at_Pin
+040B AE82      1300            mov     r6,dpl
+040D AF83      1301            mov     r7,dph
+040F A8F0      1302            mov     r0,b
+0411 F9        1303            mov     r1,a
+0412 E4        1304            clr     a
+0413 C0E0      1305            push    acc
+0415 C0E0      1306            push    acc
+0417 C0E0      1307            push    acc
+0419 C0E0      1308            push    acc
+041B 8E82      1309            mov     dpl,r6
+041D 8F83      1310            mov     dph,r7
+041F 88F0      1311            mov     b,r0
+0421 E9        1312            mov     a,r1
+0422 120000    1313            lcall   ___fsgt
+0425 AE82      1314            mov     r6,dpl
+0427 E581      1315            mov     a,sp
+0429 24FC      1316            add     a,#0xfc
+042B F581      1317            mov     sp,a
+042D EE        1318            mov     a,r6
+042E 6000      1319            jz      L010036?
+0430           1320   ;        sourcecode.c:313: if (TF0 == 1) { // Did the 16-bit timer overflow?
+0430           1321   ;        sourcecode.c:314: TF0 = 0;
+0430 108D28    1322            jbc     _TF0,L010075?
+0433 8000      1323            sjmp    L010034?
+0435           1324   L010075?:
+0435           1325   ;        sourcecode.c:315: overflow_count++;
+0435 0558      1326            inc     _overflow_count
+0437 8000      1327            sjmp    L010034?
+0439           1328   L010036?:
+0439           1329   ;        sourcecode.c:318: TR0=0; // stop timer
+0439 C28C      1330            clr     _TR0
+043B           1331   ;        sourcecode.c:323: time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+043B 855882    1332            mov     dpl,_overflow_count
+043E 120000    1333            lcall   ___uchar2fs
+0441 AE82      1334            mov     r6,dpl
+0443 AF83      1335            mov     r7,dph
+0445 A8F0      1336            mov     r0,b
+0447 F9        1337            mov     r1,a
+0448 C006      1338            push    ar6
+044A C007      1339            push    ar7
+044C C000      1340            push    ar0
+044E C001      1341            push    ar1
+0450 900000    1342            mov     dptr,#0x0000
+0453 75F080    1343            mov     b,#0x80
+0456 7447      1344            mov     a,#0x47
+0458 120000    1345            lcall   ___fsmul
+045B AE82      1346            mov     r6,dpl
+045D AF83      1347            mov     r7,dph
+045F A8F0      1348            mov     r0,b
+0461 F9        1349            mov     r1,a
+0462 E581      1350            mov     a,sp
+0464 24FC      1351            add     a,#0xfc
+0466 F581      1352            mov     sp,a
+0468 858C82    1353            mov     dpl,_TH0
+046B C006      1354            push    ar6
+046D C007      1355            push    ar7
+046F C000      1356            push    ar0
+0471 C001      1357            push    ar1
+0473 120000    1358            lcall   ___uchar2fs
+0476 AA82      1359            mov     r2,dpl
+0478 AB83      1360            mov     r3,dph
+047A ACF0      1361            mov     r4,b
+047C FD        1362            mov     r5,a
+047D C002      1363            push    ar2
+047F C003      1364            push    ar3
+0481 C004      1365            push    ar4
+0483 C005      1366            push    ar5
+0485 900000    1367            mov     dptr,#0x0000
+0488 75F080    1368            mov     b,#0x80
+048B 7443      1369            mov     a,#0x43
+048D 120000    1370            lcall   ___fsmul
+0490 AA82      1371            mov     r2,dpl
+0492 AB83      1372            mov     r3,dph
+0494 ACF0      1373            mov     r4,b
+0496 FD        1374            mov     r5,a
+0497 E581      1375            mov     a,sp
+0499 24FC      1376            add     a,#0xfc
+049B F581      1377            mov     sp,a
+049D D001      1378            pop     ar1
+049F D000      1379            pop     ar0
+04A1 D007      1380            pop     ar7
+04A3 D006      1381            pop     ar6
+04A5 C002      1382            push    ar2
+04A7 C003      1383            push    ar3
+04A9 C004      1384            push    ar4
+04AB C005      1385            push    ar5
+04AD 8E82      1386            mov     dpl,r6
+04AF 8F83      1387            mov     dph,r7
+04B1 88F0      1388            mov     b,r0
+04B3 E9        1389            mov     a,r1
+04B4 120000    1390            lcall   ___fsadd
+04B7 AA82      1391            mov     r2,dpl
+04B9 AB83      1392            mov     r3,dph
+04BB ACF0      1393            mov     r4,b
+04BD FD        1394            mov     r5,a
+04BE E581      1395            mov     a,sp
+04C0 24FC      1396            add     a,#0xfc
+04C2 F581      1397            mov     sp,a
+04C4 AE8A      1398            mov     r6,_TL0
+04C6 7F00      1399            mov     r7,#0x00
+04C8 8E82      1400            mov     dpl,r6
+04CA 8F83      1401            mov     dph,r7
+04CC C002      1402            push    ar2
+04CE C003      1403            push    ar3
+04D0 C004      1404            push    ar4
+04D2 C005      1405            push    ar5
+04D4 120000    1406            lcall   ___sint2fs
+04D7 AE82      1407            mov     r6,dpl
+04D9 AF83      1408            mov     r7,dph
+04DB A8F0      1409            mov     r0,b
+04DD F9        1410            mov     r1,a
+04DE D005      1411            pop     ar5
+04E0 D004      1412            pop     ar4
+04E2 D003      1413            pop     ar3
+04E4 D002      1414            pop     ar2
+04E6 C006      1415            push    ar6
+04E8 C007      1416            push    ar7
+04EA C000      1417            push    ar0
+04EC C001      1418            push    ar1
+04EE 8A82      1419            mov     dpl,r2
+04F0 8B83      1420            mov     dph,r3
+04F2 8CF0      1421            mov     b,r4
+04F4 ED        1422            mov     a,r5
+04F5 120000    1423            lcall   ___fsadd
+04F8 AA82      1424            mov     r2,dpl
+04FA AB83      1425            mov     r3,dph
+04FC ACF0      1426            mov     r4,b
+04FE FD        1427            mov     r5,a
+04FF E581      1428            mov     a,sp
+0501 24FC      1429            add     a,#0xfc
+0503 F581      1430            mov     sp,a
+0505 C002      1431            push    ar2
+0507 C003      1432            push    ar3
+0509 C004      1433            push    ar4
+050B C005      1434            push    ar5
+050D 90F4FC    1435            mov     dptr,#0xF4FC
+0510 75F032    1436            mov     b,#0x32
+0513 7434      1437            mov     a,#0x34
+0515 120000    1438            lcall   ___fsmul
+0518 AA82      1439            mov     r2,dpl
+051A AB83      1440            mov     r3,dph
+051C ACF0      1441            mov     r4,b
+051E FD        1442            mov     r5,a
+051F E581      1443            mov     a,sp
+0521 24FC      1444            add     a,#0xfc
+0523 F581      1445            mov     sp,a
+0525           1446   ;        sourcecode.c:324: Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
+0525 C002      1447            push    ar2
+0527 C003      1448            push    ar3
+0529 C004      1449            push    ar4
+052B C005      1450            push    ar5
+052D 900000    1451            mov     dptr,#0x0000
+0530 75F0B4    1452            mov     b,#0xB4
+0533 7443      1453            mov     a,#0x43
+0535 120000    1454            lcall   ___fsmul
+0538 AA82      1455            mov     r2,dpl
+053A AB83      1456            mov     r3,dph
+053C ACF0      1457            mov     r4,b
+053E FD        1458            mov     r5,a
+053F E581      1459            mov     a,sp
+0541 24FC      1460            add     a,#0xfc
+0543 F581      1461            mov     sp,a
+0545 C0E0      1462            push    _main_period_1_61
+0547 C0E1      1463            push    (_main_period_1_61 + 1)
+0549 C0E2      1464            push    (_main_period_1_61 + 2)
+054B C0E3      1465            push    (_main_period_1_61 + 3)
+054D 8A82      1466            mov     dpl,r2
+054F 8B83      1467            mov     dph,r3
+0551 8CF0      1468            mov     b,r4
+0553 ED        1469            mov     a,r5
+0554 120000    1470            lcall   ___fsdiv
+0557 AA82      1471            mov     r2,dpl
+0559 AB83      1472            mov     r3,dph
+055B ACF0      1473            mov     r4,b
+055D FD        1474            mov     r5,a
+055E E581      1475            mov     a,sp
+0560 24FC      1476            add     a,#0xfc
+0562 F581      1477            mov     sp,a
+0564           1478   ;        sourcecode.c:327: period*1000.0, Phase_Shift, v1_max, v2_max);
+0564 C002      1479            push    ar2
+0566 C003      1480            push    ar3
+0568 C004      1481            push    ar4
+056A C005      1482            push    ar5
+056C C0E0      1483            push    _main_period_1_61
+056E C0E1      1484            push    (_main_period_1_61 + 1)
+0570 C0E2      1485            push    (_main_period_1_61 + 2)
+0572 C0E3      1486            push    (_main_period_1_61 + 3)
+0574           1487   ;        sourcecode.c:326: printf("T=%fms, Phase: %f, v1_Max:%f, v2_Max:%f\r", 
+0574 900000    1488            mov     dptr,#0x0000
+0577 75F07A    1489            mov     b,#0x7A
+057A 7444      1490            mov     a,#0x44
+057C 120000    1491            lcall   ___fsmul
+057F AE82      1492            mov     r6,dpl
+0581 AF83      1493            mov     r7,dph
+0583 A8F0      1494            mov     r0,b
+0585 F9        1495            mov     r1,a
+0586 E581      1496            mov     a,sp
+0588 24FC      1497            add     a,#0xfc
+058A F581      1498            mov     sp,a
+058C D005      1499            pop     ar5
+058E D004      1500            pop     ar4
+0590 D003      1501            pop     ar3
+0592 D002      1502            pop     ar2
+0594 C0D8      1503            push    _v2_max
+0596 C0D9      1504            push    (_v2_max + 1)
+0598 C0DA      1505            push    (_v2_max + 2)
+059A C0DB      1506            push    (_v2_max + 3)
+059C C018      1507            push    _v1_max
+059E C019      1508            push    (_v1_max + 1)
+05A0 C01A      1509            push    (_v1_max + 2)
+05A2 C01B      1510            push    (_v1_max + 3)
+05A4 C002      1511            push    ar2
+05A6 C003      1512            push    ar3
+05A8 C004      1513            push    ar4
+05AA C005      1514            push    ar5
+05AC C006      1515            push    ar6
+05AE C007      1516            push    ar7
+05B0 C000      1517            push    ar0
+05B2 C001      1518            push    ar1
+05B4 7468      1519            mov     a,#__str_5
+05B6 C0E0      1520            push    acc
+05B8 74D8      1521            mov     a,#(__str_5 >> 8)
+05BA C0E0      1522            push    acc
+05BC 7480      1523            mov     a,#0x80
+05BE C0E0      1524            push    acc
+05C0 120000    1525            lcall   _printf
+05C3 E581      1526            mov     a,sp
+05C5 24ED      1527            add     a,#0xed
+05C7 F581      1528            mov     sp,a
+05C9 020000    1529            ljmp    L010038?
+05CC           1530            rseg R_CSEG
+05CC           1531   
+0000           1532            rseg R_XINIT
+0000           1533   
+0000           1534            rseg R_CONST
+0000           1535   __str_0:
+0000 1B        1536            db 0x1B
+0001 5B324A    1537            db '[2J'
+0004 00        1538            db 0x00
+0005           1539   __str_1:
+0005 41444320  1540            db 'ADC test program'
      74657374
      2070726F
      6772616D
-0015 0A        1501            db 0x0A
-0016 46696C65  1502            db 'File: %s'
+0015 0A        1541            db 0x0A
+0016 46696C65  1542            db 'File: %s'
      3A202573
-001E 0A        1503            db 0x0A
-001F 436F6D70  1504            db 'Compiled: %s, %s'
+001E 0A        1543            db 0x0A
+001F 436F6D70  1544            db 'Compiled: %s, %s'
      696C6564
      3A202573
      2C202573
-002F 0A        1505            db 0x0A
-0030 0A        1506            db 0x0A
-0031 00        1507            db 0x00
-0032           1508   __str_2:
-0032 736F7572  1509            db 'sourcecode.c'
+002F 0A        1545            db 0x0A
+0030 0A        1546            db 0x0A
+0031 00        1547            db 0x00
+0032           1548   __str_2:
+0032 736F7572  1549            db 'sourcecode.c'
      6365636F
      64652E63
-003E 00        1510            db 0x00
-003F           1511   __str_3:
-003F 4D617220  1512            db 'Mar  6 2024'
+003E 00        1550            db 0x00
+003F           1551   __str_3:
+003F 4D617220  1552            db 'Mar  6 2024'
      20362032
      303234
-004A 00        1513            db 0x00
-004B           1514   __str_4:
-004B 32303A32  1515            db '20:20:00'
-     303A3030
-0053 00        1516            db 0x00
-0054           1517   __str_5:
-0054 6F766572  1518            db 'overflow count:%d, %d, %d'
-     666C6F77
-     20636F75
-     6E743A25
-     642C2025
-     642C2025
-     64
-006D 0A        1519            db 0x0A
-006E 00        1520            db 0x00
-006F           1521   __str_6:
-006F 543D2566  1522            db 'T=%fms, Time diff: %5.5fms, Phase: %f '
-     6D732C20
-     54696D65
-     20646966
-     663A2025
-     352E3566
+004A 00        1553            db 0x00
+004B           1554   __str_4:
+004B 32323A31  1555            db '22:10:09'
+     303A3039
+0053 00        1556            db 0x00
+0054           1557   __str_5:
+0054 543D2566  1558            db 'T=%fms, Phase: %f, v1_Max:%f, v2_Max:%f'
      6D732C20
      50686173
      653A2025
-     6620
-0095 0A        1523            db 0x0A
-0096 00        1524            db 0x00
-0097           1525   
-0003           1526            CSEG
-0003           1527   
-0003           1528   end
+     662C2076
+     315F4D61
+     783A2566
+     2C207632
+     5F4D6178
+     3A2566
+007B 0D        1559            db 0x0D
+007C 00        1560            db 0x00
+007D           1561   
+0003           1562            CSEG
+0003           1563   
+0003           1564   end
