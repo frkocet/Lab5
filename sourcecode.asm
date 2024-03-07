@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1170 (Feb 16 2022) (MSVC)
-; This file was generated Wed Mar 06 22:10:10 2024
+; This file was generated Wed Mar 06 22:46:25 2024
 ;--------------------------------------------------------
 $name sourcecode
 $optc51 --model-small
@@ -499,6 +499,10 @@ _v2:
 	ds 4
 _main_period_1_61:
 	ds 4
+_main_sloc0_1_0:
+	ds 2
+_main_sloc1_1_0:
+	ds 4
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -941,6 +945,8 @@ _TIMER0_Init:
 ;period                    Allocated with name '_main_period_1_61'
 ;Phase_Shift               Allocated to registers r2 r3 r4 r5 
 ;time_difference           Allocated to registers r2 r3 r4 r5 
+;sloc0                     Allocated with name '_main_sloc0_1_0'
+;sloc1                     Allocated with name '_main_sloc1_1_0'
 ;------------------------------------------------------------
 ;	sourcecode.c:217: void main (void)
 ;	-----------------------------------------
@@ -1013,17 +1019,71 @@ L010038?:
 	clr	_TF0
 ;	sourcecode.c:244: overflow_count = 0;
 	mov	_overflow_count,#0x00
-;	sourcecode.c:246: while (P0_6 != 0); // Wait for the signal to be zero
+;	sourcecode.c:246: while(Volts_at_Pin(QFP32_MUX_P2_2) > 0); // Wait for the signal to be zero
 L010001?:
-	jb	_P0_6,L010001?
-;	sourcecode.c:247: while (P0_6 != 1); // Wait for the signal to be one
+	mov	dpl,#0x0F
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	clr	a
+	push	acc
+	push	acc
+	push	acc
+	push	acc
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsgt
+	mov	r2,dpl
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	a,r2
+	jnz	L010001?
+;	sourcecode.c:247: while(Volts_at_Pin(QFP32_MUX_P2_2) == 0); // Wait for the signal to be one
 L010004?:
-	jnb	_P0_6,L010004?
+	mov	dpl,#0x0F
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,r2
+	orl	a,r3
+	orl	a,r4
+	mov	b,r5
+	clr	b.7 ; Clear the sign bit
+	orl	a,b
+	jz	L010004?
 ;	sourcecode.c:248: TR0 = 1; // Start the timer
 	setb	_TR0
-;	sourcecode.c:249: while (P0_6 != 0) { // Wait for the signal to be zero
+;	sourcecode.c:249: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be zero
 L010009?:
-	jnb	_P0_6,L010014?
+	mov	dpl,#0x0F
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	clr	a
+	push	acc
+	push	acc
+	push	acc
+	push	acc
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsgt
+	mov	r2,dpl
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	a,r2
+	jz	L010014?
 ;	sourcecode.c:250: if (TF0 == 1) { // Did the 16-bit timer overflow?
 ;	sourcecode.c:251: TF0 = 0;
 	jbc	_TF0,L010066?
@@ -1031,10 +1091,31 @@ L010009?:
 L010066?:
 ;	sourcecode.c:252: overflow_count++;
 	inc	_overflow_count
-;	sourcecode.c:255: while (P0_6 != 1) { // Wait for the signal to be one
+;	sourcecode.c:255: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be one
 	sjmp	L010009?
 L010014?:
-	jb	_P0_6,L010016?
+	mov	dpl,#0x0F
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	clr	a
+	push	acc
+	push	acc
+	push	acc
+	push	acc
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsgt
+	mov	r2,dpl
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	a,r2
+	jz	L010016?
 ;	sourcecode.c:256: if (TF0 == 1) { // Did the 16-bit timer overflow?
 ;	sourcecode.c:257: TF0 = 0;
 	jbc	_TF0,L010068?
@@ -1161,114 +1242,8 @@ L010016?:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	sourcecode.c:265: while(P0_6 != 0) //wait for zero cross of reference
-	clr	a
-	push	acc
-	push	acc
-	mov	a,#0x80
-	push	acc
-	mov	a,#0x40
-	push	acc
-	mov	dpl,_main_period_1_61
-	mov	dph,(_main_period_1_61 + 1)
-	mov	b,(_main_period_1_61 + 2)
-	mov	a,(_main_period_1_61 + 3)
-	lcall	___fsdiv
-	mov	r6,dpl
-	mov	r7,dph
-	mov	r0,b
-	mov	r1,a
-	mov	a,sp
-	add	a,#0xfc
-	mov	sp,a
-L010020?:
-	jnb	_P0_6,L010022?
-;	sourcecode.c:266: while(P0_6 != 1)
+;	sourcecode.c:265: while(Volts_at_Pin(QFP32_MUX_P2_2) > 0);
 L010017?:
-	jb	_P0_6,L010020?
-;	sourcecode.c:267: waitms(period/4);
-	mov	dpl,r6
-	mov	dph,r7
-	mov	b,r0
-	mov	a,r1
-	push	ar6
-	push	ar7
-	push	ar0
-	push	ar1
-	lcall	___fs2uint
-	lcall	_waitms
-	pop	ar1
-	pop	ar0
-	pop	ar7
-	pop	ar6
-	sjmp	L010017?
-L010022?:
-;	sourcecode.c:268: v1_max = Volts_at_Pin(QFP32_MUX_P2_1);
-	mov	dpl,#0x0E
-	lcall	_Volts_at_Pin
-	mov	_v1_max,dpl
-	mov	(_v1_max + 1),dph
-	mov	(_v1_max + 2),b
-	mov	(_v1_max + 3),a
-;	sourcecode.c:270: while(P2_2 != 0) //wait for zero cross of other signal
-	clr	a
-	push	acc
-	push	acc
-	mov	a,#0x80
-	push	acc
-	mov	a,#0x40
-	push	acc
-	mov	dpl,_main_period_1_61
-	mov	dph,(_main_period_1_61 + 1)
-	mov	b,(_main_period_1_61 + 2)
-	mov	a,(_main_period_1_61 + 3)
-	lcall	___fsdiv
-	mov	r6,dpl
-	mov	r7,dph
-	mov	r0,b
-	mov	r1,a
-	mov	a,sp
-	add	a,#0xfc
-	mov	sp,a
-L010026?:
-	jnb	_P2_2,L010028?
-;	sourcecode.c:271: while(P2_2 != 1)
-L010023?:
-	jb	_P2_2,L010026?
-;	sourcecode.c:272: waitms(period/4);
-	mov	dpl,r6
-	mov	dph,r7
-	mov	b,r0
-	mov	a,r1
-	push	ar6
-	push	ar7
-	push	ar0
-	push	ar1
-	lcall	___fs2uint
-	lcall	_waitms
-	pop	ar1
-	pop	ar0
-	pop	ar7
-	pop	ar6
-	sjmp	L010023?
-L010028?:
-;	sourcecode.c:273: v2_max = Volts_at_Pin(QFP32_MUX_P2_2);
-	mov	dpl,#0x0F
-	lcall	_Volts_at_Pin
-	mov	_v2_max,dpl
-	mov	(_v2_max + 1),dph
-	mov	(_v2_max + 2),b
-	mov	(_v2_max + 3),a
-;	sourcecode.c:304: TR0=0; // Stop timer 0
-	clr	_TR0
-;	sourcecode.c:305: overflow_count = 0;
-	mov	_overflow_count,#0x00
-;	sourcecode.c:306: TH0=0; TL0=0; TF0 = 0; 		// Reset the timer
-	mov	_TH0,#0x00
-	mov	_TL0,#0x00
-	clr	_TF0
-;	sourcecode.c:309: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0); 			// Wait for reference signal to be zero
-L010029?:
 	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
 	mov	r6,dpl
@@ -1290,58 +1265,30 @@ L010029?:
 	add	a,#0xfc
 	mov	sp,a
 	mov	a,r6
-	jnz	L010029?
-;	sourcecode.c:310: TR0=1; // start timer
-	setb	_TR0
-;	sourcecode.c:312: while (Volts_at_Pin(QFP32_MUX_P2_1) > 0) { // Wait for test signal to hit zero
-L010034?:
-	mov	dpl,#0x0E
+	jnz	L010017?
+;	sourcecode.c:266: while(Volts_at_Pin(QFP32_MUX_P2_2) == 0);
+L010020?:
+	mov	dpl,#0x0F
 	lcall	_Volts_at_Pin
 	mov	r6,dpl
 	mov	r7,dph
 	mov	r0,b
 	mov	r1,a
-	clr	a
-	push	acc
-	push	acc
-	push	acc
-	push	acc
-	mov	dpl,r6
-	mov	dph,r7
-	mov	b,r0
-	mov	a,r1
-	lcall	___fsgt
-	mov	r6,dpl
-	mov	a,sp
-	add	a,#0xfc
-	mov	sp,a
 	mov	a,r6
-	jz	L010036?
-;	sourcecode.c:313: if (TF0 == 1) { // Did the 16-bit timer overflow?
-;	sourcecode.c:314: TF0 = 0;
-	jbc	_TF0,L010075?
-	sjmp	L010034?
-L010075?:
-;	sourcecode.c:315: overflow_count++;
-	inc	_overflow_count
-	sjmp	L010034?
-L010036?:
-;	sourcecode.c:318: TR0=0; // stop timer
-	clr	_TR0
-;	sourcecode.c:323: time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
-	mov	dpl,_overflow_count
-	lcall	___uchar2fs
-	mov	r6,dpl
-	mov	r7,dph
-	mov	r0,b
-	mov	r1,a
-	push	ar6
-	push	ar7
-	push	ar0
-	push	ar1
+	orl	a,r7
+	orl	a,r0
+	mov	b,r1
+	clr	b.7 ; Clear the sign bit
+	orl	a,b
+	jz	L010020?
+;	sourcecode.c:267: waitms(period*1000/4);
+	push	_main_period_1_61
+	push	(_main_period_1_61 + 1)
+	push	(_main_period_1_61 + 2)
+	push	(_main_period_1_61 + 3)
 	mov	dptr,#0x0000
-	mov	b,#0x80
-	mov	a,#0x47
+	mov	b,#0x7A
+	mov	a,#0x44
 	lcall	___fsmul
 	mov	r6,dpl
 	mov	r7,dph
@@ -1350,11 +1297,274 @@ L010036?:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-	mov	dpl,_TH0
 	push	ar6
 	push	ar7
 	push	ar0
 	push	ar1
+	clr	a
+	push	acc
+	push	acc
+	mov	a,#0x80
+	push	acc
+	mov	a,#0x40
+	push	acc
+	mov	dpl,r6
+	mov	dph,r7
+	mov	b,r0
+	mov	a,r1
+	lcall	___fsdiv
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fs2uint
+	mov	_main_sloc0_1_0,dpl
+	mov  (_main_sloc0_1_0 + 1),dph
+	lcall	_waitms
+;	sourcecode.c:268: v1_max = Volts_at_Pin(QFP32_MUX_P2_2) / 1.41621356237;
+	mov	dpl,#0x0F
+	lcall	_Volts_at_Pin
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r2,b
+	mov	r3,a
+	mov	a,#0x7C
+	push	acc
+	mov	a,#0x46
+	push	acc
+	mov	a,#0xB5
+	push	acc
+	mov	a,#0x3F
+	push	acc
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r2
+	mov	a,r3
+	lcall	___fsdiv
+	mov	_v1_max,dpl
+	mov	(_v1_max + 1),dph
+	mov	(_v1_max + 2),b
+	mov	(_v1_max + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar6
+;	sourcecode.c:270: while(Volts_at_Pin(QFP32_MUX_P2_1) > 0); //wait for zero cross of other signal
+L010023?:
+	mov	dpl,#0x0E
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	clr	a
+	push	acc
+	push	acc
+	push	acc
+	push	acc
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsgt
+	mov	r2,dpl
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar6
+	mov	a,r2
+	jnz	L010023?
+;	sourcecode.c:271: while(Volts_at_Pin(QFP32_MUX_P2_1) == 0);
+L010026?:
+	mov	dpl,#0x0E
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar6
+	mov	a,r2
+	orl	a,r3
+	orl	a,r4
+	mov	b,r5
+	clr	b.7 ; Clear the sign bit
+	orl	a,b
+	jz	L010026?
+;	sourcecode.c:272: waitms(period*1000/4);
+	mov	dpl,_main_sloc0_1_0
+	mov	dph,(_main_sloc0_1_0 + 1)
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	lcall	_waitms
+;	sourcecode.c:273: v2_max = Volts_at_Pin(QFP32_MUX_P2_1) / 1.41621356237;
+	mov	dpl,#0x0E
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	mov	a,#0x7C
+	push	acc
+	mov	a,#0x46
+	push	acc
+	mov	a,#0xB5
+	push	acc
+	mov	a,#0x3F
+	push	acc
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsdiv
+	mov	_v2_max,dpl
+	mov	(_v2_max + 1),dph
+	mov	(_v2_max + 2),b
+	mov	(_v2_max + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar6
+;	sourcecode.c:277: TR0=0; // Stop timer 0
+	clr	_TR0
+;	sourcecode.c:278: overflow_count = 0;
+	mov	_overflow_count,#0x00
+;	sourcecode.c:279: TH0=0; TL0=0; TF0 = 0; 		// Reset the timer
+	mov	_TH0,#0x00
+	mov	_TL0,#0x00
+	clr	_TF0
+;	sourcecode.c:282: while (Volts_at_Pin(QFP32_MUX_P2_2) > 0); 			// Wait for reference signal to be zero
+L010029?:
+	mov	dpl,#0x0F
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	clr	a
+	push	acc
+	push	acc
+	push	acc
+	push	acc
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsgt
+	mov	r2,dpl
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar6
+	mov	a,r2
+	jnz	L010029?
+;	sourcecode.c:283: TR0=1; // start timer
+	setb	_TR0
+;	sourcecode.c:285: while (Volts_at_Pin(QFP32_MUX_P2_1) > 0) { // Wait for test signal to hit zero
+L010034?:
+	mov	dpl,#0x0E
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	lcall	_Volts_at_Pin
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	clr	a
+	push	acc
+	push	acc
+	push	acc
+	push	acc
+	mov	dpl,r2
+	mov	dph,r3
+	mov	b,r4
+	mov	a,r5
+	lcall	___fsgt
+	mov	r2,dpl
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar6
+	mov	a,r2
+	jz	L010036?
+;	sourcecode.c:286: if (TF0 == 1) { // Did the 16-bit timer overflow?
+;	sourcecode.c:287: TF0 = 0;
+	jbc	_TF0,L010075?
+	sjmp	L010034?
+L010075?:
+;	sourcecode.c:288: overflow_count++;
+	inc	_overflow_count
+	sjmp	L010034?
+L010036?:
+;	sourcecode.c:291: TR0=0; // stop timer
+	clr	_TR0
+;	sourcecode.c:296: time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+	mov	dpl,_overflow_count
+	push	ar6
+	push	ar7
+	push	ar0
+	push	ar1
+	lcall	___uchar2fs
+	mov	r2,dpl
+	mov	r3,dph
+	mov	r4,b
+	mov	r5,a
+	push	ar2
+	push	ar3
+	push	ar4
+	push	ar5
+	mov	dptr,#0x0000
+	mov	b,#0x80
+	mov	a,#0x47
+	lcall	___fsmul
+	mov	_main_sloc1_1_0,dpl
+	mov	(_main_sloc1_1_0 + 1),dph
+	mov	(_main_sloc1_1_0 + 2),b
+	mov	(_main_sloc1_1_0 + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	dpl,_TH0
 	lcall	___uchar2fs
 	mov	r2,dpl
 	mov	r3,dph
@@ -1375,51 +1585,39 @@ L010036?:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-	pop	ar1
-	pop	ar0
-	pop	ar7
-	pop	ar6
 	push	ar2
 	push	ar3
 	push	ar4
 	push	ar5
-	mov	dpl,r6
-	mov	dph,r7
-	mov	b,r0
-	mov	a,r1
+	mov	dpl,_main_sloc1_1_0
+	mov	dph,(_main_sloc1_1_0 + 1)
+	mov	b,(_main_sloc1_1_0 + 2)
+	mov	a,(_main_sloc1_1_0 + 3)
 	lcall	___fsadd
+	mov	_main_sloc1_1_0,dpl
+	mov	(_main_sloc1_1_0 + 1),dph
+	mov	(_main_sloc1_1_0 + 2),b
+	mov	(_main_sloc1_1_0 + 3),a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	mov	r2,_TL0
+	mov	r3,#0x00
+	mov	dpl,r2
+	mov	dph,r3
+	lcall	___sint2fs
 	mov	r2,dpl
 	mov	r3,dph
 	mov	r4,b
 	mov	r5,a
-	mov	a,sp
-	add	a,#0xfc
-	mov	sp,a
-	mov	r6,_TL0
-	mov	r7,#0x00
-	mov	dpl,r6
-	mov	dph,r7
 	push	ar2
 	push	ar3
 	push	ar4
 	push	ar5
-	lcall	___sint2fs
-	mov	r6,dpl
-	mov	r7,dph
-	mov	r0,b
-	mov	r1,a
-	pop	ar5
-	pop	ar4
-	pop	ar3
-	pop	ar2
-	push	ar6
-	push	ar7
-	push	ar0
-	push	ar1
-	mov	dpl,r2
-	mov	dph,r3
-	mov	b,r4
-	mov	a,r5
+	mov	dpl,_main_sloc1_1_0
+	mov	dph,(_main_sloc1_1_0 + 1)
+	mov	b,(_main_sloc1_1_0 + 2)
+	mov	a,(_main_sloc1_1_0 + 3)
 	lcall	___fsadd
 	mov	r2,dpl
 	mov	r3,dph
@@ -1443,7 +1641,7 @@ L010036?:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	sourcecode.c:324: Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
+;	sourcecode.c:297: Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
 	push	ar2
 	push	ar3
 	push	ar4
@@ -1475,31 +1673,11 @@ L010036?:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	sourcecode.c:327: period*1000.0, Phase_Shift, v1_max, v2_max);
-	push	ar2
-	push	ar3
-	push	ar4
-	push	ar5
-	push	_main_period_1_61
-	push	(_main_period_1_61 + 1)
-	push	(_main_period_1_61 + 2)
-	push	(_main_period_1_61 + 3)
-;	sourcecode.c:326: printf("T=%fms, Phase: %f, v1_Max:%f, v2_Max:%f\r", 
-	mov	dptr,#0x0000
-	mov	b,#0x7A
-	mov	a,#0x44
-	lcall	___fsmul
-	mov	r6,dpl
-	mov	r7,dph
-	mov	r0,b
-	mov	r1,a
-	mov	a,sp
-	add	a,#0xfc
-	mov	sp,a
-	pop	ar5
-	pop	ar4
-	pop	ar3
-	pop	ar2
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar6
+;	sourcecode.c:299: printf("T=%fms, Phase: %f, v1_Max:%f, v2_Max:%f\r", 
 	push	_v2_max
 	push	(_v2_max + 1)
 	push	(_v2_max + 2)
@@ -1552,7 +1730,7 @@ __str_3:
 	db 'Mar  6 2024'
 	db 0x00
 __str_4:
-	db '22:10:09'
+	db '22:46:24'
 	db 0x00
 __str_5:
 	db 'T=%fms, Phase: %f, v1_Max:%f, v2_Max:%f'

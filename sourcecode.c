@@ -243,16 +243,16 @@ void main (void)
 		TF0 = 0;
 		overflow_count = 0;
 		
-		while (P0_6 != 0); // Wait for the signal to be zero
-		while (P0_6 != 1); // Wait for the signal to be one
+		while(Volts_at_Pin(QFP32_MUX_P2_2) > 0); // Wait for the signal to be zero
+		while(Volts_at_Pin(QFP32_MUX_P2_2) == 0); // Wait for the signal to be one
 		TR0 = 1; // Start the timer
-		while (P0_6 != 0) { // Wait for the signal to be zero
+		while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be zero
 			if (TF0 == 1) { // Did the 16-bit timer overflow?
 				TF0 = 0;
 				overflow_count++;
 			}
 		}
-		while (P0_6 != 1) { // Wait for the signal to be one
+		while (Volts_at_Pin(QFP32_MUX_P2_2) > 0) { // Wait for the signal to be one
 			if (TF0 == 1) { // Did the 16-bit timer overflow?
 				TF0 = 0;
 				overflow_count++;
@@ -262,18 +262,16 @@ void main (void)
 		period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
 
 
+		while(Volts_at_Pin(QFP32_MUX_P2_2) > 0);
+		while(Volts_at_Pin(QFP32_MUX_P2_2) == 0);
+		waitms(period*1000/4);
+		v1_max = Volts_at_Pin(QFP32_MUX_P2_2) / 1.41621356237;
 
-		while(P0_6 != 0) //wait for zero cross of reference
-		while(P0_6 != 1)
-		waitms(period/4);
-		v1_max = Volts_at_Pin(QFP32_MUX_P2_1);
-
-		while(P2_2 != 0) //wait for zero cross of other signal
-		while(P2_2 != 1)
-		waitms(period/4);
-		v2_max = Volts_at_Pin(QFP32_MUX_P2_2);
+		while(Volts_at_Pin(QFP32_MUX_P2_1) > 0); //wait for zero cross of other signal
+		while(Volts_at_Pin(QFP32_MUX_P2_1) == 0);
+		waitms(period*1000/4);
+		v2_max = Volts_at_Pin(QFP32_MUX_P2_1) / 1.41621356237;
 		
-
 
 		// Find phase shift between signals
 		TR0=0; // Stop timer 0
