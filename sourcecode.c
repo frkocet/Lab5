@@ -4,15 +4,29 @@
 #include <stdlib.h>
 #include <EFM8LB1.h>
 
+// The next line clears the "C51 command line options:" field when compiling with CrossIDE
 // ~C51~  
 
 #define SYSCLK 72000000L
 #define BAUDRATE 115200L
 #define SARCLK 18000000L
 
+#define LCD_RS P1_7
+// #define LCD_RW Px_x // Not used in this code.  Connect to GND
+#define LCD_E  P2_0
+#define LCD_D4 P1_3
+#define LCD_D5 P1_2
+#define LCD_D6 P1_1
+#define LCD_D7 P1_0
+#define CHARS_PER_LINE 16
+
+#define TOGGLE_BUTTON P2_4
+#define HOLD_BUTTON P3_7
+#define LED_OUT P2_1
+
 unsigned char overflow_count;
 
-float v1_max = 0; float v2_max = 0;
+float v1_rms = 0; float v2_rms = 0;
 float v1 = 0; float v2 = 0;
 
 char _c51_external_startup (void)
@@ -94,7 +108,7 @@ void InitADC (void)
 		(0x0 << 0) ; // Accumulate n conversions: 0x0: 1, 0x1:4, 0x2:8, 0x3:16, 0x4:32
 	
 	ADC0CF0=
-	    ((SYSCLK/SARCLK) << 3) | // SAR Clock Divider. Max is 18MHz. Fsarclk = (Fadcclk) / (ADSC + 1)
+	    ((SYSCLK/SARCLK) << 3) | // SAR Clock Divider. rms is 18MHz. Fsarclk = (Fadcclk) / (ADSC + 1)
 		(0x0 << 2); // 0:SYSCLK ADCCLK = SYSCLK. 1:HFOSC0 ADCCLK = HFOSC0.
 	
 	ADC0CF1=
@@ -208,7 +222,81 @@ void TIMER0_Init(void)
 	TR0=0; // Stop Timer/Counter 0
 }
 
+void LCD_pulse (void)
+{
+	LCD_E=1;
+	Timer3us(40);
+	LCD_E=0;
+}
 
+void LCD_byte (unsigned char x)
+{
+	// The accumulator in the C8051Fxxx is bit addressable!
+	ACC=x; //Send high nible
+	LCD_D7=ACC_7;
+	LCD_D6=ACC_6;
+	LCD_D5=ACC_5;
+	LCD_D4=ACC_4;
+	LCD_pulse();
+	Timer3us(40);
+	ACC=x; //Send low nible
+	LCD_D7=ACC_3;
+	LCD_D6=ACC_2;
+	LCD_D5=ACC_1;
+	LCD_D4=ACC_0;
+	LCD_pulse();
+}
+
+void WriteData (unsigned char x)
+{
+	LCD_RS=1;
+	LCD_byte(x);
+	waitms(2);
+}
+
+void WriteCommand (unsigned char x)
+{
+	LCD_RS=0;
+	LCD_byte(x);
+	waitms(5);
+}
+
+void LCD_4BIT (void)
+{
+	LCD_E=0; // Resting state of LCD's enable is zero
+	// LCD_RW=0; // We are only writing to the LCD in this program
+	waitms(20);
+	// First make sure the LCD is in 8-bit mode and then change to 4-bit mode
+	WriteCommand(0x33);
+	WriteCommand(0x33);
+	WriteCommand(0x32); // Change to 4-bit mode
+
+	// Configure the LCD
+	WriteCommand(0x28);
+	WriteCommand(0x0c);
+	WriteCommand(0x01); // Clear screen command (takes some time)
+	waitms(20); // Wait for clear screen command to finsih.
+}
+
+void LCDprint(char * string, unsigned char line, bit clear)
+{
+	int j;
+
+	WriteCommand(line==2?0xc0:0x80);
+	waitms(5);
+	for(j=0; string[j]!=0; j++)	WriteData(string[j]);// Write the message
+	if(clear) for(; j<CHARS_PER_LINE; j++) WriteData(' '); // Clear the rest of the line
+}
+
+void LCDprint2(char * string, unsigned char line, unsigned char col)
+{
+	unsigned int j;
+
+	WriteCommand(line==2?0xc0|col:0x80|col); // Move cursor to line and column
+	for(j=0; string[j]!=0; j++){ 
+		WriteData(string[j]); // Write the message
+	}
+}
 
 //--------------------------//
 //			Main			//
@@ -222,6 +310,9 @@ void main (void)
 
 	TIMER0_Init();
 
+	// Configure the LCD
+	LCD_4BIT();
+
     waitms(500); // Give PuTTy a chance to start before sending
 	printf("\x1b[2J"); // Clear screen using ANSI escape sequence.
 	
@@ -229,6 +320,12 @@ void main (void)
 	        "File: %s\n"
 	        "Compiled: %s, %s\n\n",
 	        __FILE__, __DATE__, __TIME__);
+
+	// Starting message on LCD, looks like:
+	// 'F : X X H z       P H : _ X X X'
+	// 'V R : X . X X     V T : X . X X'
+	LCDprint2("F:XXHz   PH:±XXX", 1, 0); //string, row, column
+	LCDprint2("VR:X.XX  VT:X.XX", 2, 0); //string, row, column
 	
 	InitPinADC(2, 1); // Configure P2.1 as analog input
 	InitPinADC(2, 2); // Configure P2.2 as analog input
@@ -259,18 +356,18 @@ void main (void)
 			}
 		}
 		TR0 = 0; // Stop timer 0, the 24-bit number [overflow_count-TH0-TL0] has the period!
-		period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
+		period = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK)*(2);
 
 
 		while(Volts_at_Pin(QFP32_MUX_P2_2) > 0);
 		while(Volts_at_Pin(QFP32_MUX_P2_2) == 0);
 		waitms(period*1000/4);
-		v1_max = Volts_at_Pin(QFP32_MUX_P2_2) / 1.41621356237;
+		v1_rms = Volts_at_Pin(QFP32_MUX_P2_2) / 1.41321356237;
 
 		while(Volts_at_Pin(QFP32_MUX_P2_1) > 0); //wait for zero cross of other signal
 		while(Volts_at_Pin(QFP32_MUX_P2_1) == 0);
 		waitms(period*1000/4);
-		v2_max = Volts_at_Pin(QFP32_MUX_P2_1) / 1.41621356237;
+		v2_rms = Volts_at_Pin(QFP32_MUX_P2_1) / 1.41321356237;
 		
 
 		// Find phase shift between signals
@@ -278,11 +375,16 @@ void main (void)
 		overflow_count = 0;
 		TH0=0; TL0=0; TF0 = 0; 		// Reset the timer
 
-
-		while (Volts_at_Pin(QFP32_MUX_P2_2) > 0); 			// Wait for reference signal to be zero
+		while (Volts_at_Pin(QFP32_MUX_P2_2) != 0); 	
+		while (Volts_at_Pin(QFP32_MUX_P2_2) == 0); 			// Wait for reference signal to be zero
 		TR0=1; // start timer
-
-		while (Volts_at_Pin(QFP32_MUX_P2_1) > 0) { // Wait for test signal to hit zero
+		while (Volts_at_Pin(QFP32_MUX_P2_1) != 0) {
+			if (TF0 == 1) { // Did the 16-bit timer overflow?
+				TF0 = 0;
+				overflow_count++;
+			}
+		}
+		while (Volts_at_Pin(QFP32_MUX_P2_1) == 0) { // Wait for test signal to hit zero
 			if (TF0 == 1) { // Did the 16-bit timer overflow?
 				TF0 = 0;
 				overflow_count++;
@@ -291,14 +393,35 @@ void main (void)
 		TR0=0; // stop timer
 
 
-
 		// Do some math to find phase shift
 		time_difference = (overflow_count*65536.0+TH0*256.0+TL0)*(12.0/SYSCLK);
 		Phase_Shift = (time_difference * 360.0) / period;   // we now have the phase shift   
 
-		printf("T=%fms, Phase: %f, v1_Max:%f, v2_Max:%f\r", 
-		period*1000.0, Phase_Shift, v1_max, v2_max);
+		printf("T=%fms, Phase: %f, v1_Rms:%f, v2_Rms:%f\r", 
+		period*1000.0, Phase_Shift, v1_rms, v2_rms);
 		//printf("\x1b[0K"); // ANSI: Clear from cursor to end of line
+
+
+		/////////////////LCD DISPLAYING/////////////////
+		// Create variables 
+		float frequency = 1/period; 
+		unsigned char str_frequency[16];
+		unsigned char str_vref[16];
+		unsigned char str_vtest[16];
+		unsigned char str_phase[16];
+
+		// Convert floats to strings
+		sprintf(str_frequency, "%f", frequency);
+		sprintf(str_vref, "%f", v1_rms);
+		sprintf(str_vtest, "%f", v2_rms); 
+		sprintf(str_phase, "%f", Phase_Shift); 
+
+		// Print values on screen 
+		LCDprint2(str_frequency, 1, 2); //string, row, column
+		LCDprint2(str_phase, 1, 13); //string, row, column
+		LCDprint2(str_vref, 2, 3); //string, row, column
+		LCDprint2(str_vtest, 2, 12); //string, row, column
+		////////////////////////////////////////////////
 		
 	 }
 }
